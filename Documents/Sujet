@@ -17,7 +17,7 @@ Fonctionnalités ajoutées :
     • Répondre à un commentaire
     • Aimer un commentaire
     • Filtres dans le fil d'actualités (récents, aimés, amis...)
-    • Publicités
+    • Publicités (1 post sur 10)
     • Messages privés
     • Mettre son compte en privé (Seuls les amis voient nos posts)
     • Page de tendances (index, présente les posts les plus likés en le moins de temps)
@@ -27,6 +27,7 @@ Fonctionnalités ajoutées :
     • Supprimer un post
     • Changement de thèmes
     • Compte admin (peut supprimer des posts et des comptes)
+    • Compte premium (pas de posts publicités, petite étoile à côté du nom)
     
 Fonctionnalités de fou :
     • Intégrer une marketplace
