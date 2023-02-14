@@ -1,0 +1,34 @@
+Sujet : Réseau social
+
+Fonctionnalités de base :
+    • Création de compte
+    • Modification de profil
+    • Recherche de comptes
+    • Ajout d'amis
+    • Liste d'amis
+    • Mettre des posts (Texte, photos, vidéos)
+    • Commenter
+    • Aimer
+    • Partager
+    • Voir les posts (les plus récents / les plus aimés)
+    
+Fonctionnalités ajoutées :
+    • Poster des stories
+    • Répondre à un commentaire
+    • Aimer un commentaire
+    • Filtres dans le fil d'actualités (récents, aimés, amis...)
+    • Publicités
+    • Messages privés
+    • Mettre son compte en privé (Seuls les amis voient nos posts)
+    • Page de tendances (index, présente les posts les plus likés en le moins de temps)
+    • Possibilité d'identifier quelqu'un
+    • Onglet Notifications
+    • Notifications pour la personne identifiée / Demandes d'amis
+    • Supprimer un post
+    
+Fonctionnalités de fou :
+    • Intégrer une marketplace
+    • Créer une application mobile
+    
+Fonctionnalités absentes :
+    • Pas de notion de "follow" seulement des demandes d'amis qui doivent être acceptées
