@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:7077
--- Generation Time: Feb 21, 2023 at 11:53 PM
+-- Generation Time: Feb 22, 2023 at 12:24 PM
 -- Server version: 5.7.24
 -- PHP Version: 8.0.1
 
@@ -124,6 +124,7 @@ CREATE TABLE `user` (
   `Country` varchar(50) NOT NULL,
   `City` varchar(50) NOT NULL,
   `BirthDate` date NOT NULL DEFAULT '1999-01-01',
+  `PhoneNumber` varchar(50) DEFAULT '0836656565',
   `Sex` int(11) NOT NULL DEFAULT '-1',
   `IsAdmin` tinyint(1) NOT NULL DEFAULT '0',
   `Theme` int(11) NOT NULL DEFAULT '0',
@@ -134,21 +135,22 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`UserID`, `Username`, `Name`, `Firstname`, `Mail`, `Country`, `City`, `BirthDate`, `Sex`, `IsAdmin`, `Theme`, `IsPremium`) VALUES
-('U1', 'Jo âne', 'Legrand', 'Joan', 'joan.legrand@gmail.com', 'France', 'Paris', '1999-01-01', 1, 1, 0, 0),
-('U10', 'Clef Man', 'Cassiet', 'Clement', 'clemDu78@yes.fr', 'Venezuela', 'Zibaboue', '1999-01-01', 1, 0, 0, 0),
-('U11', 'Clef Man', 'Cassiet', 'Clement', 'clemDu78@yes.fr', 'Venezuela', 'Zibaboue', '1999-01-01', 1, 0, 0, 0),
-('U12', 'Clef Man', 'Cassiet', 'Clement', 'clemDu78@yes.fr', 'Venezuela', 'Zibaboue', '1999-01-01', 1, 0, 0, 0),
-('U13', 'Clef Man', 'Cassiet', 'Clement', 'clemDu78@yes.fr', 'Venezuela', 'Zibaboue', '1999-01-01', 1, 0, 0, 0),
-('U14', 'Clef Man', 'Cassiet', 'Clement', 'clemDu78@yes.fr', 'Venezuela', 'Zibaboue', '1999-01-01', 1, 0, 0, 0),
-('U2', 'A Dent', 'Bouhrara', 'Adam', 'adam.oui@gmail.com', 'France', 'Cergy', '1999-01-01', 1, 1, 0, 0),
-('U3', 'Jean Rdan', 'Gautier', 'Jordan', 'jordan.gautier@gmail.com', 'Perou', 'Lima', '1999-01-01', 2, 1, 0, 0),
-('U4', 'Fa PasBien', 'Cerf', 'Fabien', 'cerffabien@cy-tech.fr', 'Perou', 'Perouland', '1999-01-01', 0, 0, 0, 0),
-('U5', 'Clef Man', 'Cassiet', 'Clement', 'clemDu78@yes.fr', 'Venezuela', 'Zibaboue', '1999-01-01', 1, 0, 0, 0),
-('U6', 'Clef Man', 'Cassiet', 'Clement', 'clemDu78@yes.fr', 'Venezuela', 'Zibaboue', '1999-01-01', 1, 0, 0, 0),
-('U7', 'Clef Man', 'Cassiet', 'Clement', 'clemDu78@yes.fr', 'Venezuela', 'Zibaboue', '1999-01-01', 1, 0, 0, 0),
-('U8', 'Clef Man', 'Cassiet', 'Clement', 'clemDu78@yes.fr', 'Venezuela', 'Zibaboue', '1999-01-01', 1, 0, 0, 0),
-('U9', 'Clef Man', 'Cassiet', 'Clement', 'clemDu78@yes.fr', 'Venezuela', 'Zibaboue', '1999-01-01', 1, 0, 0, 0);
+INSERT INTO `user` (`UserID`, `Username`, `Name`, `Firstname`, `Mail`, `Country`, `City`, `BirthDate`, `PhoneNumber`, `Sex`, `IsAdmin`, `Theme`, `IsPremium`) VALUES
+('U1', 'Jo âne', 'Legrand', 'Joan', 'joan.legrand@gmail.com', 'France', 'Paris', '1999-01-01', '0836656565', 1, 1, 0, 0),
+('U10', 'Clef Man', 'Cassiet', 'Clement', 'clemDu78@yes.fr', 'Venezuela', 'Zibaboue', '1999-01-01', '0836656565', 1, 0, 0, 0),
+('U11', 'Clef Man', 'Cassiet', 'Clement', 'clemDu78@yes.fr', 'Venezuela', 'Zibaboue', '1999-01-01', '0836656565', 1, 0, 0, 0),
+('U12', 'Clef Man', 'Cassiet', 'Clement', 'clemDu78@yes.fr', 'Venezuela', 'Zibaboue', '1999-01-01', '0836656565', 1, 0, 0, 0),
+('U13', 'Clef Man', 'Cassiet', 'Clement', 'clemDu78@yes.fr', 'Venezuela', 'Zibaboue', '1999-01-01', '0836656565', 1, 0, 0, 0),
+('U14', 'Clef Man', 'Cassiet', 'Clement', 'clemDu78@yes.fr', 'Venezuela', 'Zibaboue', '1999-01-01', '0836656565', 1, 0, 0, 0),
+('U15', 'Clef Man', 'Cassiet', 'Clement', 'clemDu78@yes.fr', 'Venezuela', 'Zibaboue', '1999-01-01', '7777777', 1, 0, 0, 0),
+('U2', 'A Dent', 'Bouhrara', 'Adam', 'adam.oui@gmail.com', 'France', 'Cergy', '1999-01-01', '0836656565', 1, 1, 0, 0),
+('U3', 'Jean Rdane', 'Gautier', 'Jordan', 'jordan.gautier@gmail.com', 'Perou', 'Lima', '1999-01-01', '0836656565', 2, 1, 0, 0),
+('U4', 'Fa PasBien', 'Cerf', 'Fabien', 'cerffabien@cy-tech.fr', 'Perou', 'Perouland', '1999-01-01', '0836656565', 0, 0, 0, 0),
+('U5', 'Clef Man', 'Cassiet', 'Clement', 'clemDu78@yes.fr', 'Venezuela', 'Zibaboue', '1999-01-01', '0836656565', 1, 0, 0, 0),
+('U6', 'Clef Man', 'Cassiet', 'Clement', 'clemDu78@yes.fr', 'Venezuela', 'Zibaboue', '1999-01-01', '0836656565', 1, 0, 0, 0),
+('U7', 'Clef Man', 'Cassiet', 'Clement', 'clemDu78@yes.fr', 'Venezuela', 'Zibaboue', '1999-01-01', '0836656565', 1, 0, 0, 0),
+('U8', 'Clef Man', 'Cassiet', 'Clement', 'clemDu78@yes.fr', 'Venezuela', 'Zibaboue', '1999-01-01', '0836656565', 1, 0, 0, 0),
+('U9', 'Clef Man', 'Cassiet', 'Clement', 'clemDu78@yes.fr', 'Venezuela', 'Zibaboue', '1999-01-01', '0836656565', 1, 0, 0, 0);
 
 --
 -- Indexes for dumped tables

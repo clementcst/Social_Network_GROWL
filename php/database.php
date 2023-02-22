@@ -24,12 +24,14 @@
       $port = 7077;
       $link = mysqli_connect($host, $user, $password, $db, $port);
       if (!$link) {
-         die("Connection failed: " . mysqli_connect_error());
+         $err = "Connection failed: " . mysqli_connect_error() ; 
+         phpError_log($err);
+         die($err);
       }
       return $link;
    }
 
-   function GenerateID(\mysqli $link, string $table) 
+   function generateID(\mysqli $link, string $table) 
    {
       $tables = array(         
                         "user" => array("UserID", "U"),
@@ -43,39 +45,39 @@
       $result = mysqli_query($link, $sql);
       if(mysqli_num_rows($result) != 1) {
          phpError_log("can't genereate new id for :".$table);
-         return "NaU";
+         return "Na".$tables[$table][1];
       } else {
          $row = mysqli_fetch_array($result);
          return ($row[0] == NULL ? $tables[$table][1]."1" : $tables[$table][1].$row[0]); 
       }
    }
 
-   function NewUser(array $user) {
+   function newUser(array $user) {
       $link = mysqli_open();
-      $newId = GenerateID($link, "user");
+      $newId = generateID($link, "user");
       $sql ="INSERT INTO 
             `user`(
                   `UserID`, `Username`, 
                   `Name`, `Firstname`, 
                   `Mail`, `Country`, 
                   `City`, `BirthDate`, 
-                  `Sex`, `IsAdmin`, 
-                  `Theme`, `IsPremium`
+                  `PhoneNumber`, `Sex`, 
+                  `IsAdmin`, `Theme`, `IsPremium`
                   )
             VALUES (
                      '".$newId."', '".$user["userName"]."',
                      '".$user["name"]."', '".$user["firstName"]."',
                      '".$user["mail"]."', '".$user["country"]."',
                      '".$user["city"]."', '".$user["birthDate"]."',
-                     '".$user["sex"]."', '0', 
-                     '0', '0'
+                     '".$user["phoneNumber"]."', '".$user["sex"]."',
+                     '0', '0', '0'
                    );";
       $newUser_str = "\\n(".
                      "\\n".$newId.", ".$user["userName"].",".
                      "\\n".$user["name"].", ".$user["firstName"].",".
                      "\\n".$user["mail"].", ".$user["country"].",".
                      "\\n".$user["city"].", ".$user["birthDate"].",".
-                     "\\n".$user["sex"].
+                     "\\n".$user["phoneNumber"].", ".$user["sex"].
                      "\\n)";
       if(mysqli_query($link, $sql)){
          java_log("User succesfully added :".$newUser_str);
@@ -92,10 +94,11 @@
       "mail" => "clemDu78@yes.fr",
       "country" => "Venezuela",
       "city" => "Zibaboue",
-      "birthDate" => "bouillabesse", //c'était pour tester le message d'erreur, à remplacer par "1999-01-01" date format
+      "birthDate" => "1999-01-01", 
+      "phoneNumber" => "7777777",
       "sex" => "1"
    );
-   NewUser($user);
+   newUser($user);
    echo $_SESSION["error_log"];
 
 
