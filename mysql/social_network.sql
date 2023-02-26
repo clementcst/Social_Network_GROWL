@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:7077
--- Generation Time: Feb 22, 2023 at 12:24 PM
+-- Generation Time: Feb 26, 2023 at 03:23 PM
 -- Server version: 5.7.24
 -- PHP Version: 8.0.1
 
@@ -52,6 +52,21 @@ CREATE TABLE `comment` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `conversation`
+--
+
+CREATE TABLE `conversation` (
+  `ConversationID` varchar(50) NOT NULL DEFAULT 'NaCV',
+  `SenderID` varchar(50) NOT NULL,
+  `ReceiverID` varchar(50) NOT NULL,
+  `Content` varchar(2048) NOT NULL DEFAULT '',
+  `MediaID` varchar(50) NOT NULL,
+  `Posted_DateTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `friends`
 --
 
@@ -76,6 +91,40 @@ CREATE TABLE `liked_post` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `media`
+--
+
+CREATE TABLE `media` (
+  `MediaID` varchar(50) NOT NULL DEFAULT 'NaM',
+  `Path` varchar(256) NOT NULL DEFAULT '',
+  `Type` varchar(50) NOT NULL DEFAULT 'jpg'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `own_media`
+--
+
+CREATE TABLE `own_media` (
+  `PostID` varchar(50) NOT NULL,
+  `MediaID` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `password`
+--
+
+CREATE TABLE `password` (
+  `UserID` varchar(50) NOT NULL,
+  `EncrPwd` varchar(256) NOT NULL DEFAULT ''
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `post`
 --
 
@@ -85,6 +134,7 @@ CREATE TABLE `post` (
   `NumberOfLikes` int(11) NOT NULL DEFAULT '0',
   `NumberOfShares` int(11) NOT NULL DEFAULT '0',
   `NumberOfMedia` int(11) NOT NULL DEFAULT '0',
+  `Title` varchar(50) DEFAULT NULL,
   `Content` varchar(2048) NOT NULL DEFAULT '',
   `PostedBy_UserID` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -93,9 +143,10 @@ CREATE TABLE `post` (
 -- Dumping data for table `post`
 --
 
-INSERT INTO `post` (`PostID`, `Posted_DateTime`, `NumberOfLikes`, `NumberOfShares`, `NumberOfMedia`, `Content`, `PostedBy_UserID`) VALUES
-('P1', '2023-02-20 10:30:00', 0, 0, 1, 'Ceci est mon premier post!', 'U1'),
-('P2', '2023-02-20 10:30:00', 0, 0, 1, 'Ceci est mon deuxième post!', 'U1');
+INSERT INTO `post` (`PostID`, `Posted_DateTime`, `NumberOfLikes`, `NumberOfShares`, `NumberOfMedia`, `Title`, `Content`, `PostedBy_UserID`) VALUES
+('P1', '2023-02-20 10:30:00', 0, 0, 1, NULL, 'Ceci est mon premier post!', 'U1'),
+('P2', '2023-02-20 10:30:00', 0, 0, 1, NULL, 'Ceci est mon deuxième post!', 'U1'),
+('P3', '2023-02-24 00:00:00', 0, 0, 1, 'Yes', 'contenue', 'U15');
 
 -- --------------------------------------------------------
 
@@ -143,6 +194,10 @@ INSERT INTO `user` (`UserID`, `Username`, `Name`, `Firstname`, `Mail`, `Country`
 ('U13', 'Clef Man', 'Cassiet', 'Clement', 'clemDu78@yes.fr', 'Venezuela', 'Zibaboue', '1999-01-01', '0836656565', 1, 0, 0, 0),
 ('U14', 'Clef Man', 'Cassiet', 'Clement', 'clemDu78@yes.fr', 'Venezuela', 'Zibaboue', '1999-01-01', '0836656565', 1, 0, 0, 0),
 ('U15', 'Clef Man', 'Cassiet', 'Clement', 'clemDu78@yes.fr', 'Venezuela', 'Zibaboue', '1999-01-01', '7777777', 1, 0, 0, 0),
+('U16', 'Inspecteur', 'Gadget', 'ca va etre la joie', 'houhou@', 'Au nom de la loi', 'moi je vous arrete', '1999-01-02', '12', 1, 0, 0, 0),
+('U17', 'Inspecteur', 'Gadget', 'ca va etre la joie', 'houhou@', 'Au nom de la loi', 'moi je vous arrete', '1999-01-02', '12', 1, 0, 0, 0),
+('U18', 'Inspecteur', 'Gadget', 'ca va etre la joie', 'houhou@', 'Au nom de la loi', 'moi je vous arrete', '1999-01-02', '12', 1, 0, 0, 0),
+('U19', 'Inspecteur', 'Gadget', 'ca va etre la joie', 'houhou@', 'Au nom de la loi', 'moi je vous arrete', '1999-01-02', '12', 1, 0, 0, 0),
 ('U2', 'A Dent', 'Bouhrara', 'Adam', 'adam.oui@gmail.com', 'France', 'Cergy', '1999-01-01', '0836656565', 1, 1, 0, 0),
 ('U3', 'Jean Rdane', 'Gautier', 'Jordan', 'jordan.gautier@gmail.com', 'Perou', 'Lima', '1999-01-01', '0836656565', 2, 1, 0, 0),
 ('U4', 'Fa PasBien', 'Cerf', 'Fabien', 'cerffabien@cy-tech.fr', 'Perou', 'Perouland', '1999-01-01', '0836656565', 0, 0, 0, 0),
@@ -173,6 +228,15 @@ ALTER TABLE `comment`
   ADD KEY `ReplyTo_PostID` (`ReplyTo_PostID`);
 
 --
+-- Indexes for table `conversation`
+--
+ALTER TABLE `conversation`
+  ADD PRIMARY KEY (`ConversationID`),
+  ADD KEY `SenderID` (`SenderID`),
+  ADD KEY `ReceiverID` (`ReceiverID`),
+  ADD KEY `MediaID` (`MediaID`);
+
+--
 -- Indexes for table `friends`
 --
 ALTER TABLE `friends`
@@ -185,6 +249,25 @@ ALTER TABLE `friends`
 ALTER TABLE `liked_post`
   ADD PRIMARY KEY (`UserID`,`PostID`),
   ADD KEY `PostID` (`PostID`);
+
+--
+-- Indexes for table `media`
+--
+ALTER TABLE `media`
+  ADD PRIMARY KEY (`MediaID`);
+
+--
+-- Indexes for table `own_media`
+--
+ALTER TABLE `own_media`
+  ADD KEY `PostID` (`PostID`),
+  ADD KEY `MediaID` (`MediaID`);
+
+--
+-- Indexes for table `password`
+--
+ALTER TABLE `password`
+  ADD KEY `UserID` (`UserID`);
 
 --
 -- Indexes for table `post`
@@ -225,6 +308,14 @@ ALTER TABLE `comment`
   ADD CONSTRAINT `comment_ibfk_2` FOREIGN KEY (`ReplyTo_PostID`) REFERENCES `post` (`PostID`);
 
 --
+-- Constraints for table `conversation`
+--
+ALTER TABLE `conversation`
+  ADD CONSTRAINT `conversation_ibfk_1` FOREIGN KEY (`SenderID`) REFERENCES `user` (`UserID`),
+  ADD CONSTRAINT `conversation_ibfk_2` FOREIGN KEY (`ReceiverID`) REFERENCES `user` (`UserID`),
+  ADD CONSTRAINT `conversation_ibfk_3` FOREIGN KEY (`MediaID`) REFERENCES `media` (`MediaID`);
+
+--
 -- Constraints for table `friends`
 --
 ALTER TABLE `friends`
@@ -237,6 +328,19 @@ ALTER TABLE `friends`
 ALTER TABLE `liked_post`
   ADD CONSTRAINT `liked_post_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `user` (`UserID`),
   ADD CONSTRAINT `liked_post_ibfk_2` FOREIGN KEY (`PostID`) REFERENCES `post` (`PostID`);
+
+--
+-- Constraints for table `own_media`
+--
+ALTER TABLE `own_media`
+  ADD CONSTRAINT `own_media_ibfk_1` FOREIGN KEY (`PostID`) REFERENCES `post` (`PostID`),
+  ADD CONSTRAINT `own_media_ibfk_2` FOREIGN KEY (`MediaID`) REFERENCES `media` (`MediaID`);
+
+--
+-- Constraints for table `password`
+--
+ALTER TABLE `password`
+  ADD CONSTRAINT `password_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `user` (`UserID`);
 
 --
 -- Constraints for table `post`
