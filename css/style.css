@@ -6,11 +6,19 @@
 
 :root{
     --bg-main-color :rgb(240, 121, 52);
-    --bg-main2-color :rgb(240, 121, 52, 0.3);
+    --bg-body-color : rgb(253, 226, 211);
+    --bg-post-color : #fff;
+}
+
+.dark-theme {
+    --bg-main-color: rgb(26, 26, 26);
+    --bg-body-color : rgb(112, 112, 112);
+    --bg-post-color : rgb(218, 218, 218);
 }
 
 body{
-    background-color: #c9c5c5ef;
+    background-color: var(--bg-body-color);
+    transition: background 0.3s ease;
     height:100%;
     width:100%;
     position:relative;
@@ -21,7 +29,7 @@ body::-webkit-scrollbar{
 }
 
 header {
-    height:100%;
+    height:50px;
     width:100%;
     position:fixed;
 }
@@ -31,7 +39,7 @@ header {
 
 footer {
     margin-left:33%;
-    color:#757474;
+    color:rgb(0, 0, 0);
     font-size:13px;
 }
 
@@ -43,10 +51,11 @@ header nav {
     align-items: center;
     justify-content: space-between;
     background-color: var(--bg-main-color);
+    transition: background 0.3s ease;
     padding: 5px 3%;
     position:sticky;
     top:0;
-    z-index:1000;
+    z-index:10000;
 }
 
 .left{
@@ -71,11 +80,12 @@ nav .left, nav .right {
     width:35px;
     border-radius: 50%;
     cursor:pointer;
+    z-index:5;
 }
 
 .search-bar {
     background-color: #efefefef;
-    width:250px;
+    width:350px;
     height:25px;
     border-radius:20px;
     display:flex;
@@ -101,9 +111,9 @@ nav .left, nav .right {
 
 .online::after {
     content:'';
-    width:7px;
-    height: 7px;
-    border:2px solid #fff;
+    width:9px;
+    height: 9px;
+    border:1px solid #fff;
     border-radius: 50%;
     background-color: #41db52;
     position: absolute;
@@ -117,7 +127,7 @@ nav .left, nav .right {
 .main{
     display:flex;
     justify-content: space-between;
-    padding:13px 5%;
+    padding:13px 52px 13px 5%;
 }
 
 .left-content {
@@ -128,10 +138,12 @@ nav .left, nav .right {
 }
 
 .right-content {
-    flex-basis:25%;
-    position:sticky;
+    flex-basis:35%;
     top:70px;
     margin-top:50px;
+    display:flex;
+    justify-content: flex-end;
+    z-index:-10;
 }
 
 .middle-content {
@@ -143,7 +155,7 @@ nav .left, nav .right {
 
 .write-post {
     width:100%;
-    background-color: #fff;
+    background-color: var(--bg-post-color);
     border-radius:7px;
     padding:20px;
     color:#626262;
@@ -205,7 +217,7 @@ nav .left, nav .right {
 
 .post-container {
     width:100%;
-    background-color: #fff;
+    background-color: var(--bg-post-color);
     border-radius: 6px;
     padding:20px;
     color: #626262;
@@ -271,21 +283,108 @@ nav .left, nav .right {
 
 }
 
-/* Left-Content Style */
+/* Setting-Menu Style */
+
+.circle {
+    background-color: #dadada;
+    width:35px;
+    height:35px;
+    border-radius:50%;
+    z-index:1;
+}
+
+.circle ion-icon {
+    width:25px;
+    height:25px;
+    padding: 4.5px 0 0 5.5px;
+}
+
+#dark-mode-btn {
+    position:absolute;
+    right:20px;
+    background-color: #b9b8b8;
+    width:45px;
+    height:25px;
+    border-radius:15px;
+    padding:3px 3px;
+    cursor:pointer;
+    transition: padding-left 0.5s , background-color 0.5s;
+}
+
+#dark-mode-btn span {
+   width:18px;
+   height:18px;
+   background-color: rgb(255, 255, 255);
+   border-radius:50%;
+   display:inline-block;
+}
+
+#dark-mode-btn.dark-mode-on{
+    padding-left:23px;
+    background-color: #000;
+}
+
+.settings-items {
+    padding: 0 0 0 5px;
+    display:flex;
+    flex-direction:row;
+    height:42px;
+    margin: 0 0 0 10px;
+}
+
+.settings-items-description {
+    padding: 5px 0 0 15px;
+}
+
+.setting-menu-top {
+    width:94%;
+    border-radius:10px;
+    margin:3% 0 3% 3%;
+    box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
+}
+
+.user-profil-setting-menu{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    margin:2%;  
+  }
+  
+
+  .setting-menu-profil-top img {
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    margin-right:10px;
+}
+
+.setting-menu-profil-top {
+    width:100%;
+    display:flex;
+    flex-direction:row;
+    padding:8px;
+    height:55px;
+}
+
+
+.your-profil {
+    padding-left:20px;
+    width:100%;
+}
+
 
 .setting-menu {
     position:absolute;
-    width:80%;
+    width:400px;
     margin:0.5% 0 0 0;
-    max-width:20%;
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.4) ;
-    border-radius:4px;
+    border-radius:10px;
     overflow:hidden;
     top:100%;
     right:3%;
     max-height:0;
-    transition: 0.4s ease;
+    transition: 0.5s ease;
 }
 
 .setting-menu-height {
@@ -309,6 +408,8 @@ nav .left, nav .right {
 .setting-menu .user-profil{
   margin:2%;
 }
+
+/* Left-Content Style */
 
 .lateral {
     position:absolute;
@@ -378,14 +479,14 @@ nav .left, nav .right {
     background-color: white;
     margin:5px;
     padding:5px;
-    border-radius: 5px;
+    border-radius: 10px;
     text-align: center;
     justify-content: flex-start;
     gap:20px;
 }
 
 .close-f:hover {
-    background-color: var(--bg-main2-color);
+    background-color: var(--bg--color);
 }
 
 .close-f p{
@@ -404,9 +505,8 @@ nav .left, nav .right {
     text-align: center;
     position:fixed;
     width:21%;
-    float:right;
-    transition: 0.1s ease;
-    transition-delay: 0.2s;
+    transition: 0.3s ease;
+    transition-delay: 0s;
 }
 
 .close-friends b {
