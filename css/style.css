@@ -29,7 +29,6 @@ body::-webkit-scrollbar{
 }
 
 header {
-    height:50px;
     width:100%;
     position:fixed;
 }
@@ -268,6 +267,25 @@ nav .left, nav .right {
     top:0;
     margin-right:10px;
     font-size:20px;
+}
+
+.comment-menu{
+    position:absolute;
+    z-index: 1;
+    width:30%;
+    margin:0 0 0 5%;
+    margin-top: -15%;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4) ;
+    border-radius:4px;
+    overflow:hidden;
+    max-height:0;
+    transition: 0.4s ease;
+}
+
+.comment-menu-height {
+    max-height:450px;
+    height: 100%; /*On met le carré à 100% de la hauteur limit, soit 450px*/
 }
 
 .load-more-btn {
