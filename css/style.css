@@ -232,6 +232,7 @@ nav .left, nav .right {
 .post-container a {
     text-decoration: none;
     color:rgb(241, 153, 38);
+    cursor: pointer;
 }
 
 .post-media {
@@ -272,7 +273,7 @@ nav .left, nav .right {
 .comment-menu{
     position:absolute;
     z-index: 1;
-    width:30%;
+    width:38%;
     margin:0 0 0 5%;
     margin-top: -15%;
     background-color: #fff;
@@ -286,6 +287,74 @@ nav .left, nav .right {
 .comment-menu-height {
     max-height:450px;
     height: 100%; /*On met le carré à 100% de la hauteur limit, soit 450px*/
+}
+
+.comments-list{
+    display: flex;
+    flex-direction: column;
+}
+
+.comment-box{
+    margin: 10px 10px 10px 10px;
+    box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
+    border-radius:10px;
+    padding-left: 5px;
+}
+
+.comment-pseudo-text{
+    margin-top: 10px;
+    margin-right: 20px;
+    background-color: rgba(109, 107, 107, 0.151);
+    border-radius:10px;
+    padding-left: 5px;
+}
+
+.comment-text{
+    margin-bottom: 0px;
+    word-break: break-word;
+}
+
+.comment-reaction{
+    display: flex;
+}
+
+.comment-info{
+    font-size: x-small;
+    margin-bottom: 0px;
+    margin-right: 5px;
+}
+
+.comment-react{
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.comment-react:hover{
+    color: var(--bg-main-color);
+}
+
+.comment-number-like{
+    padding-left: 0%;
+}
+
+.load-comments{
+    display: flex;
+    align-items: stretch;
+}
+
+.comments-bar{
+    border: 1px solid grey;
+    min-height: 100%;
+    margin-left: 10px;
+    margin-right: 22px;
+}
+
+.show-more-comments{
+    cursor: pointer;
+}
+
+.show-more-comments:hover{
+    color: var(--bg-main-color);
 }
 
 .load-more-btn {
@@ -572,6 +641,3 @@ ion-icon {
         display:block;
     }
 }
-
-
-
