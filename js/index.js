@@ -43,6 +43,6 @@ darkBtn.onclick = function (){
 //Cherche le deuxième enfait de la div qui contient l'image commentaire. Le deuxième enfant est la div 'bulle commentaire' qui apparait et disparait quand on clique sur la div mère
 function CommentSectionOpen(number_menu){
     number_menu = number_menu.replace('menu', '')
-    enfant = document.getElementById("close" + number_menu)
-    enfant.classList.toggle("comment-menu-height");
+    selected_comment_menu = document.getElementById("close" + number_menu)
+    selected_comment_menu.classList.toggle("comment-menu-height");
 }
