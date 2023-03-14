@@ -16,6 +16,8 @@
     --bg-post-color : rgb(218, 218, 218);
 }
 
+
+
 body{
     background-color: var(--bg-body-color);
     transition: background 0.3s ease;
@@ -64,13 +66,6 @@ header {
     margin-top:3%;
 }
 
-/* Footer Style */
-
-footer {
-    margin-left:33%;
-    color:rgb(0, 0, 0);
-    font-size:13px;
-}
 
 /* Middle-content Style */
 
@@ -293,131 +288,6 @@ footer {
 
 }
 
-/* Setting-Menu Style */
-
-.circle {
-    background-color: #dadada;
-    width:35px;
-    height:35px;
-    border-radius:50%;
-    z-index:1;
-}
-
-.circle ion-icon {
-    width:25px;
-    height:25px;
-    padding: 4.5px 0 0 5.5px;
-}
-
-#dark-mode-btn {
-    position:absolute;
-    right:20px;
-    background-color: #b9b8b8;
-    width:45px;
-    height:25px;
-    border-radius:15px;
-    padding:3px 3px;
-    cursor:pointer;
-    transition: padding-left 0.5s , background-color 0.5s;
-}
-
-#dark-mode-btn span {
-   width:18px;
-   height:18px;
-   background-color: rgb(255, 255, 255);
-   border-radius:50%;
-   display:inline-block;
-}
-
-#dark-mode-btn.dark-mode-on{
-    padding-left:23px;
-    background-color: #000;
-}
-
-.settings-items {
-    padding: 0 0 0 5px;
-    display:flex;
-    flex-direction:row;
-    height:42px;
-    margin: 0 0 0 10px;
-}
-
-.settings-items-description {
-    padding: 5px 0 0 15px;
-}
-
-.setting-menu-top {
-    width:94%;
-    border-radius:10px;
-    margin:3% 0 3% 3%;
-    box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
-}
-
-.user-profil-setting-menu{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    margin:2%;  
-  }
-  
-
-  .setting-menu-profil-top img {
-    width:40px;
-    height:40px;
-    border-radius:50%;
-    margin-right:10px;
-}
-
-.setting-menu-profil-top {
-    width:100%;
-    display:flex;
-    flex-direction:row;
-    padding:8px;
-    height:55px;
-}
-
-
-.your-profil {
-    padding-left:20px;
-    width:100%;
-}
-
-
-.setting-menu {
-    position:absolute;
-    width:400px;
-    margin:0.5% 0 0 0;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4) ;
-    border-radius:10px;
-    overflow:hidden;
-    top:100%;
-    right:3%;
-    max-height:0;
-    transition: 0.5s ease;
-}
-
-.setting-menu-height {
-    max-height:450px;
-}
-
-.setting-menu a {
-    text-decoration:none;
-    color:rgb(241, 153, 38);
-    font-size:12px;
-}
-
-.setting-menu hr {
-    border:0;
-    height:1px;
-    background-color: #9a9a9a;
-    margin:15px 0;
-
-}
-
-.setting-menu .user-profil{
-  margin:2%;
-}
 
 /* Left-Content Style */
 

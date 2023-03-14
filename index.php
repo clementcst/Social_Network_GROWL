@@ -9,15 +9,15 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 
-    <body>
-        <header>
-            <?php include("header.php"); ?>
-        </header>
+
+<body>
+    
+    <?php include_once("header.php"); ?> 
         
         <div class="main">
 
             <!-- Left Content -->
-            <div class="left-content">
+            <aside class="left-content">
 
                 <div class="nav-laterral">
                     <div class="nav-close" id="nav-button">
@@ -48,7 +48,7 @@
                 </nav>
             
 
-            </div>
+    </aside>
             <!-- Middle Content -->
             <div class="middle-content">
 
@@ -293,13 +293,11 @@
             </div>
 
         </div>
-    </body>
+  
+    <?php include_once("footer.php"); ?> 
     
-    <footer>
-        <p>Copyright 2023 - Les 5 Alternants, dont 1 qui à signé limite mais ca passe !</p>
-    </footer>
+</body>
+  
     
     <script rel="stylesheet" src="js/index.js"></script>
-    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </html>
