@@ -1,0 +1,11 @@
+:root{
+    --bg-main-color :rgb(16, 16, 110);
+    --bg-body-color : rgb(10,10,66, 0.25);
+    --bg-post-color : #fff;
+}
+
+.dark-theme {
+    --bg-main-color: rgb(26, 26, 26);
+    --bg-body-color : rgb(112, 112, 112);
+    --bg-post-color : rgb(218, 218, 218);
+}

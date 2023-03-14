@@ -2,7 +2,7 @@
 <header>
     <nav>
         <div class="left">
-            <img src="images/logo.png" class="logo">
+            <a href="index.php" ><img src="images/logo.png" class="logo"></a>
         </div>
 
         <div class="right">
@@ -10,9 +10,9 @@
                 <ion-icon name="search-outline"></ion-icon>
                 <input type="text" placeholder="Search">
             </div>
-        </div>
-        <div class="nav-user online">
-            <img src="images/user-1-pic.jpg" onclick="settingMenuOpen()">
+            <div class="nav-user online">
+                <img src="images/user-1-pic.jpg" onclick="settingMenuOpen()">
+            </div>
         </div>
 
     <!-- Settings User Menu-->

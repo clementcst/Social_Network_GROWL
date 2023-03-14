@@ -1,23 +1,6 @@
+@import url(color.css);
+
 /* Main Style */
-*{
-    margin:0;
-    padding:0;
-}
-
-:root{
-    --bg-main-color :rgb(240, 121, 52);
-    --bg-body-color : rgb(253, 226, 211);
-    --bg-post-color : #fff;
-}
-
-.dark-theme {
-    --bg-main-color: rgb(26, 26, 26);
-    --bg-body-color : rgb(112, 112, 112);
-    --bg-post-color : rgb(218, 218, 218);
-}
-
-
-
 body{
     background-color: var(--bg-body-color);
     transition: background 0.3s ease;
@@ -30,32 +13,24 @@ body::-webkit-scrollbar{
     width:0;
 }
 
-
-header {
-    width:100%;
-    position:fixed;
-    z-index:100;
-}
-
 /* Body Style */
 
 .main{
     display:flex;
     justify-content: space-between;
-    padding:13px 52px 13px 5%;
+    padding: 13px 52px 13px 5%;
 }
 
 .left-content {
+    padding-top:70px;
     flex-basis:12%;
     position:sticky;
-    top:70px;
+    top:80px;
     align-self: flex-start;
 }
 
 .right-content {
     flex-basis:35%;
-    top:70px;
-    margin-top:50px;
     display:flex;
     justify-content: flex-end;
     z-index:-10;
@@ -63,7 +38,6 @@ header {
 
 .middle-content {
     flex-basis:50%;
-    margin-top:3%;
 }
 
 
@@ -302,9 +276,8 @@ header {
 
 .nav-laterral {
     position:absolute;
-    top:0;
     left:-200%;
-    background-color: rgb(252, 252, 252);
+    top:10px;
     height:100%;
     width:max-content;
     transition:all 0.3s ease;

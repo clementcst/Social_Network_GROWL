@@ -8,12 +8,14 @@
     <link rel="stylesheet" href="css/profil.css">
 </head>
 <body>
+<?php include_once("header.php"); ?>
+
     <div class="main">
-    dans le main 
+    
     </div>
 
 
 
-    <?php include_once("footer.php"); ?>
+<?php include_once("footer.php"); ?>
 </body>
 </html>
