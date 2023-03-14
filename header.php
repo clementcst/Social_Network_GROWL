@@ -24,7 +24,7 @@
                         <p>Jordan Gautier</p>
                     </div>
                     <div class="your-profil">
-                        <a href="#">See your Profil</a>
+                        <a href="profil.php">See your Profil</a>
                     </div>
                 </div>
             </div>

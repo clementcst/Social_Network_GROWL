@@ -1,0 +1,14 @@
+body {
+    position:absolute;
+    height:100%;
+    width:100%;
+}
+
+.main {
+    width:100%;
+    height:95%;
+}
+
+body::-webkit-scrollbar{
+    width:0;
+}

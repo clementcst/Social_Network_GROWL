@@ -24,18 +24,19 @@
                         <ion-icon name="close"></ion-icon>
                     </div>
                         <div class="nav-links">
-                            <div class="nav-link">
+                            
+                            <a href="#"><div class="nav-link" >
                                 <ion-icon name="home"></ion-icon>Home
-                            </div>
-                            <div class="nav-link">
+                            </div></a>
+                            <a href="profil.php"><div class="nav-link">
                                 <ion-icon name="person"></ion-icon>Account
-                            </div>
-                            <div class="nav-link">
+                            </div></a>
+                            <a href="#"><div class="nav-link">
                                 <ion-icon name="paper-plane"></ion-icon>Messages
-                            </div>
-                            <div class="nav-link">
+                            </div></a>
+                            <a href="#"><div class="nav-link">
                                 <ion-icon name="settings"></ion-icon>Settings
-                            </div>
+                            </div></a>
                             <hr>
                             <small>About us</small>
                         </div>

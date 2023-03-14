@@ -315,6 +315,10 @@ header {
     margin-bottom: 50%;
 }
 
+a {
+    color:black;
+    text-decoration:none;
+}
 
 .nav-link {
     cursor:pointer;
