@@ -35,6 +35,34 @@ header {
     z-index:100;
 }
 
+/* Body Style */
+
+.main{
+    display:flex;
+    justify-content: space-between;
+    padding:13px 52px 13px 5%;
+}
+
+.left-content {
+    flex-basis:12%;
+    position:sticky;
+    top:70px;
+    align-self: flex-start;
+}
+
+.right-content {
+    flex-basis:35%;
+    top:70px;
+    margin-top:50px;
+    display:flex;
+    justify-content: flex-end;
+    z-index:-10;
+}
+
+.middle-content {
+    flex-basis:50%;
+    margin-top:3%;
+}
 
 /* Footer Style */
 
