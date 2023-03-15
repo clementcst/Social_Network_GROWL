@@ -201,7 +201,6 @@ nav .left, nav .right {
 
 .setting-menu a {
     text-decoration:none;
-    color:var(--bg-main-color);
     font-size:12px;
 }
 
@@ -215,4 +214,28 @@ nav .left, nav .right {
 
 .setting-menu .user-profil{
   margin:2%;
+}
+
+
+/* Others */
+
+a {
+    display:flex;
+    flex-direction: row;
+    text-decoration : none;
+    cursor:pointer;
+    color:black;
+}
+
+a p {
+    font-size:16px;
+}
+
+a:hover{
+    color:var(--bg-main-color);
+}
+
+
+.settings-items:hover {
+    color:var(--bg-main-color);
 }

@@ -34,35 +34,35 @@
                     <ion-icon name="moon"></ion-icon>
                 </div>
                 <div class="settings-items-description">
-                    <p>Change Light Mode</p>
+                    <p>Change Theme</p>
                 </div>
                 <div id="dark-mode-btn" >
                     <span></span>
                 </div>
             </div> 
             <div class="settings-items">
-                <div class="circle">
+                <a href="settings.php"><div class="circle">
                     <ion-icon name="settings"></ion-icon>
                 </div>
                 <div class="settings-items-description">
                     <p>Settings</p>
-                </div>
+                </div></a>
             </div> 
             <div class="settings-items">
-                <div class="circle">
+                <a href="#"><div class="circle">
                     <ion-icon name="help-outline"></ion-icon>
                 </div>
                 <div class="settings-items-description">
                     <p>Need Help</p>
-                </div>
+                </div></a>
             </div> 
             <div class="settings-items">
-                <div class="circle">
+                <a href="#"><div class="circle">
                     <ion-icon name="log-out"></ion-icon>
                 </div>
                 <div class="settings-items-description">
                     <p>Logout</p>
-                </div>
+                </div></a>
             </div> 
 
         </div> 

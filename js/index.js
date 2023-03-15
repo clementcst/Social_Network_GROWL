@@ -21,3 +21,15 @@ function CommentSectionOpen(number_menu){
     selected_comment_menu = document.getElementById("close" + number_menu)
     selected_comment_menu.classList.toggle("comment-menu-height");
 }
+
+function getfile(){
+    document.getElementById('hiddenfile').click();
+}
+
+function displayFile(){
+    var path = document.getElementById('hiddenfile').value.replace("\\fakepath","");
+    /*console.log(path);
+    console.log(encodeURIComponent(path));*/
+    console.log(document.getElementById('hiddenfile').files[0]);
+    document.getElementById('displayfile').src=document.getElementById('hiddenfile').files[0];
+}

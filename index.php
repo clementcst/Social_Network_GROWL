@@ -63,10 +63,15 @@
                         </div>
                     </div>
                     <div class="post-input">
-                        <textarea placeholder="What do you want to tell about today ?"></textarea>
+
+                    <div class="content-input">
+                    <textarea placeholder="What do you want to tell about today ?"></textarea>
                         <div class="add-post">
-                            <a href="#"><ion-icon name="camera"></ion-icon>Add Photos/Videos</a>
-                            <a href="#"><ion-icon name="happy" ></ion-icon>Add Feelings</a>
+                        <img id="displayfile" src="">
+                    </div>    
+  
+                        <input type="file" id="hiddenfile" onchange="displayFile()" style="display:none"/>
+                        <ion-icon name='camera' onclick="getfile()" ></ion-icon>Add Photos/Videos
                         </div>
                     </div>
 

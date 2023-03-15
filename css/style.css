@@ -72,6 +72,11 @@ body::-webkit-scrollbar{
     padding-top:20px;
 }
 
+.post-input ion-icon:hover {
+    color:var(--bg-main-color);
+    cursor:pointer;
+}
+
 .post-input ion-icon {
     padding-right:5px;
 }
