@@ -1,6 +1,11 @@
 @import url(color.css);
 
 /* Main Style */
+
+html{ 
+    height: 100%;
+}
+
 body{
     background-color: var(--bg-body-color);
     transition: background 0.3s ease;
@@ -39,7 +44,6 @@ body::-webkit-scrollbar{
 .middle-content {
     flex-basis:50%;
 }
-
 
 /* Middle-content Style */
 
@@ -155,7 +159,6 @@ body::-webkit-scrollbar{
     color:var(--bg-main-color);
 }
 
-
 .post-reactions div ion-icon{
     margin-right:10px;
     font-size:25px;
@@ -266,7 +269,6 @@ body::-webkit-scrollbar{
     font-size:15px;
 
 }
-
 
 /* Left-Content Style */
 
