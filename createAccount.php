@@ -8,7 +8,6 @@
 </head>
 <body>
 <?php 
-require_once("./php/database.php");
         session_start();
 
         if(!empty($_SESSION['errorMessageRegistration']))
