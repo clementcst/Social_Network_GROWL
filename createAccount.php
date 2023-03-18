@@ -28,6 +28,14 @@ require_once("./php/database.php");
             }
             unset($_SESSION["correctInputRegistration"]);
         }
+        if(!empty($_SESSION['errorMessageLogin']))
+        {
+            $tab_errorMessage_log = [];
+            foreach($_SESSION['errorMessageLogin'] as $errorKey => $error) {
+                $tab_errorMessage_log[$errorKey] = $error;
+            }
+            unset($_SESSION['errorMessageLogin']);
+        }
     ?>
     
 <form  id="form-registration" onsubmit="return (checkingForm('registration'))" action="./php/processCreateAccount.php" method="post">
@@ -93,7 +101,7 @@ require_once("./php/database.php");
                     <td>
                         <div class="input_label">
                             <label for="confirmationMail">Confirmation mail</label>
-                            <input type="email" name="confirmationMail" id="confirmationMail"  required placeholder="Adresse mail" size="25" value="<?php if(isset($tabCorrectInput["confirmationMail"])){echo $tabCorrectInput["confirmationMail"];}else{echo "";} ?>">
+                            <input type="email" name="confirmationMail" id="confirmationMail" onpaste="return false;" required placeholder="Adresse mail" size="25" value="<?php if(isset($tabCorrectInput["confirmationMail"])){echo $tabCorrectInput["confirmationMail"];}else{echo "";} ?>">
                             <p id="errorMessage-registration-confirmationMail" class="errorMessage"><?php if(isset($tabErrorMessage["confirmationMail"])){echo $tabErrorMessage["confirmationMail"];}else{echo "";} ?></p>
                         </div>
                     </td>
@@ -109,7 +117,7 @@ require_once("./php/database.php");
                     <td>
                         <div class="input_label">
                             <label for="confirmationPassword">Confirmation mot de passe</label>
-                            <input type="password" name="confirmationPassword" id="confirmationPassword" required placeholder="Mot de passe">
+                            <input type="password" name="confirmationPassword" id="confirmationPassword" onpaste="return false;" required placeholder="Mot de passe">
                             <p id="errorMessage-registration-confirmationPassword" class="errorMessage"><?php if(isset($tabErrorMessage["confirmationPassword"])){echo $tabErrorMessage["confirmationPassword"];}else{echo "";} ?></p>
                         </div>
                     </td>
@@ -118,7 +126,7 @@ require_once("./php/database.php");
                     <td colspan="2">
                         <div class="input_label">
                             <label for="country">Pays</label>
-                            <textarea class="country" name="country" id="country" required rows="3" value="<?php if(isset($tabCorrectInput["country"])){echo $tabCorrectInput["country"];}else{echo "";} ?>"></textarea>
+                            <input class="country" name="country" id="country" placeholder="Pays" required rows="3" value="<?php if(isset($tabCorrectInput["country"])){echo $tabCorrectInput["country"];}else{echo "";} ?>">
                             <p id="errorMessage-registration-country" class="errorMessage"><?php if(isset($tabErrorMessage["country"])){echo $tabErrorMessage["country"];}else{echo "";} ?></p>
                         </div>
                     </td>
@@ -150,7 +158,39 @@ require_once("./php/database.php");
             </table>
         </div>
     </form>
-    </div>
+   <br>
+    <fieldset><form id = "submit_Login" action="./php/loginProcess.php" method="post">
+        <legend>Se connecter</legend>
+        <table>
+            <tr>
+                <td>
+                    <div class="input_label">
+                        <label for="identifiant">Identifiant</label>
+                        <input type="text" name="identifiant" id="identifiant" required placeholder="Nom d'utilisateur/adresse mail" size="32" value="<?php if(isset($_SESSION['conservedLogin'])){echo $_SESSION['conservedLogin'];unset($_SESSION['conservedLogin']);}else{echo "";} ?>">
+                        <p id="errorMessage-registration-log" class="errorMessage"><?php if(isset($tab_errorMessage_log["log"])){echo $tab_errorMessage_log["log"];}else{echo "";} ?></p>
+                    </div> 
+                </td>
+                <td>
+                    <div class="input_label">
+                        <label for="password">Mot de passe</label>
+                        <input type="password" name="password_log" id="password_log"  required placeholder="Mot de passe">
+                        <p id="errorMessage-registration-passwordLog" class="errorMessage"><?php if(isset($tab_errorMessage_log["passwordLog"])){echo $tab_errorMessage_log["passwordLog"];}else{echo "";} ?></p>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="submit" class="but_link" name="submitLogin" value="Connexion">
+                </td>    
+                <td colspan="2">
+                    <input type="reset" class="but_link" name="Reset" value="Annuler">
+                </td>
+            </tr>
+        </table>
+    </form>
+    </fieldset>
+
+
 </body>
 <script type="text/javascript" src="./js/manage_form.js"></script>
 </html>
