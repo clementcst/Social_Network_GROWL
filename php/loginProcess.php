@@ -1,7 +1,9 @@
 <?php
     require_once("./manage_form.php");
+    require_once("./miscellanous.php");
     require_once("./database.php");
-    session_start();
+    require_once("./session.php");
+    // session_start();
 
     function is_mail($log){ // Fonction qui vérifie si le string contient un @ et est donc une adresse mail
         return stristr($log, '@');
@@ -16,17 +18,14 @@
     function verify_login(string $log, string $password, bool $connection_state) { // Fonction qui permet la connexion
         if(is_mail($log) === FALSE){
             $result_id = db_selectColumns('user', ['UserID'], ['Username' => ['=', "'".$log."'", "0"]]);
-            // $result_id = is_in_db('Username', $log, '=', 'user', 'UserID');
         }else{
             $result_id = db_selectColumns('user', ['UserID'], ['Mail' => ['=', "'".$log."'", "0"]]);
-            // $result_id = is_in_db('Mail', $log, '=', 'user', 'UserID');
         }
         if(count($result_id) == 1){   // L'identifiant utilisé est présent dans la base de donnée
             $result_pwd = db_selectColumns('password', ['EncrPwd'], ['UserID' => ['LIKE', "'".$result_id[0][0]."'", "0"]]);
-            // $result_pwd = is_in_db('UserID', $result_id[0][0], 'LIKE', 'password', 'EncrPwd'); 
             if(password_verify($password ,$result_pwd[0][0])) {
                 $connection_state = true;
-                $_SESSION['connnected'] = $result_id[0][0]; // Le mot de passe est le bon par rapport à l'identifiant
+                s_connect($result_id[0][0]);// Le mot de passe est le bon par rapport à l'identifiant
             } else {
                 $_SESSION['errorMessageLogin']['passwordLog'] = "Le mot de passe ne correspond pas.";
             }
@@ -84,7 +83,7 @@
     else
     {
         $_SESSION['errorMessageLogin'] = "Veuillez envoyer le formulaire de connection.";
-        header("Location :../createAccount.php", true, 301);
+        header("Location : ../createAccount.php", true, 301);
         exit;
     }
 

@@ -1,5 +1,6 @@
 <?php
     require_once("./manage_form.php");
+    require_once("./miscellanous.php");
     require_once("./database.php");
     session_start();
     
@@ -49,6 +50,7 @@
                     header('Location: ../createAccount.php', true, 301);
                 }
                 
+                s_connect(db_selectColumns('user', ['UserID'], ['Username' => ['=', "'".$tabDataForm["userName"]."'", "0"]])[0][0]);
                 header('Location: ../index.php', true, 301);
                 exit;
         }
