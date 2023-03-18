@@ -8,12 +8,13 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
-
     <body>
     <?php
-        require_once('./php/miscellanous.php');
-        require_once('./php/session.php');
-        if(s_isConnected()) java_log('user connecté :'.$_SESSION['connected']);
+        require_once("./php/constant.php"); //à include dans le header
+        require_once(PHP.MISC);
+        require_once(PHP.SESSION);
+        if(s_isConnected()) 
+            echo '<p>user connecté :'.$_SESSION['connected'].'</p>';
     ?>
         <header>
             <nav>

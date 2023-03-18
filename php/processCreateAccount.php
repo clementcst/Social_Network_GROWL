@@ -1,8 +1,9 @@
 <?php
-    require_once("./manage_form.php");
-    require_once("./miscellanous.php");
-    require_once("./database.php");
-    session_start();
+    require_once("./constant.php");
+    require_once(M_FORMS);
+    require_once(MISC);
+    require_once(DATABASE);
+    require_once(SESSION);
     
     if(isset($_POST["submitRegistration"]))
     {
@@ -47,25 +48,22 @@
                     }                    
                     unset($_SESSION["errorMessageRegistration"]);
                     $_SESSION['errorMessageRegistration'][$dbUser] = $err;
-                    header('Location: ../createAccount.php', true, 301);
+                   redirect(ROOT.ACCOUNT);
                 }
                 
                 s_connect(db_selectColumns('user', ['UserID'], ['Username' => ['=', "'".$tabDataForm["userName"]."'", "0"]])[0][0]);
-                header('Location: ../index.php', true, 301);
-                exit;
+                redirect(ROOT.INDEX);
         }
         else
         {
-            java_log("ici");
-            header('Location: ../createAccount.php', true, 301);
-            exit;
+            java_log("ici"); 
+            redirect(ROOT.ACCOUNT);
         }
     }
     else
     {
         java_log("là");
         $_SESSION['errorMessageRegistration']['submitRegistration'] = "Veuillez envoyer le formulaire d'inscription.";
-        header('Location: ../createAccount.php', true, 301);
-        exit;
+        redirect(ROOT.ACCOUNT);
     }
 ?>

@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3308
--- Generation Time: Mar 15, 2023 at 07:55 PM
+-- Generation Time: Mar 18, 2023 at 06:13 PM
 -- Server version: 5.7.24
--- PHP Version: 8.0.1
+-- PHP Version: 8.1.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -260,9 +260,9 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`UserID`, `Username`, `Name`, `Firstname`, `Mail`, `Country`, `City`, `BirthDate`, `PhoneNumber`, `Sex`, `ProfilPic`, `ProfilConfidentiality`, `PostConfidentiality`, `IsAdmin`, `Theme`, `IsPremium`) VALUES
-('U0', 'Purple Guy', 'Guy', 'Purple', 'PG@gmail.com', 'Terre', 'City', '1000-01-01', '351483773', 2, 'M0', 0, 0, 1, 0, 1),
+('U0', 'Purple Guy', 'Guy', 'Purple', 'PG@gmail.com', 'Terre', 'City', '1000-01-01', '80085', 2, 'M0', 0, 0, 1, 0, 1),
 ('U1', 'Kenobite', 'Wan', 'Obi', 'PtdrYoda@gmail.com', 'Tatooine', 'Mos Esley', '1914-02-04', '081', 1, 'M1', 0, 0, 1, 0, 0),
-('U2', 'Not Grogu', 'Yoda', 'Maître', 'jesuisvert@gmail.com', 'Dagobah', 'Marécage', '1980-06-06', '12', 1, 'M2', 0, 0, 0, 0, 1),
+('U2', 'Not Grogu', 'Yoda', 'Maître', 'jesuisvert@gmail.com', 'Dagobah', 'Marécage', '1980-06-06', '14', 1, 'M2', 0, 0, 0, 0, 1),
 ('U3', 'Asticot Gadget', 'Gadget', 'Inspecteur', 'inspecteur.gadget@gmail.com', 'Angleterre', 'Metrocity', '1983-03-12', '3630', 1, 'M3', 0, 0, 0, 0, 0);
 
 --

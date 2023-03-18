@@ -1,6 +1,4 @@
-<?php
-    // require_once("./manage_panier.php");
-    
+<?php    
     // fonction  permettant de securiser les informations reçu par un formulaire
     function valid_data(string $data){
         $data = stripslashes($data);
@@ -69,7 +67,7 @@
     */
     function checkingForm(string $formName, array $formInputs)
     {
-        if(!empty($formName) && !empty($formInputs) && $formName === "registration" )   //verification du nom de formualire entré
+        if(!empty($formName) && !empty($formInputs) && $formName === "registration" )   //verification du nom de formulaire entré
         {
             $keySet = $formName."Keys";
 

@@ -1,5 +1,6 @@
 <?php 
-   require_once("./miscellanous.php");
+   require_once("./constant.php");
+   require_once("./".MISC);
 
 /**
    ┌──────────────────────────────────────────────────────────────────────────┐

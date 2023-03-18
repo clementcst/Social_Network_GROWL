@@ -1,9 +1,9 @@
 <?php
-    require_once("./manage_form.php");
-    require_once("./miscellanous.php");
-    require_once("./database.php");
-    require_once("./session.php");
-    // session_start();
+    require_once("./constant.php");
+    require_once(SESSION);
+    require_once(MISC);
+    require_once(DATABASE);
+    require_once(M_FORMS);
 
     function is_mail($log){ // Fonction qui vérifie si le string contient un @ et est donc une adresse mail
         return stristr($log, '@');
@@ -65,26 +65,14 @@
             $_SESSION["conservedLogin"] = $tabDataForm['identifiant'];
             $connection_state = verify_login($tabDataForm['identifiant'], $tabDataForm['password_log'], $connection_state ); 
             if($connection_state === false)
-            {
-                header("Location: ../createAccount.php", true, 301);
-                exit;
-            }
-            else if($connection_state === true){
-                header("Location: ../index.php", true, 301);
-                exit;
-            }
-        }
-        else{
-            header("Location: ../createAccount.php", true, 301);
-            exit;
-        }
-
-    }
-    else
-    {
+                redirect(ROOT.ACCOUNT);
+            else if($connection_state === true)
+                redirect(ROOT.INDEX);
+        } else
+            redirect(ROOT.ACCOUNT);
+    } else {
         $_SESSION['errorMessageLogin'] = "Veuillez envoyer le formulaire de connection.";
-        header("Location : ../createAccount.php", true, 301);
-        exit;
+        redirect(ROOT.ACCOUNT);
     }
 
     

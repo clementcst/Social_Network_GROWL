@@ -1,5 +1,4 @@
 <?php
-
     function java_log(string $log) {
       $log = str_replace("'", '"', $log);
       ?> 
@@ -13,6 +12,11 @@
       $_SESSION["php_error_log"] = $err;
       java_log($err);
       die($err);
+   }
+
+   function redirect(string $location) {
+      header('Location: '.$location, true, 301);
+      exit;
    }
 
    function array_equal($a, $b) {
