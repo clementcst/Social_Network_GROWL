@@ -1,5 +1,7 @@
 <?php
     session_start();
+    require_once("constant.php");
+    require_once(MISC);
 
     function s_isConnected(){
         return isset($_SESSION['connected']);
@@ -15,4 +17,10 @@
         s_disconnect();
         $_SESSION['connected'] = $userID; 
     }    
+
+    if(isset($_GET["action"]) && $_GET["action"] === "disconnection") {
+        s_disconnect();
+        redirect(ROOT.INDEX);
+    }
+    
 ?>
