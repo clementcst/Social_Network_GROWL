@@ -10,12 +10,14 @@
 </head>
     <body>
     <?php
-        require_once("./php/constant.php"); //à include dans le header
-        require_once(PHP.MISC);
-        require_once(PHP.SESSION);
+        require_once("./php/required.php"); //ligne à deplacer dans le header
         if(s_isConnected()) 
             echo '<p>user connecté :'.$_SESSION['connected'].'</p>';
     ?>
+    <form action=<?=PHP.SESSION?> method="get">
+        <input type="hidden" name="action" value="disconnection">
+        <button type="submit">Se déconnecter</button>
+    </form>
         <header>
             <nav>
                 <div class="left">
