@@ -1,6 +1,13 @@
 <?php 
-   require_once("./constant.php");
-   require_once("./".MISC);
+   if(file_exists("./constant.php")) {
+      require_once("./constant.php");
+      require_once(MISC);
+   } else {
+      require_once("./php/constant.php");
+      require_once(PHP.MISC);
+   } 
+      
+   
 
 /**
    ┌──────────────────────────────────────────────────────────────────────────┐
