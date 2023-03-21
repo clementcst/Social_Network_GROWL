@@ -9,10 +9,12 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 
-
 <body>
-    
-    <?php include_once("header.php"); ?> 
+
+    <?php 
+          require_once("./php/constant.php");
+          include_once(HEADER); 
+    ?> 
         
         <div class="main">
 
@@ -28,7 +30,7 @@
                             <a href="#"><div class="nav-link" >
                                 <ion-icon name="home"></ion-icon>Home
                             </div></a>
-                            <a href="profil.php"><div class="nav-link">
+                            <a href=<?=PROFIL?>><div class="nav-link">
                                 <ion-icon name="person"></ion-icon>Account
                             </div></a>
                             <a href="#"><div class="nav-link">
@@ -300,7 +302,7 @@
 
         </div>
   
-    <?php include_once("footer.php"); ?> 
+    <?php include_once(FOOTER); ?> 
     
 </body>
   

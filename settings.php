@@ -1,1 +1,4 @@
-<?php inclue_onde("header.php") ?>
+    <?php 
+          require_once("./php/constant.php");
+          include_once(HEADER); 
+    ?> 

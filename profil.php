@@ -8,7 +8,10 @@
     <link rel="stylesheet" href="css/profil.css">
 </head>
 <body>
-<?php include_once("header.php"); ?>
+    <?php 
+          require_once("./php/constant.php");
+          include_once(HEADER); 
+    ?> 
 
     <div class="main">
     
@@ -16,6 +19,6 @@
 
 
 
-<?php include_once("footer.php"); ?>
+<?php include_once(FOOTER); ?>
 </body>
 </html>

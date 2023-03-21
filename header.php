@@ -1,8 +1,20 @@
 <link rel="stylesheet" href="css/header.css">
 <header>
+   
+    <?php
+        include_once("./php/required.php");
+        if(s_isConnected()) 
+            echo '<p>user connecté :'.$_SESSION['connected'].'</p>';
+    ?>
+     <!-- à retravailler par le FRONT -->
+    <form action=<?=PHP.SESSION?> method="get">
+        <input type="hidden" name="action" value="disconnection">
+        <button type="submit">Se déconnecter</button>
+    </form>
+    <!--  -->
     <nav>
         <div class="left">
-            <a href="index.php" ><img src="images/logo.png" class="logo"></a>
+            <a href=<?=INDEX?> ><img src="images/logo.png" class="logo"></a>
         </div>
 
         <div class="right">
@@ -24,7 +36,7 @@
                         <p>Jordan Gautier</p>
                     </div>
                     <div class="your-profil">
-                        <a href="profil.php">See your Profil</a>
+                        <a href=<?=PROFIL?>>See your Profil</a>
                     </div>
                 </div>
             </div>
@@ -41,7 +53,7 @@
                 </div>
             </div> 
             <div class="settings-items">
-                <a href="settings.php"><div class="circle">
+                <a href=<?=SETTINGS?>><div class="circle">
                     <ion-icon name="settings"></ion-icon>
                 </div>
                 <div class="settings-items-description">
