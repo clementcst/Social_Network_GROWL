@@ -2,7 +2,7 @@
 <header>
    
     <?php
-        include_once("./php/required.php");
+        require_once("./php/required.php");
         if(s_isConnected()) 
             echo '<p>user connecté :'.$_SESSION['connected'].'</p>';
     ?>
