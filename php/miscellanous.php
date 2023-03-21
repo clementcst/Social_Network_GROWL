@@ -1,4 +1,6 @@
 <?php
+    define('MISC_INCLUDED','1');
+    
     function java_log(string $log) {
       $log = str_replace("'", '"', $log);
       ?> 

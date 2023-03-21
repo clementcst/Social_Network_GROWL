@@ -1,4 +1,5 @@
 <?php
+     define('CONSTANT_INCLUDED','1');
     /** PATH */
 
     /**  To be use in subfolder */

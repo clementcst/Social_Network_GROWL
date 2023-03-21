@@ -1,9 +1,10 @@
 <?php
-    require_once("./constant.php");
+    if(file_exists("./required.php"))
+        require_once("./required.php");
+    else
+        require_once("./php/required.php");
     require_once(M_FORMS);
-    require_once(MISC);
-    require_once(DATABASE);
-    require_once(SESSION);
+    
     
     if(isset($_POST["submitRegistration"]))
     {

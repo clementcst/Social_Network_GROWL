@@ -1,30 +1,27 @@
 <?php 
-   if(file_exists("./constant.php")) {
-      require_once("./constant.php");
-      require_once(MISC);
-   } else {
-      require_once("./php/constant.php");
-      require_once(PHP.MISC);
-   } 
+    define('DATABASE_INCLUDED','1');
+   if(file_exists("./required.php"))
+      require_once("./required.php");
+   else
+      require_once("./php/required.php");
       
    
-
 /**
    ┌──────────────────────────────────────────────────────────────────────────┐
    │                     Functions for mysql Database                         │
    └──────────────────────────────────────────────────────────────────────────┘
-**/
+**/   
 /** 
    @return \mysqli > for mysqli fcts 
    @summary > connection to the database
 **/
    function  mysqli_open() {
       $link = mysqli_connect(
-         'localhost', 
-         'apache', 
-         'cible123', 
-         'social_network', 
-         3308 
+         hostname:'localhost', 
+         username:'apache', 
+         password:'cible123', 
+         database:'social_network', 
+         port:3308 
       );
       if (!$link) {
          $err = "Connection failed: ".mysqli_connect_error() ; 
@@ -34,8 +31,8 @@
    }
 
 /**
-   @return array > table column names
-   @summary retrieves the table structure
+@return array > table column names
+@summary retrieves the table structure
 **/
    function db_columns(\mysqli $link, string $table_name) {
       $struct = array();
@@ -47,10 +44,10 @@
    }
 
 /**
-   @return array[][] > associative array
-   @return keys > table names
-   @return values > array \w table column names
-   @summary > retrieves the database structure
+@return array[][] > associative array
+@return keys > table names
+@return values > array \w table column names
+@summary > retrieves the database structure
 **/
    function db_structure(\mysqli $link) {
       $tables = mysqli_fetch_all(mysqli_query($link, "SHOW TABLES;"));
@@ -62,7 +59,7 @@
    }
 
 /**
-   @summary > check if a table exist in the db
+@summary > check if a table exist in the db
 **/
    function db_tableExist(string $table_name, \mysqli $link) {
       if(!in_array($table_name, array_keys(db_structure($link))))
@@ -70,9 +67,9 @@
    }
 
 /**
-   @summary > genere a new id for a table
+@summary > genere a new id for a table
 **/
-  function db_generateId(string $table) {
+   function db_generateId(string $table) {
       $link = mysqli_open();
       $tables = array(         
          "user" => array("UserID", "U"),
@@ -97,16 +94,16 @@
       }
    }
 
-   
-   /**
-      @param array[][] $filters > associative array of array of string / null
-         | key : column to which applies the filter
-         | array[0] : operator (=, <>, LIKE, ...) 
-         | array[1] : filter param 
-         | array[2] : Operator Beetween this filter and the next one 
-          (NONE = 0, AND = 1, OR = 2 [last filter must have 0])
-      @return string > WHERE statement part according to $filter param
-   **/
+
+/**
+   @param array[][] $filters > associative array of array of string / null
+      | key : column to which applies the filter
+      | array[0] : operator (=, <>, LIKE, ...) 
+      | array[1] : filter param 
+      | array[2] : Operator Beetween this filter and the next one 
+       (NONE = 0, AND = 1, OR = 2 [last filter must have 0])
+   @return string > WHERE statement part according to $filter param
+**/
    function db_filterStmt(\mysqli $link, string $table_name, array $filters) {
       $sql = " WHERE ";
       $table_struct = db_columns($link, $table_name);
@@ -127,10 +124,10 @@
       return $sql;
    }
 
-   /**
-      @param string $group_by > column name 
-      @return string > GROUP BY statement part according to $groupBy param
-   **/
+/**
+   @param string $group_by > column name 
+   @return string > GROUP BY statement part according to $groupBy param
+**/
    function db_groupByStmt(\mysqli $link, string $table_name, string $group_by) {
       $sql = " GROUP BY ";
       if(!in_array($group_by, db_columns($link, $table_name))) {
@@ -140,10 +137,10 @@
       return $sql;
    }
 
-   /**
-      @param string[] $order_by > array of string : columns
-      @return string > ORDER BY statement part according to $groupBy param
-   **/
+/**
+   @param string[] $order_by > array of string : columns
+   @return string > ORDER BY statement part according to $groupBy param
+**/
    function db_orderByStmt(\mysqli $link, string $table_name, array $order_by) {
       $sql = " ORDER BY ";
       $table_struct = db_columns($link, $table_name);
@@ -158,14 +155,14 @@
       return $sql;
    }
 
-   /**
-      @param array $columns > array of the column names you want to retrieve
-      @param array[][] $filters > check db_filterStmnt dox
-      @param $group_by > check db_orderByStmt
-      @summary > retrieve specified columns (filtered or not) of a table in the db
-      @return > array of row.s selected by the statement 
-   **/
-  function db_selectColumns(string $table_name, array $columns, 
+/**
+   @param array $columns > array of the column names you want to retrieve
+   @param array[][] $filters > check db_filterStmnt dox
+   @param $group_by > check db_orderByStmt
+   @summary > retrieve specified columns (filtered or not) of a table in the db
+   @return > array of row.s selected by the statement 
+**/
+   function db_selectColumns(string $table_name, array $columns, 
                            ?array $filters = null, 
                            ?string $prefix = null,
                            ?string $suffix = null, 
@@ -195,20 +192,21 @@
       if($suffix <> null) 
          $sql .= $suffix." ";
       $result = mysqli_query($link, $sql.';');
+      mysqli_close($link);
       if(!$result)
          php_err("error while trying select statement :\\n".$sql);
       return mysqli_fetch_all($result);      
    }
 
-   /**
-      @param array[][] $new_content > associative array
-      @param $new_content keys > column names of the target table u wanna update
-      @param $new_content values > correspoding value u want in the column
-      @param array[][] $filters > check db_filterStmnt dox
-      @summary > retrieve specified columns (filtered or not) of a table in the db
-      @return > true  
-   **/
-  function db_updateColumns(string $table_name, array $new_content, ?array $filters = null) {
+/**
+   @param array[][] $new_content > associative array
+   @param $new_content keys > column names of the target table u wanna update
+   @param $new_content values > correspoding value u want in the column
+   @param array[][] $filters > check db_filterStmnt dox
+   @summary > retrieve specified columns (filtered or not) of a table in the db
+   @return > true  
+**/
+   function db_updateColumns(string $table_name, array $new_content, ?array $filters = null) {
       $link = mysqli_open();
       db_tableExist($table_name, $link);
       $table_struct = db_columns($link ,$table_name);
@@ -231,10 +229,10 @@
          java_log("Row succesfully updated in table ".$table_name);
       return $result;      
    }
-    /**
-      @summary > allows you to know if a value belongs to a table, on a specific column
-      @return > bool
-   **/
+ /**
+   @summary > allows you to know if a value belongs to a table, on a specific column
+   @return > bool
+**/
    function db_alreadyExist(string $table_name, string $column, $value) {
       $link = mysqli_open();
       db_tableExist($table_name, $link);
@@ -245,13 +243,13 @@
       return (count($result) != 0);
    }
 
-    /**
-      @param array[][] $item_content > associative array
-      @param $item_content keys > column names of target table
-      @param $item_content values > correspoding value u want in the column
-      @summary > insert a row in a table
-   **/
-  function db_newRow(string $table_name, array $item_content) {
+ /**
+   @param array[][] $item_content > associative array
+   @param $item_content keys > column names of target table
+   @param $item_content values > correspoding value u want in the column
+   @summary > insert a row in a table
+**/
+   function db_newRow(string $table_name, array $item_content) {
       $link = mysqli_open();
       db_tableExist($table_name, $link);
       $table_struct = db_columns($link, $table_name);   
@@ -283,11 +281,11 @@
       mysqli_close($link);
    }
 
-   /**
-     ┌──────────────────────────────────────────────────────────────────────────┐
-     │                   specific fcts for our database                         │
-     └──────────────────────────────────────────────────────────────────────────┘
-   **/
+/**
+  ┌──────────────────────────────────────────────────────────────────────────┐
+  │                   specific fcts for our database                         │
+  └──────────────────────────────────────────────────────────────────────────┘
+**/
    function db_newUser(array $user, string $encr_pwd) {
       if(db_alreadyExist('user', 'Mail', "'".$user['Mail']."'"))
          return 'mail'; //mail already exist
@@ -309,10 +307,10 @@
       $post = array_merge(
                $post, 
                array(
-                'PostID' => db_generateId("post"),
-                'Posted_DateTime' => date("Y-m-d"),
-                'NumberOfLikes' => '0',
-                'NumberOfShares' => '0'));
+               'PostID' => db_generateId("post"),
+               'Posted_DateTime' => date("Y-m-d"),
+               'NumberOfLikes' => '0',
+               'NumberOfShares' => '0'));
       db_newRow('post', $post); 
    }
 
@@ -328,7 +326,11 @@
          filters:['UserID' => ['LIKE', '"'.$user_id.'"','0']], 
          suffix:"LIMIT 1")[0]);
    }
+
+   java_log(json_encode(db_selectColumns('user',['Username','Name'])));
 ?>
+
+
 
 
 

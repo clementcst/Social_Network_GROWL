@@ -1,7 +1,12 @@
 <?php
+     define('SESSION_INCLUDED','1');
+     if(file_exists("./required.php"))
+       require_once("./required.php");
+     else
+       require_once("./php/required.php");
+    
     session_start();
-    require_once("constant.php");
-    require_once(MISC);
+   
 
     function s_isConnected(){
         return isset($_SESSION['connected']);

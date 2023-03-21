@@ -1,8 +1,8 @@
 <?php
-    require_once("./constant.php");
-    require_once(SESSION);
-    require_once(MISC);
-    require_once(DATABASE);
+    if(file_exists("./required.php"))
+        require_once("./required.php");
+    else
+        require_once("./php/required.php");
     require_once(M_FORMS);
 
     function is_mail($log){ // Fonction qui vérifie si le string contient un @ et est donc une adresse mail
