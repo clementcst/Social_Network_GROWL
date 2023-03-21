@@ -12,7 +12,8 @@
 
 <body>
     
-    <?php include_once("header.php"); ?> 
+    <?php include_once("php/constant.php"); ?> 
+    <?php include_once(HEADER); ?> 
         
         <div class="main">
 
@@ -300,7 +301,7 @@
 
         </div>
   
-    <?php include_once("footer.php"); ?> 
+    <?php include_once(FOOTER); ?> 
     
 </body>
   
