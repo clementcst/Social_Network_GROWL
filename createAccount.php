@@ -8,6 +8,10 @@
 </head>
 <body>
     <?php 
+        require_once("./php/constant.php");
+        include_once(HEADER); 
+    ?>
+    <?php 
         session_start();
         if(!empty($_SESSION['errorMessageRegistration']))
         {   
@@ -186,6 +190,7 @@
             </table>
         </form>
     </fieldset>
+    <?php include_once(FOOTER); ?> 
 </body>
 <script type="text/javascript" src="./js/manage_form.js"></script>
 </html>

@@ -11,7 +11,10 @@
 
     <body>
 
-        <?php include_once(HEADER); ?> 
+        <?php 
+            require_once("./php/constant.php");
+            include_once(HEADER); 
+        ?> 
         
         <div class="main">
 
