@@ -23,5 +23,6 @@
             define('HEADER','header.php');
             define('FOOTER','footer.php');
             define('PROFIL','profil.php');
+            define('PROFIL','settings.php');
 
 ?>
