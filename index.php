@@ -8,107 +8,37 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
-    <body>
-    <?php
-        require_once("./php/required.php"); //ligne à deplacer dans le header
-        if(s_isConnected()) 
-            echo '<p>user connecté :'.$_SESSION['connected'].'</p>';
-    ?>
-    <form action=<?=PHP.SESSION?> method="get">
-        <input type="hidden" name="action" value="disconnection">
-        <button type="submit">Se déconnecter</button>
-    </form>
-        <header>
-            <nav>
-                <div class="left">
-                    <img src="images/logo.png" class="logo">
-                </div>
-    
-                <div class="right">
-                    <div class="search-bar">
-                        <ion-icon name="search-outline"></ion-icon>
-                        <input type="text" placeholder="Search">
-                    </div>
-                </div>
-                <div class="nav-user online">
-                    <img src="images/user-1-pic.jpg" onclick="settingMenuOpen()">
-                </div>
-    
-            <!-- Settings User Menu-->
-                <div class="setting-menu" id="close">
-                    <div class="setting-menu-top">
-                        <div class="user-profil-setting-menu">
-                            <div class="setting-menu-profil-top">
-                                <img src="images/user-1-pic.jpg">
-                                <p>Jordan Gautier</p>
-                            </div>
-                            <div class="your-profil">
-                                <a href="#">See your Profil</a>
-                            </div>
-                        </div>
-                    </div>
-    
-                    <div class="settings-items">
-                        <div class="circle">
-                            <ion-icon name="moon"></ion-icon>
-                        </div>
-                        <div class="settings-items-description">
-                            <p>Change Light Mode</p>
-                        </div>
-                        <div id="dark-mode-btn" >
-                            <span></span>
-                        </div>
-                    </div> 
-                    <div class="settings-items">
-                        <div class="circle">
-                            <ion-icon name="settings"></ion-icon>
-                        </div>
-                        <div class="settings-items-description">
-                            <p>Settings</p>
-                        </div>
-                    </div> 
-                    <div class="settings-items">
-                        <div class="circle">
-                            <ion-icon name="help-outline"></ion-icon>
-                        </div>
-                        <div class="settings-items-description">
-                            <p>Need Help</p>
-                        </div>
-                    </div> 
-                    <div class="settings-items">
-                        <div class="circle">
-                            <ion-icon name="log-out"></ion-icon>
-                        </div>
-                        <div class="settings-items-description">
-                            <p>Logout</p>
-                        </div>
-                    </div> 
-    
-                </div> 
-            </nav>
-        </header>
+
+<body>
+
+    <?php 
+          require_once("./php/constant.php");
+          include_once(HEADER); 
+    ?> 
+        
         <div class="main">
 
             <!-- Left Content -->
-            <div class="left-content">
+            <aside class="left-content">
 
                 <div class="nav-laterral">
                     <div class="nav-close" id="nav-button">
                         <ion-icon name="close"></ion-icon>
                     </div>
                         <div class="nav-links">
-                            <div class="nav-link">
+                            
+                            <a href="#"><div class="nav-link" >
                                 <ion-icon name="home"></ion-icon>Home
-                            </div>
-                            <div class="nav-link">
+                            </div></a>
+                            <a href=<?=PROFIL?>><div class="nav-link">
                                 <ion-icon name="person"></ion-icon>Account
-                            </div>
-                            <div class="nav-link">
+                            </div></a>
+                            <a href="#"><div class="nav-link">
                                 <ion-icon name="paper-plane"></ion-icon>Messages
-                            </div>
-                            <div class="nav-link">
+                            </div></a>
+                            <a href="#"><div class="nav-link">
                                 <ion-icon name="settings"></ion-icon>Settings
-                            </div>
+                            </div></a>
                             <hr>
                             <small>About us</small>
                         </div>
@@ -121,7 +51,7 @@
                 </nav>
             
 
-            </div>
+    </aside>
             <!-- Middle Content -->
             <div class="middle-content">
 
@@ -135,10 +65,15 @@
                         </div>
                     </div>
                     <div class="post-input">
-                        <textarea placeholder="What do you want to tell about today ?"></textarea>
+
+                    <div class="content-input">
+                    <textarea placeholder="What do you want to tell about today ?"></textarea>
                         <div class="add-post">
-                            <a href="#"><ion-icon name="camera"></ion-icon>Add Photos/Videos</a>
-                            <a href="#"><ion-icon name="happy" ></ion-icon>Add Feelings</a>
+                        <img id="displayfile" src="">
+                    </div>    
+  
+                        <input type="file" id="hiddenfile" onchange="displayFile()" style="display:none"/>
+                        <ion-icon name='camera' onclick="getfile()" ></ion-icon>Add Photos/Videos
                         </div>
                     </div>
 
@@ -366,13 +301,11 @@
             </div>
 
         </div>
-    </body>
+  
+    <?php include_once(FOOTER); ?> 
     
-    <footer>
-        <p>Copyright 2023 - Les 5 Alternants, dont 1 qui à signé limite mais ca passe !</p>
-    </footer>
+</body>
+  
     
     <script rel="stylesheet" src="js/index.js"></script>
-    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </html>
