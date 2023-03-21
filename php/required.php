@@ -1,6 +1,6 @@
 <?php
-    include_once("constant.php"); 
-    include_once(SESSION);
-    include_once(MISC);
-    include_once(DATABASE);
+       require_once("./php/constant.php"); 
+       require_once(PHP.SESSION);
+       require_once(PHP.MISC);
+       //include_once(DATABASE);
 ?>
