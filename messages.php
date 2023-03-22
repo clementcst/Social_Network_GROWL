@@ -129,7 +129,7 @@
                             <input type="file" id="hiddenfile" onchange="displayFile()" style="display:none"/>
                             <ion-icon name='images' onclick="getfile()" ></ion-icon>
                         </div>
-                        <input id="actual_writen_message" type="text" class="form-control" placeholder="Write message...">
+                        <input id="actual_writen_message" type="text" class="form-control" placeholder="Write message..."  onkeypress="if (event.keyCode == 13) sendMessage()">
                         <div class="send_icon_message" onclick="sendMessage()">
                             <ion-icon name="send"></ion-icon>
                         </div>
