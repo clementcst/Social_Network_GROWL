@@ -16,41 +16,10 @@
             include_once(HEADER);  
         ?>
         
-        <div class="main">
+        <main class="main">
 
             <!-- Left Content -->
-            <div class="left-content">
-
-                <div class="nav-laterral">
-                    <div class="nav-close" id="nav-button">
-                        <ion-icon name="close"></ion-icon>
-                    </div>
-                        <div class="nav-links">
-                            <div class="nav-link">
-                                <ion-icon name="home"></ion-icon>Home
-                            </div>
-                            <div class="nav-link">
-                                <ion-icon name="person"></ion-icon>Account
-                            </div>
-                            <div class="nav-link">
-                                <ion-icon name="paper-plane"></ion-icon>Messages
-                            </div>
-                            <div class="nav-link">
-                                <ion-icon name="settings"></ion-icon>Settings
-                            </div>
-                            <hr>
-                            <small>About us</small>
-                        </div>
-                </div>
-
-                <nav class="lateral">
-                    <div class="nav-open" id="nav-button">
-                        <ion-icon name="reorder-three"></ion-icon>
-                    </div>
-                </nav>
-            
-
-            </div>
+                <?php include_once(ASIDE) ?>
             <!-- Middle Content -->
             <div class="middle-content middle-message">
                 <div class="box_message">
@@ -174,14 +143,11 @@
                 </div>
             </div>
 
-        </div>
+        </main>
 
         <?php include_once(FOOTER); ?> 
         
     </body>
-    
-    <script rel="stylesheet" src="js/index.js"></script>
     <script rel="stylesheet" src="js/conversations.js"></script>
-    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <!-- les autres script on été déplacé dans le footer adam, si jamais tu te pose la question -->
 </html>

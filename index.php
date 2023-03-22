@@ -16,47 +16,12 @@
           include_once(HEADER); 
     ?> 
         
-        <div class="main">
-
+        <main class="main">
             <!-- Left Content -->
-            <aside class="left-content">
-
-                <div class="nav-laterral">
-                    <div class="nav-close" id="nav-button">
-                        <ion-icon name="close"></ion-icon>
-                    </div>
-                        <div class="nav-links">
-                            
-                            <a href=<?=INDEX?>><div class="nav-link" >
-                                <ion-icon name="home"></ion-icon>Home
-                            </div></a>
-                            <a href=<?=PROFIL?>><div class="nav-link">
-                                <ion-icon name="person"></ion-icon>Account
-                            </div></a>
-                            <a href=<?=CONVERSATION?>><div class="nav-link">
-                                <ion-icon name="paper-plane"></ion-icon>Messages
-                            </div></a>
-                            <a href=<?=SETTINGS?>><div class="nav-link">
-                                <ion-icon name="settings"></ion-icon>Settings
-                            </div></a>
-                            <hr>
-                            <small>About us</small>
-                        </div>
-                </div>
-
-                <nav class="lateral">
-                    <div class="nav-open" id="nav-button">
-                        <ion-icon name="reorder-three"></ion-icon>
-                    </div>
-                </nav>
-            
-
-    </aside>
+            <?php include_once(ASIDE); ?>
             <!-- Middle Content -->
             <div class="middle-content">
-
                 <div class="write-post">
-                    
                     <div class="user-profil">
                         <img src="images/user-1-pic.jpg">
                         <div>
@@ -65,23 +30,19 @@
                         </div>
                     </div>
                     <div class="post-input">
-
-                    <div class="content-input">
-                    <textarea placeholder="What do you want to tell about today ?"></textarea>
-                        <div class="add-post">
-                        <img id="displayfile" src="">
-                    </div>    
-  
-                        <input type="file" id="hiddenfile" onchange="displayFile()" style="display:none"/>
-                        <ion-icon name='camera' onclick="getfile()" ></ion-icon>Add Photos/Videos
+                        <div class="content-input">
+                            <textarea placeholder="What do you want to tell about today ?"></textarea>
+                            <div class="add-post">
+                                <img id="displayfile" src="">
+                            </div>    
+                            <input type="file" id="hiddenfile" onchange="displayFile()" style="display:none"/>
+                            <ion-icon name='camera' onclick="getfile()" ></ion-icon>Add Photos/Videos
                         </div>
                     </div>
 
                 </div>
 
-                
                 <div class="post-container">
-                    
                     <div class="user-profil">
                         <img src="images/user-3-pic.jpg">
                         <div>
@@ -300,12 +261,9 @@
                 </div>
             </div>
 
-        </div>
+        </main>
   
     <?php include_once(FOOTER); ?> 
     
 </body>
-  
-    
-    <script rel="stylesheet" src="js/index.js"></script>
 </html>

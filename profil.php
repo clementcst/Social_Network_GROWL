@@ -11,8 +11,8 @@
 <?php include_once("php/constant.php"); ?>
 <?php include_once(HEADER); ?>
 
-    <main>
-
+    <main class="main">
+        <?php include_once(ASIDE); ?>
         <div class="top-profil">
 
             <div class="pic-profil">
@@ -222,12 +222,8 @@
                             </div>
                         </div>
                     </div>
-
         </div>
-
-    
     </main>
-
-<?php include_once(FOOTER); ?>
+    <?php include_once(FOOTER); ?>
 </body>
 </html>
