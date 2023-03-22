@@ -1,8 +1,11 @@
 <?php
-       if(file_exists("./php/constant.php")) {
-              if(!defined('CONSTANTE_INCLUDED')) 
-                     include_once("./php/constant.php"); 
-              set_include_path(PHP);
+        if(!defined('SESSION_START')) {
+              session_start();
+              define('SESSION_START','1');
+       }
+
+       if(file_exists("./php/constant.php")) { 
+              set_include_path('./php');
        }
        if(!defined('CONSTANTE_INCLUDED')) 
               include_once("./constant.php");

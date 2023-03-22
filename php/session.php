@@ -4,8 +4,6 @@
        require_once("./required.php");
      else
        require_once("./php/required.php");
-    
-    session_start();
    
 
     function s_isConnected(){

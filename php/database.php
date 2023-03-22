@@ -327,7 +327,7 @@
          suffix:"LIMIT 1")[0]);
    }
 
-   java_log(json_encode(db_selectColumns('user',['Username','Name'])));
+   //java_log(json_encode(db_selectColumns('user',['Username','Name'])));
 ?>
 
 
