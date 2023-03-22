@@ -20,6 +20,7 @@
     /** in ROOT */
         define('INDEX','index.php');
         define('ACCOUNT','createAccount.php');
+        define('CONVERSATION','conversation.php');
         define('HEADER','header.php');
         define('FOOTER','footer.php');
         define('PROFIL','profil.php');

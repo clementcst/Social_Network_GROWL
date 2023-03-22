@@ -6,15 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home Social Network </title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/messages.css">
+    <link rel="stylesheet" href="css/conversations.css">
 </head>
 
     <body>
 
         <?php 
             require_once("./php/constant.php");
-            include_once(HEADER); 
-        ?> 
+            include_once(HEADER);  
+        ?>
         
         <div class="main">
 
@@ -64,7 +64,7 @@
                         </div>
                     </div>
 
-                    <div class="conv_message">
+                    <div id="conv" class="conv_message">
 
                         <div class="bulle friend_bulle_message">
                             <span class="message_info friend_name_message">Fabien Cerf</span>
@@ -125,20 +125,24 @@
                     </div>
 
                     <div class="send_menu_message">
-                        <input type="text" class="form-control" placeholder="Write message...">
-                        <div class="send_icon_message">
-                            <ion-icon name="send-outline"></ion-icon>
+                        <div class="message_image_file">
+                            <input type="file" id="hiddenfile" onchange="displayFile()" style="display:none"/>
+                            <ion-icon name='images' onclick="getfile()" ></ion-icon>
+                        </div>
+                        <input id="actual_writen_message" type="text" class="form-control" placeholder="Write message..."  onkeypress="if (event.keyCode == 13) sendMessage()">
+                        <div class="send_icon_message" onclick="sendMessage()">
+                            <ion-icon name="send"></ion-icon>
                         </div>
                     </div>
                 </div>        
             </div>
             
             <!-- Right Content -->
-            <div class="right-content right-message">
+            <div class="right-content-message">
 
                 <div class="close-friends">
                     <b>Discussion</b>
-                    <div class="close-f selected_friends">
+                    <div id="friend1" class="friends_list selected_friends" onclick="selectDiscussion(this.id)">
                         <img src="images/user-2-pic.jpg">
                         <div>
                             <p>Fabien Cerf</p>
@@ -148,7 +152,7 @@
                         </div>
                     </div>
  
-                    <div class="close-f">
+                    <div id="friend2" class="friends_list" onclick="selectDiscussion(this.id)">
                         <img src="images/user-4-pic.jpg">
                         <div>
                             <p>Adam Bouhrara</p>
@@ -157,7 +161,7 @@
                             <ion-icon name="paper-plane"></ion-icon>
                         </div>
                     </div>
-                    <div class="close-f">
+                    <div id="friend3" class="friends_list" onclick="selectDiscussion(this.id)">
                         <img src="images/user-2-pic.jpg">
                         <div>
                             <p>Fabien Cerf</p>
@@ -177,6 +181,7 @@
     </body>
     
     <script rel="stylesheet" src="js/index.js"></script>
+    <script rel="stylesheet" src="js/conversations.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </html>

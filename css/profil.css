@@ -1,23 +1,275 @@
 @import url(color.css);
 
-html {
-    overflow-y: hidden;
-    overflow-x: hidden;
-}
 
 body {
-    position:absolute;
-    height:100%;
+    overflow-y:hidden;
+    overflow-x:hidden;
     width:100%;
+    height:100%;
 }
 
-.main {
+main {
     width:100%;
-    height:92%;
+    height:90%;
+    margin-left:10%;
+}
+
+html{
+    background-color:var(--bg-body-color);
+    width:100%;
+    height:100%;
 }
 
 body::-webkit-scrollbar{
     width:0;
 }
 
+.post-profil::-webkit-scrollbar{
+    width:0;
+}
 
+.top-profil{
+    display:flex;
+    flex-direction:row;
+    width:100%;
+    height:230px;
+    display:flex;
+}
+
+.pic-profil{
+    width:250px;
+    height:250px;
+}
+
+
+.pic-profil img{
+    border:solid 3px var(--bg-main-color);
+}
+
+.number-profil{
+    height:100%;
+    width:40%;
+}
+
+.case-number{
+    margin-right:20%;
+    text-align:center;
+    font-size:18px;
+}
+
+.case-number p {
+    margin-top:10%;
+}
+
+.statistique-profil{
+    display:flex;
+    width:100%;
+    margin-top:8%;
+    margin-left:5%;
+}
+
+
+#pic {
+    width:80%;;
+    border-radius:50%;
+    margin:20px;
+}
+
+.bottom-profil {
+    width:100%;
+    height:65%;
+}
+
+
+.username-profil {
+    display:flex;
+    align-items:flex-end;
+    width:100%;
+    height:100px;
+    padding-left:10%;
+    font-size:25px;
+}
+
+.username-profil ion-icon{
+    margin-left:10px;
+}
+
+.post-container {
+    width:95%;
+    background-color: var(--bg-post-color);
+    border-radius: 6px;
+    padding:20px;
+    color: #626262;
+    margin-bottom: 20px;
+}
+
+.post-text {
+    color: #414141;
+    margin:15px 0;
+    font-size: 15px;    
+}
+
+.post-container a {
+    text-decoration: none;
+    color:var(--bg-body-color);
+    cursor: pointer;
+}
+
+.post-media {
+    width:100%;
+    display: flex;
+    flex-direction:row;
+}
+
+.post-img {
+    width:75%;
+    border-radius:6px;
+    margin-bottom: 5px;
+}
+
+.post-reactions {
+    width:20%;
+    margin-left:3%;
+    display: flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:space-evenly;
+}
+
+.post-reactions ion-icon:hover {
+    color:var(--bg-main-color);
+}
+
+
+.post-reactions div ion-icon{
+    margin-right:10px;
+    font-size:25px;
+}
+
+.post-reactions small {
+    top:0;
+    margin-right:10px;
+    font-size:20px;
+}
+
+
+.comment-menu{
+    position:absolute;
+    z-index: 0;
+    width:36%;
+    margin:0 0 0 5%;
+    margin-top: -15%;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4) ;
+    border-radius:8px;
+    overflow:hidden;
+    max-height:0;
+    transition: 0.4s ease;
+}
+
+.comment-menu-height {
+    max-height:450px;
+    height: 100%; /*On met le carré à 100% de la hauteur limit, soit 450px*/
+}
+
+.comments-list{
+    display: flex;
+    flex-direction: column;
+}
+
+.comment-box{
+    margin: 10px 10px 10px 10px;
+    box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
+    border-radius:10px;
+    padding-left: 5px;
+}
+
+.comment-pseudo-text{
+    margin-top: 10px;
+    margin-right: 20px;
+    background-color: rgba(109, 107, 107, 0.151);
+    border-radius:10px;
+    padding-left: 5px;
+}
+
+.comment-text{
+    margin-bottom: 0px;
+    word-break: break-word;
+}
+
+.comment-reaction{
+    display: flex;
+}
+
+.comment-info{
+    font-size: x-small;
+    margin-bottom: 0px;
+    margin-right: 5px;
+}
+
+.comment-react{
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.comment-react:hover{
+    color: var(--bg-main-color);
+}
+
+.comment-number-like{
+    padding-left: 0%;
+}
+
+.load-comments{
+    display: flex;
+    align-items: stretch;
+}
+
+.comments-bar{
+    border: 1px solid grey;
+    min-height: 100%;
+    margin-left: 10px;
+    margin-right: 22px;
+}
+
+.show-more-comments{
+    cursor: pointer;
+}
+
+.show-more-comments:hover{
+    color: var(--bg-main-color);
+}
+
+
+.user-profil{
+    display:flex;
+    align-items:center;  
+  }
+  
+  .user-profil img {
+      width:45px;
+      border-radius:50%;
+      margin-right:10px;
+  }
+  
+  
+  .user-profil small, .user-profil span {
+      font-size: 12px;
+  }
+
+  .post-profil{
+    height: 95%;
+    width:65%;
+    overflow-y:scroll;
+    margin-left:2%;
+    padding:5px;
+    margin-top:5px;
+}
+
+hr {
+    color:white;
+    width:70%;
+  }
+
+ 
+ 
