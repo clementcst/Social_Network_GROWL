@@ -347,6 +347,7 @@ a {
     text-align: center;
     justify-content: flex-start;
     gap:20px;
+    cursor: pointer;
 }
 
 .close-f:hover {
