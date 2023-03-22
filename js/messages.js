@@ -6,6 +6,8 @@ function selectDiscussion(number_friend) {
 }
 
 function sendMessage() {
+	let now = new Date();
+	var tableauMois = new Array('janvier','février','mars','mai','juillet','septembre','novembre','décembre');
     //On récupère le message qui est écrit dans le champ message
     let message = document.getElementById("actual_writen_message").value;
     //On récupère la div conversation pour y ajouter la nouvelle bulle message
@@ -19,6 +21,7 @@ function sendMessage() {
     text_message.className = "text_message";
     let info_message = document.createElement("span");
     info_message.className = "message_info date_message";
+	info_message.textContent = now.getHours() + ":" + now.getMinutes() + " - " + ('0'+now.getDate()).slice(-2) + " " + tableauMois[now.getMonth()];
     //Pour la mise en forme, il faut une div vide qui centre à droite la bulle
     let empty_div = document.createElement("div");
     empty_div.className = "my-empty-conv"
@@ -32,5 +35,5 @@ function sendMessage() {
     mother_div.append(new_bulle);
 
     conversation.prepend(mother_div);
-    message = "";
+    document.getElementById("actual_writen_message").value = "";
 }
