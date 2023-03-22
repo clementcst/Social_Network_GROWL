@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home Social Network </title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/messages.css">
+    <link rel="stylesheet" href="css/conversations.css">
 </head>
 
     <body>
@@ -181,7 +181,7 @@
     </body>
     
     <script rel="stylesheet" src="js/index.js"></script>
-    <script rel="stylesheet" src="js/messages.js"></script>
+    <script rel="stylesheet" src="js/conversations.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </html>
