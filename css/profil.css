@@ -1,4 +1,3 @@
-@import url("./style.css");
 
 
 body {
@@ -15,7 +14,6 @@ main {
 }
 
 html{
-    background-color:var(--bg-body-color);
     width:100%;
     height:100%;
 }

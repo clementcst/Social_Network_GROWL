@@ -3,8 +3,11 @@
    
     <?php
         require_once("./php/required.php");
-        if(s_isConnected()) //sera supprimé, ou alors juste pour les admins ? 
+        if(s_isConnected()){
             echo '<p style="position:fixed; left:0; top:7%; background-color:red; color:white; opacity:0.6;">user connecté : '.$_SESSION['connected'].'</p>';
+
+        } //sera supprimé, ou alors juste pour les admins ? 
+   
     ?>
    
     <nav>
