@@ -13,7 +13,10 @@
 
     <?php 
           require_once("./php/constant.php");
-          include_once(HEADER); 
+          include_once(HEADER);
+          if(!s_isConnected()){
+            redirect(ACCOUNT);
+          }
     ?> 
         
         <main class="main">

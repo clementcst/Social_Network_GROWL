@@ -12,7 +12,6 @@
 <?php include_once(HEADER); ?>
 
     <main class="main">
-        <?php include_once(ASIDE); ?>
         <div class="top-profil">
 
             <div class="pic-profil">

@@ -5,44 +5,54 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/account.css">
 </head>
 <body>
     <?php 
         require_once("./php/constant.php");
         include_once(HEADER); 
     ?>
-    <main class="main">
-        <?php 
-            if(!empty($_SESSION['errorMessageRegistration']))
-            {   
-                $tabErrorMessage = [];
-                foreach($_SESSION['errorMessageRegistration'] as $errorKey => $error) {
-                    $tabErrorMessage[$errorKey] = $error;
-                }
-                unset($_SESSION['errorMessageRegistration']);
+    <?php 
+        session_start();
+        if(!empty($_SESSION['errorMessageRegistration']))
+        {   
+            $tabErrorMessage = [];
+            foreach($_SESSION['errorMessageRegistration'] as $errorKey => $error) {
+                $tabErrorMessage[$errorKey] = $error;
             }
+            unset($_SESSION['errorMessageRegistration']);
+        }
 
-            if(!empty($_SESSION["correctInputRegistration"]))
-            {
-                $tabCorrectInput = [];
-                foreach($_SESSION['correctInputRegistration'] as $inputName => $input) {
-                    $tabCorrectInput[$inputName] = $input;
-                }
-                unset($_SESSION["correctInputRegistration"]);
+        if(!empty($_SESSION["correctInputRegistration"]))
+        {
+            $tabCorrectInput = [];
+            foreach($_SESSION['correctInputRegistration'] as $inputName => $input) {
+                $tabCorrectInput[$inputName] = $input;
             }
-            if(!empty($_SESSION['errorMessageLogin']))
-            {
-                $tab_errorMessage_log = [];
-                foreach($_SESSION['errorMessageLogin'] as $errorKey => $error) {
-                    $tab_errorMessage_log[$errorKey] = $error;
-                }
-                unset($_SESSION['errorMessageLogin']);
+            unset($_SESSION["correctInputRegistration"]);
+        }
+        if(!empty($_SESSION['errorMessageLogin']))
+        {
+            $tab_errorMessage_log = [];
+            foreach($_SESSION['errorMessageLogin'] as $errorKey => $error) {
+                $tab_errorMessage_log[$errorKey] = $error;
             }
-        ?>  
-        <?php include_once(ASIDE); ?>
-        <div class="middle-content">
-            <form  id="form-registration" onsubmit="return (checkingForm('registration'))" action="./php/processCreateAccount.php" method="post">
+            unset($_SESSION['errorMessageLogin']);
+        }
+    ?>  
+     
+    <div class="onglet">
+
+    <div class="choose-options">
+        <div class="log-in-account" onclick="alert('ddfsfs')">
+        <p>Log In</p>
+        </div>
+        <div class="sign-up-account" onclick="alert('fdfdsfss')">
+            <p>Sign up</p>
+        </div>
+    </div>
+
+        <form  id="form-registration" onsubmit="return (checkingForm('registration'))" action="./php/processCreateAccount.php" method="post">
                 <div id="formulaire">    
                     <h1>Inscription</h1>
                     <table>
@@ -162,8 +172,9 @@
                     </table>
                 </div>
             </form>
-            <br>
-            <fieldset><form id = "submit_Login" action="./php/loginProcess.php" method="post">
+        <br>
+        
+        <form id ="submit_Login" action="./php/loginProcess.php" method="post">
                 <legend>Se connecter</legend>
                 <table>
                     <tr>
@@ -191,9 +202,10 @@
                         </td>
                     </tr>
                 </table>
-             </form>
-        </fieldset>
+            </form>
+
     </div>
+
     <?php include_once(FOOTER); ?> 
 </body>
 <script type="text/javascript" src="./js/manage_form.js"></script>
