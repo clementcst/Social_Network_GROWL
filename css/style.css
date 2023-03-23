@@ -1,4 +1,4 @@
-@import url(color.css);
+@import url("./color.css");
 
 /* Main Style */
 
@@ -85,7 +85,7 @@ body::-webkit-scrollbar{
     padding-right:5px;
 }
 
-.post-input textarea {
+.text-area {
     width: 100%;
     border:0;
     outline:0;
@@ -414,3 +414,4 @@ a {
         display:block;
     }
 }
+
