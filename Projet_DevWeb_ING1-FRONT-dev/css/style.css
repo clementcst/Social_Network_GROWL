@@ -1,0 +1,416 @@
+@import url("./color.css");
+
+/* Main Style */
+
+html{ 
+    height: 100%;
+}
+
+body{
+    background-color: var(--bg-body-color);
+    transition: background 0.3s ease;
+    height:100%;
+    width:100%;
+    position:relative;
+}
+
+body::-webkit-scrollbar{
+    width:0;
+}
+
+/* Body Style */
+
+.main{
+    display:flex;
+    justify-content: space-between;
+    padding: 13px 52px 13px 5%;
+}
+
+.left-content {
+    padding-top:70px;
+    flex-basis:12%;
+    position:sticky;
+    top:80px;
+    align-self: flex-start;
+}
+
+.right-content {
+    flex-basis:35%;
+    display:flex;
+    justify-content: flex-end;
+    z-index:-10;
+}
+
+.middle-content {
+    flex-basis:50%;
+}
+
+/* Middle-content Style */
+
+.write-post {
+    width:100%;
+    background-color: var(--bg-post-color);
+    border-radius:7px;
+    padding:20px;
+    color:#626262;
+}
+
+.user-profil{
+  display:flex;
+  align-items:center;  
+}
+
+.user-profil img {
+    width:45px;
+    border-radius:50%;
+    margin-right:10px;
+}
+
+
+.user-profil small, .user-profil span {
+    font-size: 12px;
+}
+
+.post-input {
+    padding-left:55px;
+    padding-top:20px;
+}
+
+.post-input ion-icon:hover {
+    color:var(--bg-main-color);
+    cursor:pointer;
+}
+
+.post-input ion-icon {
+    padding-right:5px;
+}
+
+.post-input textarea {
+    width: 100%;
+    border:0;
+    outline:0;
+    border-bottom:1px solid #ccc;
+    background:transparent;
+    resize:none;
+}
+
+.add-post{
+    display:flex;
+    margin-top:10px;
+
+}
+
+.add-post a{
+   text-decoration:none;
+   display:flex;
+   align-items:center;
+   color: #626262;
+   margin-right:13px;
+   font-size:13px;
+}
+
+.add-post a img {
+    width:20px;
+    margin-right:10px ;
+}
+
+.post-container {
+    width:100%;
+    background-color: var(--bg-post-color);
+    border-radius: 6px;
+    padding:20px;
+    color: #626262;
+    margin: 20px 0;
+}
+
+.post-text {
+    color: #414141;
+    margin:15px 0;
+    font-size: 15px;    
+}
+
+.post-container a {
+    text-decoration: none;
+    color:rgb(241, 153, 38);
+    cursor: pointer;
+}
+
+.post-media {
+    width:100%;
+    display: flex;
+    flex-direction:row;
+}
+
+.post-img {
+    width:85%;
+    border-radius:6px;
+    margin-bottom: 5px;
+}
+
+.post-reactions {
+    width:20%;
+    display: flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:space-evenly;
+}
+
+.post-reactions ion-icon:hover {
+    color:var(--bg-main-color);
+}
+
+.post-reactions div ion-icon{
+    margin-right:10px;
+    font-size:25px;
+}
+
+.post-reactions small {
+    top:0;
+    margin-right:10px;
+    font-size:20px;
+}
+
+.comment-menu{
+    position:absolute;
+    z-index: 0;
+    width:36%;
+    margin:0 0 0 5%;
+    margin-top: -15%;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4) ;
+    border-radius:8px;
+    overflow:hidden;
+    max-height:0;
+    transition: 0.4s ease;
+}
+
+.comment-menu-height {
+    max-height:450px;
+    height: 100%; /*On met le carré à 100% de la hauteur limit, soit 450px*/
+}
+
+.comments-list{
+    display: flex;
+    flex-direction: column;
+}
+
+.comment-box{
+    margin: 10px 10px 10px 10px;
+    box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
+    border-radius:10px;
+    padding-left: 5px;
+}
+
+.comment-pseudo-text{
+    margin-top: 10px;
+    margin-right: 20px;
+    background-color: rgba(109, 107, 107, 0.151);
+    border-radius:10px;
+    padding-left: 5px;
+}
+
+.comment-text{
+    margin-bottom: 0px;
+    word-break: break-word;
+}
+
+.comment-reaction{
+    display: flex;
+}
+
+.comment-info{
+    font-size: x-small;
+    margin-bottom: 0px;
+    margin-right: 5px;
+}
+
+.comment-react{
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.comment-react:hover{
+    color: var(--bg-main-color);
+}
+
+.comment-number-like{
+    padding-left: 0%;
+}
+
+.load-comments{
+    display: flex;
+    align-items: stretch;
+}
+
+.comments-bar{
+    border: 1px solid grey;
+    min-height: 100%;
+    margin-left: 10px;
+    margin-right: 22px;
+}
+
+.show-more-comments{
+    cursor: pointer;
+}
+
+.show-more-comments:hover{
+    color: var(--bg-main-color);
+}
+
+.load-more-btn {
+    display:block;
+    margin:auto;
+    cursor:pointer;
+    padding:5px 10px;
+    border:1px solid #9a9a9a;
+    color: #313131;
+    background-color: transparent;
+    border-radius:5px;
+    font-size:15px;
+
+}
+
+/* Left-Content Style */
+
+.lateral {
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    background-color: transparent;
+    z-index:1;
+}
+
+.nav-laterral {
+    position:absolute;
+    left:-200%;
+    top:10px;
+    height:100%;
+    width:max-content;
+    transition:all 0.3s ease;
+    z-index:2;
+}
+
+.nav-close {
+    margin-bottom: 50%;
+}
+
+a {
+    color:black;
+    text-decoration:none;
+}
+
+.nav-link {
+    cursor:pointer;
+    font-size:20px;
+    margin-bottom: 20%;
+    display:flex;
+    align-items:center;
+}
+
+.nav-link:hover {
+    color: var(--bg-main-color);
+}
+
+.nav-link ion-icon {
+    margin-right:15px;
+}
+
+.nav-link, #nav-button {
+    transition: all 0.2s ease;
+}
+
+#nav-button{
+    font-size:40px;
+    cursor:pointer;
+    height:50px;
+    width:50px;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    border-radius:5px;
+}
+
+#nav-button:hover{
+    color: var(--bg-main-color);
+}
+
+/* Right-Content Style */
+
+.close-f {
+    display:flex;
+    align-items:center;
+    background-color: white;
+    margin:5px;
+    padding:5px;
+    border-radius: 10px;
+    text-align: center;
+    justify-content: flex-start;
+    gap:20px;
+}
+
+.close-f:hover {
+    background-color: var(--bg--color);
+}
+
+.close-f p{
+    margin-bottom:-5px;
+    font-weight: 500px;
+}
+
+
+.close-f img {
+    width:45px;
+    border-radius:50%;
+    margin-right:10px;
+}
+
+.close-friends  {
+    text-align: center;
+    position:fixed;
+    width:21%;
+    transition: 0.3s ease;
+    transition-delay: 0s;
+}
+
+.close-friends b {
+    font-size:25px;
+    color:rgb(63, 62, 62);
+}
+
+.close-message {
+    position:relative;
+    float:right;
+}
+
+.close-message:hover ion-icon {
+    color:white;
+    cursor:pointer;
+}
+
+.close-message {
+    position:relative;
+    float:right;
+}
+
+/*Other Style */
+
+
+@media  screen and (max-width:650px) {
+   
+    .logo{
+        display: none;
+    }
+
+    .left-content{
+        display:none;
+    }
+
+    .right-content{
+        display:none;
+    }
+
+    .main{
+        display:block;
+    }
+}
