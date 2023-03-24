@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="css/aside.css">
 <aside class="left-content">
     <div class="nav-laterral">
         <div class="nav-close" id="nav-button">

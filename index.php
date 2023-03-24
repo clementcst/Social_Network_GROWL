@@ -315,5 +315,5 @@
     <?php include_once(FOOTER); ?>
 
 </body>
-
+<script rel="stylesheet" src="js/index.js"></script>
 </html>
