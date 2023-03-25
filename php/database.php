@@ -333,6 +333,7 @@
    // java_log(json_encode(db_selectColumns('user',['Username','Name'])));
 
    function db_newMessage($id_sender, $id_receiver, $content) {
+      date_default_timezone_set('Europe/Paris');
       $conversation = array(
                           'ConversationID' => db_generateId("conversation"),
                           'SenderID' => $id_sender,
