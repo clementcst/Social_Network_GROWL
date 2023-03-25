@@ -192,6 +192,7 @@
       if($suffix <> null) 
          $sql .= $suffix." ";
       $result = mysqli_query($link, $sql.';');
+      // echo $sql."\n";
       mysqli_close($link);
       if(!$result)
          php_err("error while trying select statement :\\n".$sql);
@@ -272,7 +273,7 @@
       }
       $sql .= "'".$item_content[$table_struct[$i]]."')";
       $row = json_encode(array_values($item_content));
-      java_log($sql);
+      echo($sql);
       if(mysqli_query($link, $sql)) {
          java_log("Row succesfully added in table ".$table_name."\\nRow :\\n".$row);
       } else {
@@ -317,17 +318,90 @@
    function db_getUserData(string $user_id) {
       if(!db_alreadyExist('user','UserID',"'".$user_id."'"))
          php_err("User with ID: ".$user_id." doesn't exist in database");
-      return (
-      db_selectColumns(
+      $userData = db_selectColumns(
          table_name:'user',
          columns:['Username','Name','Firstname','Mail',
                   'Country','City','BirthDate','PhoneNumber',
-                  'Sex','ProfilConfidentiality','PostConfidentiality','Theme'], 
+                  'Sex','ProfilPic','ProfilConfidentiality','PostConfidentiality','Theme'], 
          filters:['UserID' => ['LIKE', '"'.$user_id.'"','0']], 
-         suffix:"LIMIT 1")[0]);
+         suffix:"LIMIT 1")[0];
+      $profpic = db_selectColumns('media', ['Base64','Type'], ['MediaID' => ['=',"'".$userData[9]."'", '0']])[0];
+      $userData[9] = 'data:'.$profpic[1].';base64,'.$profpic[0];
+      return $userData;
    }
 
-   //java_log(json_encode(db_selectColumns('user',['Username','Name'])));
+   // java_log(json_encode(db_selectColumns('user',['Username','Name'])));
+
+   function db_newMessage($id_sender, $id_receiver, $content) {
+      $conversation = array(
+                          'ConversationID' => db_generateId("conversation"),
+                          'SenderID' => $id_sender,
+                          'ReceiverID' => $id_receiver,
+                          'Content' => $content,
+                          'Posted_DateTime' => date("Y-m-d H:i:s"));
+      db_newRow('conversation', $conversation); 
+  }
+
+  function db_newFriend($id_user1, $id_user2) {
+      db_newRow('friends', ['UserID_1' => $id_user1,
+                            'UserID_2' => $id_user2,
+                            'Level' => '0']); 
+  }
+  
+  function db_order_lastConversation($user_id){
+   $order_friends = 
+   array_merge(db_selectColumns(
+      table_name:'conversation',
+      columns:['ConversationID','ReceiverID'], 
+      filters:['SenderID' => ['LIKE', '"'.$user_id.'"','0']]
+      ),
+      db_selectColumns(
+         table_name:'conversation',
+         columns:['ConversationID','SenderID'], 
+         filters:['ReceiverID' => ['LIKE', '"'.$user_id.'"','0']]
+      ));
+      for ($i=0; $i<count($order_friends); $i++) {
+         $order = intval(str_replace("CV","",$order_friends[$i][0]));
+         $order_tab["$order"]= $i;
+      }    
+      krsort($order_tab, SORT_NUMERIC);
+      $cmp = 0;
+      foreach($order_tab as $value) {
+         $final_order[$cmp] = $order_friends[$value][1];
+         $cmp++;
+      }
+      $final_order = array_values(array_unique($final_order));
+      return $final_order;
+  }
+
+
+  
+  function db_getConversation($user_id1, $user_id2) {
+   $conversations = array_merge(
+      db_selectColumns(
+      table_name:'conversation',
+      columns:['ConversationID','SenderID','ReceiverID','Content','MediaID','Posted_DateTime'], 
+      filters:['SenderID' => ['LIKE', '"'.$user_id1.'"','1'],
+               'ReceiverID' => ['LIKE', '"'.$user_id2.'"','0']]
+      ),
+      db_selectColumns(
+         table_name:'conversation',
+         columns:['ConversationID','SenderID','ReceiverID','Content','MediaID','Posted_DateTime'], 
+         filters:['SenderID' => ['LIKE', '"'.$user_id2.'"','1'],
+                  'ReceiverID' => ['LIKE', '"'.$user_id1.'"','0']]
+      ));
+   for ($i=0; $i<count($conversations); $i++) {
+      $order = intval(str_replace("CV","",$conversations[$i][0]));
+      $order_tab["$order"]= $i;
+   }    
+   ksort($order_tab, SORT_NUMERIC);
+   $cmp = 0;
+   foreach($order_tab as $value) {
+      $final_conv[$cmp] =$conversations[$value];
+      $cmp++;
+   }
+   return $final_conv;
+  }
 ?>
 
 
