@@ -13,7 +13,14 @@
 
         <?php 
             require_once("./php/constant.php");
-            include_once(HEADER);  
+            include_once(HEADER); 
+            if(!s_isConnected())
+                redirect(INDEX);
+
+            $friends_id = db_order_lastConversation($_SESSION['connected']);
+            $last_communicate_friend = db_getUserData($friends_id[0]);
+            $conversation = db_getConversation($friends_id[0],$_SESSION['connected']);
+            $number_message = count($conversation);
         ?>
         
         <main class="main">
@@ -21,75 +28,42 @@
             <!-- Left Content -->
                 <?php include_once(ASIDE) ?>
             <!-- Middle Content -->
-            <div class="middle-content middle-message">
+            
+             <div class="middle-content middle-message">
                 <div class="box_message">
+                <?php $taille_conversation = count($conversation);?>
 
                     <div class="title_message">
                         <div class="username_receiver_message">
-                            <h3>Fabien Cerf</h3>
+                            <h3 id="current_speaking"><?= $last_communicate_friend[0]; ?></h3>
                         </div>
                         <div class="date_last_message">
-                            <span>Jeudi 26 mars 11h24</span>
+                            <span id="current_speaking_date_last_message"><script>changeFormatDate('<?=$conversation[$number_message-1][5]?>', 'current_speaking_date_last_message', '1')</script></span>
                         </div>
                     </div>
 
                     <div id="conv" class="conv_message">
 
-                        <div class="bulle friend_bulle_message">
-                            <span class="message_info friend_name_message">Fabien Cerf</span>
-                            <span class="text_message">La réponse de l'ami qui est surement tresssssssstresssssssstresssssssstresssssssstresssssssstresssssssstresssssssstresssssssstresssssssstresssssssstresssssssstresssssssstresssssssstresssssssstressssssss</span>
-                            <span class="message_info date_message">11:47 - 23 mars</span>
+                    <?php for($i=$taille_conversation-1;$i>=0; $i--){?>
+                    <div>
+                        <div class=" <?php 
+                            if($i>0){echo "my-empty-conv";}?>">                            
                         </div>
-                        <div>
-                            <div class="my-empty-conv"></div>
-                            <div class="bulle my_bulle_message">
-                                <span class="text_message">Un messa</span>
-                                <span class="message_info date_message">11:47 - 23 mars</span>
-                            </div>
+                        <div class="bulle <?php 
+                            if($conversation[$i][1]==$_SESSION['connected']){echo "my_bulle_message";}
+                            else{echo "friend_bulle_message";}?>">
+                            <span class=" <?php 
+                                if($conversation[$i][1]==$_SESSION['connected']){echo "message_info";}
+                                else{echo "message_info friend_name_message";}?>">
+                                <?php 
+                                if($conversation[$i][1]==$_SESSION['connected']){echo "Moi";}
+                                else{echo $last_communicate_friend[0];}?>
+                            </span>
+                            <span class="text_message"><?=$conversation[$i][3]?></span>
+                            <span id="<?=$i;?>" class="message_info date_message" ><script>changeFormatDate('<?=$conversation[$i][5]?>', '<?=$i?>', '1')</script></span>  
                         </div>
-                        <div class="bulle friend_bulle_message">
-                            <span class="message_info friend_name_message">Fabien Cerf</span>
-                            <span class="text_message">La réponse de l'ami qui est surement tresssssssstresssssssstresssssssstresssssssstresssssssstresssssssstresssssssstresssssssstresssssssstresssssssstresssssssstresssssssstresssssssstresssssssstressssssss</span>
-                            <span class="message_info date_message">11:47 - 23 mars</span>
-                        </div>
-                        <div class="bulle friend_bulle_message">
-                            <span class="message_info friend_name_message">Fabien Cerf</span>
-                            <span class="text_message">La réponse de l'ami qui est surement tresssssssstresssssssstresssssssstresssssssstresssssssstresssssssstresssssssstresssssssstresssssssstresssssssstresssssssstresssssssstresssssssstresssssssstressssssss</span>
-                            <span class="message_info date_message">11:47 - 23 mars</span>
-                        </div>
-                        <div>
-                            <div class="my-empty-conv"></div>
-                            <div class="bulle my_bulle_message">
-                                <span class="text_message">Un message de ma part en reponsereponsereponsereponsereponsereponsereponsereponsereponse</span>
-                                <span class="message_info date_message">11:47 - 23 mars</span>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="my-empty-conv"></div>
-                            <div class="bulle my_bulle_message">
-                                <span class="text_message">Un message de ma part en reponsereponsereponsereponsereponsereponsereponsereponsereponse</span>
-                                <span class="message_info date_message">11:47 - 23 mars</span>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="my-empty-conv"></div>
-                            <div class="bulle my_bulle_message">
-                                <span class="text_message">Un message de ma part en reponsereponsereponsereponsereponsereponsereponsereponsereponse</span>
-                                <span class="message_info date_message">11:47 - 23 mars</span>
-                            </div>
-                        </div>
-                        <div class="bulle friend_bulle_message">
-                            <span class="message_info friend_name_message">Fabien Cerf</span>
-                            <span class="text_message">La réponse de l'ami qui est surement tresssssssstresssssssstresssssssstresssssssstresssssssstresssssssstresssssssstresssssssstresssssssstresssssssstresssssssstresssssssstresssssssstresssssssstressssssss</span>
-                            <span class="message_info date_message">11:47 - 23 mars</span>
-                        </div>
-                        <div>
-                            <div class="my-empty-conv"></div>
-                            <div class="bulle my_bulle_message">
-                                <span class="text_message">Un message de ma part en reponsereponsereponsereponsereponsereponsereponsereponsereponse</span>
-                                <span class="message_info date_message">11:47 - 23 mars</span>
-                            </div>
-                        </div>
+                    </div>
+                    <?php } ?>                              
 
                     </div>
 
@@ -105,43 +79,31 @@
                     </div>
                 </div>        
             </div>
-            
             <!-- Right Content -->
             <div class="right-content-message">
-
-                <div class="close-friends">
+            <div class="close-friends">
                     <b>Discussion</b>
-                    <div id="friend1" class="friends_list selected_friends" onclick="selectDiscussion(this.id)">
-                        <img src="images/user-2-pic.jpg">
+            <?php
+                for($i=0; $i<count($friends_id); $i++){
+                    $user_data = db_getUserData($friends_id[$i]);
+                    $media = db_selectColumns('media', ['Base64', 'Type'], ['MediaID' => ['LIKE', "'".$user_data[9]."'", "0"]])[0];
+                    ?>
+                    <div name="<?=$user_data[0]?>" id="friend<?=$i+1?>" class="friends_list <?php if($i==0){echo 'selected_friends';}?>" onclick="selectDiscussion(this.id)">
+                        <img src= "data:<?=$media[1]?>;base64,<?=$media[0]?>"  alt=<?= $user_data[9] ?>>
                         <div>
-                            <p>Fabien Cerf</p>
+                            <p id="username_friend<?=$i+1?>"><?=$user_data[0]?></p>
                         </div>
                         <div class="close-message">
                             <ion-icon name="paper-plane"></ion-icon>
                         </div>
-                    </div>
- 
-                    <div id="friend2" class="friends_list" onclick="selectDiscussion(this.id)">
-                        <img src="images/user-4-pic.jpg">
-                        <div>
-                            <p>Adam Bouhrara</p>
-                        </div>
-                        <div class="close-message">
-                            <ion-icon name="paper-plane"></ion-icon>
-                        </div>
-                    </div>
-                    <div id="friend3" class="friends_list" onclick="selectDiscussion(this.id)">
-                        <img src="images/user-2-pic.jpg">
-                        <div>
-                            <p>Fabien Cerf</p>
-                        </div>
-                        <div class="close-message">
-                            <ion-icon name="paper-plane"></ion-icon>
-                        </div>
-                    </div>
-
+                    </div><?php
+                }
+                
+            ?>
                 </div>
             </div>
+        </div>
+
 
         </main>
 
