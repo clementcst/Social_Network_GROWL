@@ -3,12 +3,22 @@
    
     <?php
         require_once("./php/required.php");
+        if(s_isConnected()) //sera supprimé, ou alors juste pour les admins ? 
+            echo '<p style="position:fixed; left:0; top:7%; background-color:red; color:white; opacity:0.6;">user connecté : '.$_SESSION['connected'].'</p>';
     ?>
    
     <nav>
         <div class="left">
             <a href=<?=INDEX?> ><img src="images/logo.png" class="logo"></a>
         </div>
+
+        <!-- à retravailler par le FRONT -->
+        <form action=<?=PHP.SESSION?> method="get">
+            <input type="hidden" name="action" value="disconnection">
+            <button type="submit">Se déconnecter</button>
+        </form>
+        <a href="<?=ACCOUNT?>"><button>Create Account & Login</button></a>
+        <!--  -->
 
         <div class="right">
             <div class="search-bar">
@@ -62,18 +72,12 @@
                 </div></a>
             </div> 
             <div class="settings-items">
-                <form action=<?=PHP.SESSION?> method="get">
-                    <button class="button" type="submit" style="border:none;background-color:white;">
-                        <a href="#"><div class="circle">
-                            <ion-icon name="log-out"></ion-icon>
-                            </div>
-                            <div class="settings-items-description">
-                                <p>Logout</p>
-                            </div>
-                            <input type="hidden" name="action" value="disconnection">
-                        </a>
-                    </button>
-                </form>
+                <a href="#"><div class="circle">
+                    <ion-icon name="log-out"></ion-icon>
+                </div>
+                <div class="settings-items-description">
+                    <p>Logout</p>
+                </div></a>
             </div> 
 
         </div> 
