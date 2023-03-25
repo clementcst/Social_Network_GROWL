@@ -3,6 +3,11 @@
    
     <?php
         require_once("./php/required.php");
+        if(!s_isConnected()){
+            redirect(ACCOUNT);
+        }
+        else
+            $userData = db_getUserData($_SESSION['connected']);
     ?>
    
     <nav>
@@ -16,7 +21,7 @@
                 <input type="text" placeholder="Search">
             </div>
             <div class="nav-user online">
-                <img src="images/user-1-pic.jpg" onclick="settingMenuOpen()">
+                <img src="<?= $userData[9] ?>" onclick="settingMenuOpen()">
             </div>
         </div>
 
@@ -25,8 +30,8 @@
             <div class="setting-menu-top">
                 <div class="user-profil-setting-menu">
                     <div class="setting-menu-profil-top">
-                        <img src="images/user-1-pic.jpg">
-                        <p>Jordan Gautier</p>
+                        <img src="<?= $userData[9] ?>">
+                        <p><?= $userData[0] ?></p>
                     </div>
                     <div class="your-profil">
                         <a href=<?=PROFIL?>>See your Profil</a>

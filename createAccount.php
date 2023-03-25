@@ -10,7 +10,7 @@
 <body>
     <?php 
         require_once("./php/constant.php");
-        include_once(HEADER); 
+        //include_once(HEADER); 
     ?>
     <?php 
         session_start();

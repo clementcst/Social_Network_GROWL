@@ -8,33 +8,45 @@
     <link rel="stylesheet" href="css/profil.css">
 </head>
 <body>
-<?php include_once("php/constant.php"); ?>
-<?php include_once(HEADER); ?>
-
+    <?php 
+        require_once("./php/constant.php");
+        include_once(HEADER);
+    ?>
     <main class="main">
         <div class="top-profil">
 
             <div class="pic-profil">
-                <img src="images/user-1-pic.jpg" id="pic">
+                <img src="<?= $userData[9] ?>" id="pic">
             </div>
 
             <div class="number-profil">
                 <div class="username-profil">
-                    <div>Jordan GAUTIER</div> 
+                    <div><?= $userData[2] ?> <?= $userData[1] ?></div>  
                     <a href="settings.php"><ion-icon name="settings"></ion-icon></a>
                 </div>
                 <div class="statistique-profil">
+                   <?php 
+                        $postLikes = db_selectColumns('post',['NumberOfLikes'],['PostedBy_UserID' => ['=', "'".$_SESSION['connected']."'", '0']]);
+                        $nbPosts = count($postLikes);
+                        $nbFriends = count(db_selectColumns('friends',['UserID_1'],
+                            ['UserID_1' => ['=', "'".$_SESSION['connected']."'", '2'],
+                             'UserID_2' => ['=', "'".$_SESSION['connected']."'", '0'] ]));
+                        $nbLikes = 0;
+                        for ($i=0; $i < $nbPosts; $i++) { 
+                            $nbLikes += $postLikes[$i][0];
+                        }
+                    ?>
                    <div class="posts case-number">
                      Posts
-                    <p>32</p>
+                    <p><?= $nbPosts ?></p>
                    </div>
                    <div class="following case-number">
                     Friends
-                    <p>25</p>
+                    <p><?= $nbFriends ?></p>
                    </div>
                    <div class="followers case-number">
                      Likes
-                    <p>32</p>
+                    <p><?= $nbLikes ?></p>
                    </div>
                 </div>
             </div>
