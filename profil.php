@@ -11,7 +11,6 @@
     <?php 
         require_once("./php/constant.php");
         include_once(HEADER);
-        java_log('oui');
         if(isset($_GET["user"])  && db_alreadyExist('user', 'Username', "'".$_GET["user"]."'")) {
             $vieweduser_id = db_selectColumns('user',['UserID'], ['Username' => ['LIKE', "'".$_GET["user"]."'", '0']])[0][0];
             $vieweduserData = db_getUserData($vieweduser_id);
