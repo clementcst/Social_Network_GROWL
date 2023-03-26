@@ -403,6 +403,20 @@
    }
    return $final_conv;
   }
+
+  function db_getFriends(string $user_id) {
+   return (array_merge(
+      db_selectColumns(
+         table_name:'friends',
+         columns:['UserID_1'], 
+         filters:['UserID_2' => ['LIKE', '"'.$user_id.'"','0']]
+      ),
+      db_selectColumns(
+         table_name:'friends',
+         columns:['UserID_2'], 
+         filters:['UserID_1' => ['LIKE', '"'.$user_id.'"','0']]
+      )));
+  }
 ?>
 
 
