@@ -135,38 +135,29 @@
 
         <!-- Right Content -->
         <div class="right-content">
-
             <div class="close-friends">
                 <b>Close Friends</b>
+                <?php 
+                    $friends_id = db_getFriends($_SESSION['connected']);
+                    for ($i=0; $i < count($friends_id); $i++) { 
+                        $friendData = db_getUserData($friends_id[$i][0]);
+                ?>
                 <div class="close-f">
-                    <img src="images/user-2-pic.jpg">
-                    <div>
-                        <p>Fabien Cerf</p>
+                    
+                    <div class="friend-profil-link" onclick='submitFormProfilLink(<?=$i?>);'>
+                        <img src="<?= $friendData[9] ?>">
+                        <div>
+                            <p><?= $friendData[0] ?></p>
+                        </div>
+                        <form id="form-profil-link<?=$i?>" method="GET" action="<?= PROFIL ?>">
+                            <input type="hidden" name="user" id="user" value="<?= $friendData[0] ?>">
+                        </form>
                     </div>
                     <div class="close-message">
                         <ion-icon name="paper-plane"></ion-icon>
                     </div>
                 </div>
-
-                <div class="close-f">
-                    <img src="images/user-4-pic.jpg">
-                    <div>
-                        <p>Adam Bouhrara</p>
-                    </div>
-                    <div class="close-message">
-                        <ion-icon name="paper-plane"></ion-icon>
-                    </div>
-                </div>
-                <div class="close-f">
-                    <img src="images/user-2-pic.jpg">
-                    <div>
-                        <p>Fabien Cerf</p>
-                    </div>
-                    <div class="close-message">
-                        <ion-icon name="paper-plane"></ion-icon>
-                    </div>
-                </div>
-
+                <?php } ?>
             </div>
         </div>
 
