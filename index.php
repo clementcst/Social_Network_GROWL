@@ -17,7 +17,7 @@
           include_once(HEADER);
     ?>
 
-    <main class="main">
+    <main>
         <!-- Left Content -->
         <?php include_once(ASIDE); ?>
         <!-- Middle Content -->
@@ -35,20 +35,22 @@
 
                     <div class="post-input">
                         <div class="content-input">
-                            <input class="text-area" type="textarea" placeholder="What do you want to tell about today ?"/>
-                            
+                            <input class="text-area" type="textarea"
+                                placeholder="What do you want to tell about today ?" />
+
                             <div class="add-post">
                                 <div id="new-post-images">
 
                                 </div>
                             </div>
 
-                            <input type="file" name="picture" id="hiddenfile" onchange="previewPicture(this)" style="display:none" multiple>
+                            <input type="file" name="picture" id="hiddenfile" onchange="previewPicture(this)"
+                                style="display:none" multiple>
                             <ion-icon name='camera' onclick="getfile()"></ion-icon>Add Photos/Videos
-                            <input type="submit" value="Submit"/>
-                    </form>
-                </div>
+                            <input type="submit" value="Submit" />
+                </form>
             </div>
+        </div>
         </div>
         <!-- Posts -->
         <?php 
@@ -70,7 +72,7 @@
             <p class="post-text"><?= $postData[6] ?></p>
             <div class="post-media">
                 <img src="images/feed-image-1.png" class="post-img">
-                
+
                 <div class="post-reactions">
                     <div>
                         <ion-icon name="heart" onclick="AddHeart()"></ion-icon>
@@ -81,7 +83,8 @@
                         $nbComments = count($postComments);                            
                     ?>
                     <div>
-                        <ion-icon id="menu<?=$i+1?>" name="chatbox-ellipses" onclick="CommentSectionOpen(this.id)"></ion-icon>
+                        <ion-icon id="menu<?=$i+1?>" name="chatbox-ellipses" onclick="CommentSectionOpen(this.id)">
+                        </ion-icon>
                         <small><?= $nbComments ?></small>
                     </div>
                     <!-- Comments -->
@@ -111,6 +114,7 @@
                                         <ion-icon name="heart"></ion-icon><small>26</small>
                                     </p>
                                 </div> -->
+
                             </div>
                             <!-- <div class="load-comments">
                                 <div class="comments-bar"></div>
@@ -127,6 +131,8 @@
             </div>
         </div>
         <?php } ?>
+        </div>
+
         <!-- Right Content -->
         <div class="right-content">
 
@@ -170,4 +176,5 @@
 
 </body>
 <script rel="stylesheet" src="js/index.js"></script>
+
 </html>
