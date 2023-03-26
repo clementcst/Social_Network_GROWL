@@ -20,7 +20,7 @@ body::-webkit-scrollbar{
 
 /* Body Style */
 
-.main{
+main{
     display:flex;
     justify-content: space-between;
     padding: 13px 52px 13px 5%;
@@ -70,6 +70,7 @@ body::-webkit-scrollbar{
 .user-profil small, .user-profil span {
     font-size: 12px;
 }
+
 
 .post-input {
     padding-left:55px;
@@ -174,8 +175,7 @@ body::-webkit-scrollbar{
     position:absolute;
     z-index: 0;
     width:36%;
-    margin:0 0 0 5%;
-    margin-top: -15%;
+    margin:0 -35% 0 5%;
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.4) ;
     border-radius:8px;
@@ -187,6 +187,7 @@ body::-webkit-scrollbar{
 .comment-menu-height {
     max-height:450px;
     height: 100%; /*On met le carré à 100% de la hauteur limit, soit 450px*/
+    transition: 0.4s ease;
 }
 
 .comments-list{
