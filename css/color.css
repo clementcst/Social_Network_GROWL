@@ -3,6 +3,7 @@
     --bg-body-color : rgb(10,10,66, 0.25);
     --bg-post-color : #fff;
     --bg-conv-color : rgba(214, 211, 211, 0.549);
+    --bg-conv-color2 : rgba(214, 211, 211, 0.1);
     --bg-conv-other-color : rgba(214, 211, 211, 0.242);
 }
 
@@ -11,5 +12,6 @@
     --bg-body-color : rgb(112, 112, 112);
     --bg-post-color : rgb(218, 218, 218);
     --bg-conv-color : rgba(105, 104, 104, 0.549);
+    --bg-conv-color2 : rgba(105, 104, 104, 0.1);
     --bg-conv-other-color : rgba(105, 104, 104, 0.242);
 }

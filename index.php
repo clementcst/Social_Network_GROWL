@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home Social Network </title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/index.css">
 </head>
 
 <body>
@@ -142,12 +142,12 @@
                     for ($i=0; $i < count($friends_id); $i++) { 
                         $friendData = db_getUserData($friends_id[$i][0]);
                 ?>
-                <div class="close-f">
+                <div class="close-f" onclick='submitFormProfilLink(<?=$i?>);'>
                     
-                    <div class="friend-profil-link" onclick='submitFormProfilLink(<?=$i?>);'>
+                    <div class="friend-profil-link" >
                         <img src="<?= $friendData[9] ?>">
                         <div>
-                            <p><?= $friendData[0] ?></p>
+                            <p id="pseudo-close-f-display"><?= $friendData[0] ?></p>
                         </div>
                         <form id="form-profil-link<?=$i?>" method="GET" action="<?= PROFIL ?>">
                             <input type="hidden" name="user" id="user" value="<?= $friendData[0] ?>">

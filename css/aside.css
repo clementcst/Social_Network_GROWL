@@ -8,6 +8,14 @@
     z-index:1;
 }
 
+.left-content {
+    padding-top:70px;
+    flex-basis:12%;
+    position:sticky;
+    top:80px;
+    align-self: flex-start;
+}
+
 .nav-laterral {
     position:absolute;
     left:-200%;

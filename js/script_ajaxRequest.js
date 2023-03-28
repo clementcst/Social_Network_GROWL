@@ -64,11 +64,11 @@ function changeConversation(username_friend){
             var res=reponse.split(";");
             var number_messages = (res.length-3)/5;
             let all_messages = [];
-            let data = [res[0],res[1],res[2],res[3]];//variable contenant les informations de l'ami dont la fenetre de discussion est ouverte avec un 0 son username et en 1 sa photo
-            for(var j=0;j<(number_messages-1);j++){
+            let data = [res[0],res[1],res[3]];//variable contenant les informations de l'ami dont la fenetre de discussion est ouverte avec un 0 son username et en 1 sa photo
+            for(var j=0;j<(number_messages);j++){
                 all_messages[j] = []; // tableau de la taille du nombre de message
                 for(var k = 0;k<5;k++){
-                    all_messages[j][k] = res[5*j+4+k]// dans le tableau on y met un tableau contenant toutes les infos du message
+                    all_messages[j][k] = res[5*j+3+k]// dans le tableau on y met un tableau contenant toutes les infos du message
                 }
             }
             updateConvMessage(data,all_messages);
@@ -181,7 +181,7 @@ function updateConvMessage(data, messages){
             space_between_message.className = 'my-empty-conv';
             zone_message.appendChild(space_between_message);
         }
-        if((messages[i][0]) == data[3]){
+        if((messages[i][0]) == data[2]){
             createBulbleMessage(data[0], messages[i][2],messages[i][4],"1", div_one_message);
         } else {
             createBulbleMessage(data[0], messages[i][2],messages[i][4],"0", div_one_message);               
