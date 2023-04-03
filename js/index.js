@@ -38,3 +38,32 @@ function previewPicture(e){
         })
 } 
 
+function sendComment() {
+	let now = new Date();
+	var tableauMois = new Array('janvier','février','mars','mai','juillet','septembre','novembre','décembre');
+    //On récupère le message qui est écrit dans le champ message
+    let message = document.getElementById("actual_writen_message").value;
+    //On récupère la div conversation pour y ajouter la nouvelle bulle message
+    let comment_list = document.getElementById("comments-list");
+    //On crée la nouvelle bulle avec la bonne classe
+    let new_bulle = document.createElement("div");
+    new_bulle.className = "comment-pseudo-text";
+    //Cette bulle doit contenir le contenu du message et les informations annexes avec les bonnes classes css
+    let text_message = document.createElement("p");
+    text_message.textContent = message;
+    text_message.className = "comment-text";
+    let info_message = document.createElement("div");
+    info_message.className = "comment-reaction";
+	info_message.textContent = now.getHours() + ":" + now.getMinutes() + " - " + ('0'+now.getDate()).slice(-2) + " " + tableauMois[now.getMonth()];
+    //Pour la mise en forme, il faut une div vide qui centre à droite la bulle
+    //Le tout doit être mit dans une div qui prend 100% de la taille du champ conversation
+    let mother_div = document.createElement("div");
+
+    new_bulle.append(text_message);
+    new_bulle.append(info_message);
+
+    mother_div.append(new_bulle);
+
+    comment_list.prepend(mother_div);
+    document.getElementById("actual_writen_message").value = "";
+}
