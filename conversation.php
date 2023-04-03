@@ -81,27 +81,13 @@
                 </div>        
             </div>
             <!-- Right Content -->
-            <div class="right-content-message">
-            <div class="close-friends">
-                    <b>Discussion</b>
-            <?php
-                for($i=0; $i<count($friends_id); $i++){
-                    $user_data = db_getUserData($friends_id[$i]);
-                    ?>
-                    <div name="<?=$user_data[0]?>" id="friend<?=$i+1?>" class="friends_list <?php if($i==0){echo 'selected_friends';}?>" onclick="selectDiscussion(this.id)">
-                        <img src= "<?= $user_data[9] ?>"  alt=<?= $user_data[9] ?>>
-                        <div>
-                            <p id="username_friend<?=$i+1?>"><?=$user_data[0]?></p>
-                        </div>
-                        <div class="close-message">
-                            <ion-icon name="paper-plane"></ion-icon>
-                        </div>
-                    </div><?php
-                }
-                
-            ?>
-                </div>
-            </div>
+            <?php 
+                define('ARRAYFRIEND','1');
+                define('CONVERSIONABLE','1');
+                $onclickfct = 'selectDiscussion';
+                $friends_id = db_getFriends($_SESSION['connected']);
+                include_once(LISTFRIEND);
+            ?>           
         </div>
 
 

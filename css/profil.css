@@ -19,11 +19,7 @@ main {
 }
 
 
-.list-friend{
-    border:solid blue 2px;
-    flex-basis:35%;
-    display:flex;
-}
+/* j'ai retiré list friend psk du coup il y a right content */
 
 html{
     width:100%;
