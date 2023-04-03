@@ -87,10 +87,9 @@
             <?php
                 for($i=0; $i<count($friends_id); $i++){
                     $user_data = db_getUserData($friends_id[$i]);
-                    $media = db_selectColumns('media', ['Base64', 'Type'], ['MediaID' => ['LIKE', "'".$user_data[9]."'", "0"]])[0];
                     ?>
                     <div name="<?=$user_data[0]?>" id="friend<?=$i+1?>" class="friends_list <?php if($i==0){echo 'selected_friends';}?>" onclick="selectDiscussion(this.id)">
-                        <img src= "data:<?=$media[1]?>;base64,<?=$media[0]?>"  alt=<?= $user_data[9] ?>>
+                        <img src= "<?= $user_data[9] ?>"  alt=<?= $user_data[9] ?>>
                         <div>
                             <p id="username_friend<?=$i+1?>"><?=$user_data[0]?></p>
                         </div>
