@@ -239,34 +239,16 @@
                 </div>
             </div>
             <!-- Right content -->
-            <div class="right-content">
-                <div class="close-friends">
-                    <b>Friends Settings</b>
-                    <?php 
-                        $friends_id = db_getFriends($_SESSION['connected']);
-                        for ($i=0; $i < count($friends_id); $i++) { 
-                            $friendData = db_getUserData($friends_id[$i][0]);
-                    ?>
-                    <div class="close-f" onclick='submitFormProfilLink(<?=$i?>);'>
-                        
-                        <div class="friend-profil-link" >
-                            <img src="<?= $friendData[9] ?>">
-                            <div>
-                                <p id="pseudo-close-f-display"><?= $friendData[0] ?></p>
-                            </div>
-                            <form id="form-profil-link<?=$i?>" method="GET" action="<?= PROFIL ?>">
-                                <input type="hidden" name="user" id="user" value="<?= $friendData[0] ?>">
-                            </form>
-                        </div>
-                        <div>
-                            <ion-icon name="paper-plane"></ion-icon>
-                            <ion-icon name="trash-outline"></ion-icon>
-                        </div>
-                    </div>
-                    <?php } ?>
-                </div>
-            </div>
+            <?php 
+                define('CONVERSIONABLE','1');
+                define('TRASHABLE','1');
+                include_once(LISTFRIEND);
+            ?>
         </div>
+        <br><br><br><br><br><br><br><br><br><br><br>
+        <?php 
+            include_once(FOOTER);
+        ?>
     </body>
 
     <script rel="stylesheet" src="js/settings.js"></script>

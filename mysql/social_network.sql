@@ -208,11 +208,11 @@ CREATE TABLE `password` (
 --
 
 INSERT INTO `password` (`UserID`, `EncrPwd`) VALUES
-('U0', '$2y$10$C5uiC7C9kCgSiyu3/M6M1uxPaAgou5HIj0.GCQSd.pfqmwdYA8Z72'),
-('U1', '$2y$10$C5uiC7C9kCgSiyu3/M6M1uxPaAgou5HIj0.GCQSd.pfqmwdYA8Z72'),
-('U2', '$2y$10$C5uiC7C9kCgSiyu3/M6M1uxPaAgou5HIj0.GCQSd.pfqmwdYA8Z72'),
-('U3', '$2y$10$C5uiC7C9kCgSiyu3/M6M1uxPaAgou5HIj0.GCQSd.pfqmwdYA8Z72'),
-('U4', '$2y$10$C5uiC7C9kCgSiyu3/M6M1uxPaAgou5HIj0.GCQSd.pfqmwdYA8Z72'),
+('U0', '$2y$10$LkdWF2FvN8aeeIGxPckc0u8LziT3V4MouFCuGC7E3D88DxlYQv31K'),
+('U1', '$2y$10$P5B1enTFBMuv235aPr7BEuUB63uFfPLJfq1c/K1zxOc9UXMPjOIO6'),
+('U2', '$2y$10$C0CYvP2yOvZKObiRWXXDUuhqKDSvYkF8P6xognN5qE9et5Zb4H7wq'),
+('U3', '$2y$10$tfsEic6T2.HzuI.U8HLHHecDccqrDEQz9o/G6Pp.5ZBnDbweFUjsK'),
+('U4', '$2y$10$IPz9dvmd7N8maGvlItuvwOb7MexSAwm3HRbBI.6eKNk0Bg6mKCtZq'),
 ('U5', '$2y$10$C5uiC7C9kCgSiyu3/M6M1uxPaAgou5HIj0.GCQSd.pfqmwdYA8Z72'),
 ('U6', '$2y$10$/oO1yBUAYXba7EV9zj6wR.SbfEs1LiKEhyvQ65gxUZPpDkZ063fK2');
 

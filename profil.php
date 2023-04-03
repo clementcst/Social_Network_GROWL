@@ -47,16 +47,16 @@
                     </div>
                     <div class="statistique-profil">
                         <?php 
-            $postLikes = db_selectColumns('post',['NumberOfLikes'],['PostedBy_UserID' => ['=', "'".$_SESSION['connected']."'", '0']]);
-            $nbPosts = count($postLikes);
-            $nbFriends = count(db_selectColumns('friends',['UserID_1'],
-                ['UserID_1' => ['=', "'".$_SESSION['connected']."'", '2'],
-                 'UserID_2' => ['=', "'".$_SESSION['connected']."'", '0'] ]));
-            $nbLikes = 0;
-            for ($i=0; $i < $nbPosts; $i++) { 
-                $nbLikes += $postLikes[$i][0];
-            }
-        ?>
+                            $postLikes = db_selectColumns('post',['NumberOfLikes'],['PostedBy_UserID' => ['=', "'".$_SESSION['connected']."'", '0']]);
+                            $nbPosts = count($postLikes);
+                            $nbFriends = count(db_selectColumns('friends',['UserID_1'],
+                                ['UserID_1' => ['=', "'".$_SESSION['connected']."'", '2'],
+                                'UserID_2' => ['=', "'".$_SESSION['connected']."'", '0'] ]));
+                            $nbLikes = 0;
+                            for ($i=0; $i < $nbPosts; $i++) { 
+                                $nbLikes += $postLikes[$i][0];
+                            }
+                        ?>
                         <div class="posts case-number">
                             Posts
                             <p><?= $nbPosts ?></p>
@@ -77,16 +77,16 @@
                 <hr>
                 <div class="post-profil">
                     <?php 
-$posts = db_selectColumns('post', ['*'], ['PostedBy_UserID' => ['LIKE', "'".$vieweduser_id."'", '0']]);
-if(count($posts) == 0) {
-    ?><p>Vous n'avez encore fait aucun post</p><?php
-}
-for ($i=0; $i < count($posts) ; $i++) {
-    $postData = $posts[$i]; 
-    $postUserData = db_getUserData($postData[7]);
-    $postData[6] = urldecode($postData[6]);
-    $postData[5] = urldecode($postData[5]);
-?>
+                    $posts = db_selectColumns('post', ['*'], ['PostedBy_UserID' => ['LIKE', "'".$vieweduser_id."'", '0']]);
+                    if(count($posts) == 0) {
+                        ?><p>Vous n'avez encore fait aucun post</p><?php
+                    }
+                    for ($i=0; $i < count($posts) ; $i++) {
+                        $postData = $posts[$i]; 
+                        $postUserData = db_getUserData($postData[7]);
+                        $postData[6] = urldecode($postData[6]);
+                        $postData[5] = urldecode($postData[5]);
+                    ?>
                     <div class="post-container">
                         <div class="user-profil">
                             <img src="<?= $postUserData[9] ?>" id="profil-pic">
@@ -105,9 +105,9 @@ for ($i=0; $i < count($posts) ; $i++) {
                                     <small><?= $postData[2] ?></small>
                                 </div>
                                 <?php 
-            $postComments = db_selectColumns('comment', ['*'], ['ReplyTo_PostID' => ['=', "'".$postData[0]."'", '0']]);
-            $nbComments = count($postComments);                            
-        ?>
+                                    $postComments = db_selectColumns('comment', ['*'], ['ReplyTo_PostID' => ['=', "'".$postData[0]."'", '0']]);
+                                    $nbComments = count($postComments);                            
+                                ?>
                                 <div>
                                     <ion-icon id="menu<?=$i+1?>" name="chatbox-ellipses"
                                         onclick="CommentSectionOpen(this.id)">
@@ -116,11 +116,11 @@ for ($i=0; $i < count($posts) ; $i++) {
                                 </div>
                                 <!-- Comments -->
                                 <?php 
-            for ($j=0; $j < $nbComments ; $j++) {
-                $postCommentData = $postComments[$j]; 
-                $postCommentData[2] = urldecode($postCommentData[2]);
-                $CommentUserData = db_getUserData($postCommentData[3]);
-        ?>
+                                    for ($j=0; $j < $nbComments ; $j++) {
+                                        $postCommentData = $postComments[$j]; 
+                                        $postCommentData[2] = urldecode($postCommentData[2]);
+                                        $CommentUserData = db_getUserData($postCommentData[3]);
+                                ?>
                                 <div class="comment-menu" id="close<?=$i+1?>">
                                     <div class="comments-list">
                                         <div class="user-profil comment-box">
@@ -137,16 +137,15 @@ for ($i=0; $i < count($posts) ; $i++) {
                                                 </div>
                                             </div>
                                             <!-- <div class="comment-number-like">
-                        <p>
-                            <ion-icon name="heart"></ion-icon><small>26</small>
-                        </p>
-                    </div> -->
-
+                                                <p>
+                                                    <ion-icon name="heart"></ion-icon><small>26</small>
+                                                </p>
+                                            </div> -->
                                         </div>
                                         <!-- <div class="load-comments">
-                    <div class="comments-bar"></div>
-                    <span class="show-more-comments">Afficher les 4 réponses</span>
-                </div> -->
+                                            <div class="comments-bar"></div>
+                                            <span class="show-more-comments">Afficher les 4 réponses</span>
+                                        </div> -->
                                     </div>
                                 </div>
                                 <?php } ?>
@@ -162,10 +161,15 @@ for ($i=0; $i < count($posts) ; $i++) {
             </div>
 
         </div>   
-            
-        <div class="list-friend">
-                A JOAN de rajouter le "right content" de l'index adaptation php que je ne pouvais pas faire 
-        </div>
+        <!-- Right Content -->
+        <?php 
+            if($vieweduser_id == $_SESSION['connected'])
+                define('CONVERSIONABLE','1');          
+            $friends_id = db_getFriends($vieweduser_id);
+            define('ARRAYFRIEND','1');
+            $onclickfct = 'submitFormProfilLink';
+            include_once(LISTFRIEND);
+        ?>    
         
 
 
