@@ -153,7 +153,7 @@ main{
 
 .comment-menu{
     position:absolute;
-    z-index: 0;
+    z-index: 1;
     width:36%;
     margin:0 -35% 0 5%;
     background-color: #fff;
@@ -216,6 +216,23 @@ main{
 
 .comment-number-like{
     padding-left: 0%;
+}
+
+.send_menu_comment{
+    margin: 0 10px 10px 10px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    display: flex;
+    align-items: center;
+}
+
+.comment-input{
+    margin: 10px;
+    border-radius: 20px;
+    width: 95%;
+    background-color: var(--bg-post-color);
+    overflow-y: scroll;
+    border: var(--bg-body-color) solid 1px;
 }
 
 .load-comments{
