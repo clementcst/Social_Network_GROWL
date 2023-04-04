@@ -83,9 +83,7 @@
             <!-- Right Content -->
             <?php 
                 define('ARRAYFRIEND','1');
-                define('CONVERSIONABLE','1');
                 $onclickfct = 'selectDiscussion';
-                $friends_id = db_getFriends($_SESSION['connected']);
                 include_once(LISTFRIEND);
             ?>           
         </div>
