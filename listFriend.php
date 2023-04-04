@@ -17,12 +17,12 @@
             for ($i=0; $i < count($friends_id); $i++) { 
                 $friendData = db_getUserData($friends_id[$i][0]);
         ?>
-        <div class="close-f" onclick='<?php echo $onclickfct ?>(<?=$i?>);'>  
+        <div class="close-f friends_list <?php if($i==0){echo 'selected_friends';}?>" onclick='<?php echo $onclickfct ?>(<?=$i?>);'>  
             
             <div class="friend-profil-link" >
-                <img src="<?= $friendData[9] ?>">
+                <img src="<?= $friendData[9] ?>" <?php if( $onclickfct == 'selectDiscussion'){echo "onclick = 'submitFormProfilLink($i)'";}?>>
                 <div>
-                    <p id="pseudo-close-f-display"><?= $friendData[0] ?></p>
+                    <p id="pseudo-close-f-display class="userName<?=$i?>""><?= $friendData[0] ?></p>
                 </div>
                 <form id="form-profil-link<?=$i?>" method="GET" action="<?= PROFIL ?>">
                     <input type="hidden" name="user" id="user" value="<?= $friendData[0] ?>">
