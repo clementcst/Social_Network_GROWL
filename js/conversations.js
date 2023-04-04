@@ -1,7 +1,7 @@
 function selectDiscussion(number_friend) {
     let actualselectedFriend = document.getElementsByClassName("selected_friends");
-    let selectedFriend = document.getElementById(number_friend);
-	let nameSelectedFriend = document.getElementById('username_'+number_friend).innerHTML;
+    let selectedFriend = document.getElementById('user'+number_friend);
+	let nameSelectedFriend = document.getElementsByClassName('userName'+number_friend)[0].innerHTML;
     changeConversation(nameSelectedFriend);
     actualselectedFriend[0].classList.toggle("selected_friends");
     selectedFriend.classList.toggle("selected_friends");
