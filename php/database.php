@@ -372,7 +372,19 @@
          $cmp++;
       }
       $final_order = array_values(array_unique($final_order));
-      return $final_order;
+      $friends_id = db_getFriends($user_id);
+      for($j = 0; $j <count($friends_id); $j++) {
+         $friends_id[$j] = $friends_id[$j][0];
+      } 
+      $friends_id = array_merge($final_order, $friends_id);
+     
+      $unique_friends = array();
+      for ($i = 0; $i < count($friends_id); $i++) {
+         if (!in_array($friends_id[$i], $unique_friends)) {
+             $unique_friends[] = $friends_id[$i];
+         }
+      }    
+      return $unique_friends;
   }
 
 
@@ -395,27 +407,15 @@
       $order = intval(str_replace("CV","",$conversations[$i][0]));
       $order_tab["$order"]= $i;
    }    
-   krsort($order_tab, SORT_NUMERIC);
-      $cmp = 0;
-      foreach($order_tab as $value) {
-         $final_order[$cmp] = $order_friends[$value][1];
-         $cmp++;
-      }
-      $final_order = array_values(array_unique($final_order));
-      $friends_id = db_getFriends($user_id);
-      for($j = 0; $j <count($friends_id); $j++) {
-         $friends_id[$j] = $friends_id[$j][0];
-      } 
-      $friends_id = array_merge($final_order, $friends_id);
-     
-      $unique_friends = array();
-      for ($i = 0; $i < count($friends_id); $i++) {
-         if (!in_array($friends_id[$i], $unique_friends)) {
-             $unique_friends[] = $friends_id[$i];
-         }
-      }    
-      return $unique_friends;
+   ksort($order_tab, SORT_NUMERIC);
+   $cmp = 0;
+   foreach($order_tab as $value) {
+      $final_conv[$cmp] =$conversations[$value];
+      $cmp++;
+   }
+   return $final_conv;
   }
+
 
   function db_getFriends(string $user_id) {
    return (array_merge(
