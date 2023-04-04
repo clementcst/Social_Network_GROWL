@@ -22,7 +22,7 @@
             <div class="friend-profil-link" >
                 <img src="<?= $friendData[9] ?>" <?php if( $onclickfct == 'selectDiscussion'){echo "onclick = 'submitFormProfilLink($i)'";}?>>
                 <div>
-                    <p id="pseudo-close-f-display class="userName<?=$i?>""><?= $friendData[0] ?></p>
+                     <p id="pseudo-close-f-display" class="userName<?=$i?>"><?= $friendData[0] ?></p>
                 </div>
                 <form id="form-profil-link<?=$i?>" method="GET" action="<?= PROFIL ?>">
                     <input type="hidden" name="user" id="user" value="<?= $friendData[0] ?>">
