@@ -62,13 +62,13 @@ function changeConversation(username_friend){
                 return 0;
             }
             var res=reponse.split(";");
-            var number_messages = (res.length-3)/5;
+            var number_messages = (res.length-4)/5;
             let all_messages = [];
             let data = [res[0],res[1],res[3]];//variable contenant les informations de l'ami dont la fenetre de discussion est ouverte avec un 0 son username et en 1 sa photo
             for(var j=0;j<(number_messages);j++){
                 all_messages[j] = []; // tableau de la taille du nombre de message
                 for(var k = 0;k<5;k++){
-                    all_messages[j][k] = res[5*j+3+k]// dans le tableau on y met un tableau contenant toutes les infos du message
+                    all_messages[j][k] = res[5*j+4+k]// dans le tableau on y met un tableau contenant toutes les infos du message
                 }
             }
             updateConvMessage(data,all_messages);
@@ -92,7 +92,7 @@ function sendMessageIntoDB(content){
                 return 0;
             }
             var res=reponse.split(";");
-            updateFriendsOrder(res[1]);
+            //updateFriendsOrder(res[1]);
         }
     }
     requestsendMIDB.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8');
@@ -173,6 +173,9 @@ function updateConvMessage(data, messages){
     zone_message.innerHTML="";
     var number_messages = messages.length;
     document.getElementById('current_speaking').innerHTML = data[0];
+    document.getElementById('current_speaking_date_last_message').innerHTML = "";
+    if(messages[0][0] == "") //Aucun message
+        return;
     document.getElementById('current_speaking_date_last_message').innerHTML = changeFormatDate(messages[number_messages-1][4], 'current_speaking_date_last_message');
     for(var i=number_messages-1; i>=0;i--){
         var div_one_message = document.createElement('div');
