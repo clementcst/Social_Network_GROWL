@@ -221,15 +221,39 @@
       }
       if($filters <> null)
          $sql .= db_filterStmt($link, $table_name, $filters);
-      java_log($sql);
+      //java_log($sql);
       $result = mysqli_query($link, $sql.';');
-      java_log(json_encode($result));
+      //java_log(json_encode($result));
       if(!$result)
          php_err("error while trying update statement :\\n".$sql);
       else
          java_log("Row succesfully updated in table ".$table_name);
       return $result;      
    }
+
+   /**
+
+   @param array[][] $filters > check db_filterStmnt dox 
+   | CANNOT BE NULL | SHOULD/MUST BE ON the ID of the TABLE
+   @summary > DELETE specified columns of a table in the db
+   @return > true/false depend on success
+**/
+function db_deleteRows(string $table_name, ?array $filters) {
+   $link = mysqli_open();
+   db_tableExist($table_name, $link);
+   
+   $sql = "DELETE FROM $table_name ";   
+   if($filters <> null)
+      $sql .= db_filterStmt($link, $table_name, $filters);
+   //java_log($sql);
+   $result = mysqli_query($link, $sql.';');
+   //java_log(json_encode($result));
+   if(!$result)
+      php_err("error while trying update statement :\\n".$sql);
+   else
+      java_log("Row succesfully delete in table ".$table_name);
+   return $result;      
+}
  /**
    @summary > allows you to know if a value belongs to a table, on a specific column
    @return > bool
