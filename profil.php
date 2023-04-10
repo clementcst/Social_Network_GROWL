@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,227 +8,173 @@
     <title>page profil Perso</title>
     <link rel="stylesheet" href="css/profil.css">
 </head>
+
 <body>
-<?php include_once("php/constant.php"); ?>
-<?php include_once(HEADER); ?>
+    <?php 
+        require_once("./php/constant.php");
+        include_once(HEADER);
+        if(isset($_GET["user"])  && db_alreadyExist('user', 'Username', "'".$_GET["user"]."'")) {
+            $vieweduser_id = db_selectColumns('user',['UserID'], ['Username' => ['LIKE', "'".$_GET["user"]."'", '0']])[0][0];
+            $vieweduserData = db_getUserData($vieweduser_id);
 
+        } else {
+            $vieweduser_id = $_SESSION['connected'];
+            $vieweduserData = $userData;
+        }
+    ?>
     <main>
+        <?php include_once(ASIDE); ?>
+        
+        <div class="central">
+            <div class="top-profil">
 
-        <div class="top-profil">
+                <div class="pic-profil">
+                    <img src="<?= $vieweduserData[9] ?>" id="pic">
+                </div>
 
-            <div class="pic-profil">
-                <img src="images/user-1-pic.jpg" id="pic">
+                <div class="number-profil">
+                    <div class="username-profil">
+                        <div><?= $vieweduserData[2] ?> <?= $vieweduserData[1] ?></div>
+                        <?php if($vieweduser_id == $_SESSION['connected']) { ?>
+                        <a href="<?= SETTINGS ?>">
+                            <ion-icon name="settings"></ion-icon>
+                        </a>
+                        <?php }else{ ?>
+                            <button id="send-messages">
+                                Send Messages
+                            </button>
+                        <?php } ?>
+                    </div>
+                    <div class="statistique-profil">
+                        <?php 
+                            $postLikes = db_selectColumns('post',['NumberOfLikes'],['PostedBy_UserID' => ['=', "'".$_SESSION['connected']."'", '0']]);
+                            $nbPosts = count($postLikes);
+                            $nbFriends = count(db_selectColumns('friends',['UserID_1'],
+                                ['UserID_1' => ['=', "'".$_SESSION['connected']."'", '2'],
+                                'UserID_2' => ['=', "'".$_SESSION['connected']."'", '0'] ]));
+                            $nbLikes = 0;
+                            for ($i=0; $i < $nbPosts; $i++) { 
+                                $nbLikes += $postLikes[$i][0];
+                            }
+                        ?>
+                        <div class="posts case-number">
+                            Posts
+                            <p><?= $nbPosts ?></p>
+                        </div>
+                        <div class="following case-number">
+                            Friends
+                            <p><?= $nbFriends ?></p>
+                        </div>
+                        <div class="followers case-number">
+                            Likes
+                            <p><?= $nbLikes ?></p>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <div class="number-profil">
-                <div class="username-profil">
-                    <div>Jordan GAUTIER</div> 
-                    <a href="settings.php"><ion-icon name="settings"></ion-icon></a>
-                </div>
-                <div class="statistique-profil">
-                   <div class="posts case-number">
-                     Posts
-                    <p>32</p>
-                   </div>
-                   <div class="following case-number">
-                    Friends
-                    <p>25</p>
-                   </div>
-                   <div class="followers case-number">
-                     Likes
-                    <p>32</p>
-                   </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="bottom-profil">
-            <hr>  
-            <div class="post-profil"> 
-                <div class="post-container">
-                        
+            <div class="bottom-profil">
+                <hr>
+                <div class="post-profil">
+                    <?php 
+                    $posts = db_selectColumns('post', ['*'], ['PostedBy_UserID' => ['LIKE', "'".$vieweduser_id."'", '0']]);
+                    if(count($posts) == 0) {
+                        ?><p>Vous n'avez encore fait aucun post</p><?php
+                    }
+                    for ($i=0; $i < count($posts) ; $i++) {
+                        $postData = $posts[$i]; 
+                        $postUserData = db_getUserData($postData[7]);
+                        $postData[6] = urldecode($postData[6]);
+                        $postData[5] = urldecode($postData[5]);
+                    ?>
+                    <div class="post-container">
                         <div class="user-profil">
-                            <img src="images/user-1-pic.jpg">
+                            <img src="<?= $postUserData[9] ?>" id="profil-pic">
                             <div>
-                                <p>Joan Legrand</p>
-                                <span>January, 11, 2023, 12:34 AM</span>
+                                <p><?= $postUserData[0] ?></p>
+                                <span><?= $postData[1] ?></span>
                             </div>
                         </div>
-                        <p class="post-text">Voici mon premier post sur le nouveaux réseau social qui va détronner Instagram, Twitter, Facebook, et tous les autres ! Vous voulez savoir pourquoi ? Parce que il y a rien de nouveau hehe... ;) <a href="#">#ClaquezAuSol</a></p>
+                        <p class="post-text"><?= $postData[6] ?></p>
                         <div class="post-media">
                             <img src="images/feed-image-1.png" class="post-img">
+
                             <div class="post-reactions">
-
-                                <div><ion-icon name="heart" onclick="AddHeart()"></ion-icon><small>26</small></div>
-
-                                <div> <!--Le php devra créer un menu{i} pour chaque nouveau post-->
-                                    <ion-icon id="menu1" name="chatbox-ellipses" onclick="CommentSectionOpen(this.id)"></ion-icon><small>23</small>
-                                    <!-- Comment Menu-->
-                                    <div class="comment-menu" id="close1">
-
-                                        <div class="comments-list">
-                                            <div class="user-profil comment-box">
-                                                <img src="images/user-1-pic.jpg">
-                                                <div class="">
-                                                    <div class="comment-pseudo-text">
-                                                        <a class="comment-pseudo">Jordan Gautier</a>
-                                                        <p class="comment-text">Voici le commentaire. Je vais essayer de faire un vrai comment avec des mots avec des espaces entre chaque oui voilà c'est parfait comme ca!</p>
-                                                    </div>
-                                                    <div class="comment-reaction">
-                                                        <p class="comment-react comment-info">Répondre</p>
-                                                        <p class="comment-react comment-info">Aimer</p>
-                                                        <p class="comment-info">06-01-2002</p>
-                                                    </div>
-                                                </div>
-                                                
-                                                <div class="comment-number-like">
-                                                    <p><ion-icon name="heart"></ion-icon><small>26</small></p>
-                                                </div>
-                                            </div>
-                                            <div class="load-comments">
-                                                <div class="comments-bar"></div>
-                                                <span class="show-more-comments">Afficher les 4 réponses</span>
-                                            </div>
-                                        </div>
-
-                                        <div class="comments-list">
-                                            <div class="user-profil comment-box">
-                                                <img src="images/user-1-pic.jpg">
-                                                <div class="">
-                                                    <div class="comment-pseudo-text">
-                                                        <a class="comment-pseudo">Jordan Gautier</a>
-                                                        <p class="comment-text">Voici le commentaire. Je vais essayer de faire un vrai comment avec des mots avec des espaces entre chaque oui voilà c'est parfait comme ca!</p>
-                                                    </div>
-                                                    <div class="comment-reaction">
-                                                        <p class="comment-react comment-info">Répondre</p>
-                                                        <p class="comment-react comment-info">Aimer</p>
-                                                        <p class="comment-info">06-01-2002</p>
-                                                    </div>
-                                                </div>
-                                                <div class="comment-number-like">
-                                                    <p><ion-icon name="heart"></ion-icon><small>26</small></p>
-                                                </div>
-                                            </div>
-                                            <div class="load-comments">
-                                                <div class="comments-bar"></div>
-                                                <span class="show-more-comments">Afficher les 4 réponses</span>
-                                            </div>
-                                        </div>
-
-                                        <div class="comments-list">
-                                            <div class="user-profil comment-box">
-                                                <img src="images/user-1-pic.jpg">
-                                                <div class="">
-                                                    <div class="comment-pseudo-text">
-                                                        <a class="comment-pseudo">Jordan Gautier</a>
-                                                        <p class="comment-text">Voici le commentaire. Je vais essayer de faire un vrai comment avec des mots avec des espaces entre chaque oui voilà c'est parfait comme ca!</p>
-                                                    </div>
-                                                    <div class="comment-reaction">
-                                                        <p class="comment-react comment-info">Répondre</p>
-                                                        <p class="comment-react comment-info">Aimer</p>
-                                                        <p class="comment-info">06-01-2002</p>
-                                                    </div>
-                                                </div>
-                                                <div class="comment-number-like">
-                                                    <p><ion-icon name="heart"></ion-icon><small>26</small></p>
-                                                </div>
-                                            </div>
-                                            <div class="load-comments">
-                                                <div class="comments-bar"></div>
-                                                <span class="show-more-comments">Afficher les 4 réponses</span>
-                                            </div>
-                                        </div>
-
-                                    </div> 
-                                </div>
-
-                                <div><ion-icon name="share-social"></ion-icon><small>18</small></div>
-
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="post-container">
-                        
-                        <div class="user-profil">
-                            <img src="images/user-1-pic.jpg">
-                            <div>
-                                <p>Fabien Cerf</p>
-                                <span>September, 12, 2022, 12:34 AM</span>
-                            </div>
-                        </div>
-                        <p class="post-text">Bravo à <a>#CyTech</a> pour sa super 16ème place volée au classement de l'étudiant. Bravo à tous pour ce vol !!</p>
-                        <div class="post-media">
-                            <img src="images/feed-image-2.png" class="post-img">
-                            <div class="post-reactions">
-
-                                <div><ion-icon name="heart"></ion-icon><small>26</small></div>
-
                                 <div>
-                                    <ion-icon id="menu2" onclick="CommentSectionOpen(this.id)" name="chatbox-ellipses"></ion-icon><small>8</small>
-                                    <!-- Comment Menu-->
-                                    <div class="comment-menu" id="close2">
-                                        <div class="comments-list">
-                                            <div class="user-profil comment-box">
-                                                <img src="images/user-1-pic.jpg">
-                                                <div class="">
-                                                    <div class="comment-pseudo-text">
-                                                        <a class="comment-pseudo">Jordan Gautier</a>
-                                                        <p class="comment-text">Voici le commentaire. Je vais essayer de faire un vrai comment avec des mots avec des espaces entre chaque oui voilà c'est parfait comme ca!</p>
-                                                    </div>
-                                                    <div class="comment-reaction">
-                                                        <p class="comment-react comment-info">Répondre</p>
-                                                        <p class="comment-react comment-info">Aimer</p>
-                                                        <p class="comment-info">06-01-2002</p>
-                                                    </div>
+                                    <ion-icon name="heart" onclick="AddHeart()"></ion-icon>
+                                    <small><?= $postData[2] ?></small>
+                                </div>
+                                <?php 
+                                    $postComments = db_selectColumns('comment', ['*'], ['ReplyTo_PostID' => ['=', "'".$postData[0]."'", '0']]);
+                                    $nbComments = count($postComments);                            
+                                ?>
+                                <div>
+                                    <ion-icon id="menu<?=$i+1?>" name="chatbox-ellipses"
+                                        onclick="CommentSectionOpen(this.id)">
+                                    </ion-icon>
+                                    <small><?= $nbComments ?></small>
+                                </div>
+                                <!-- Comments -->
+                                <?php 
+                                    for ($j=0; $j < $nbComments ; $j++) {
+                                        $postCommentData = $postComments[$j]; 
+                                        $postCommentData[2] = urldecode($postCommentData[2]);
+                                        $CommentUserData = db_getUserData($postCommentData[3]);
+                                ?>
+                                <div class="comment-menu" id="close<?=$i+1?>">
+                                    <div class="comments-list">
+                                        <div class="user-profil comment-box">
+                                            <img src="<?= $CommentUserData[9] ?>">
+                                            <div class="">
+                                                <div class="comment-pseudo-text">
+                                                    <a class="comment-pseudo"><?= $CommentUserData[0] ?></a>
+                                                    <p class="comment-text"><?= $postCommentData[2] ?></p>
                                                 </div>
-                                                <div class="comment-number-like">
-                                                    <p><ion-icon name="heart"></ion-icon><small>26</small></p>
+                                                <div class="comment-reaction">
+                                                    <p class="comment-react comment-info">Répondre</p>
+                                                    <!-- <p class="comment-react comment-info">Aimer</p> -->
+                                                    <p class="comment-info"><?= $postCommentData[1] ?></p>
                                                 </div>
                                             </div>
-                                            <div class="load-comments">
-                                                <div class="comments-bar"></div>
-                                                <span class="show-more-comments">Afficher les 4 réponses</span>
-                                            </div>
+                                            <!-- <div class="comment-number-like">
+                                                <p>
+                                                    <ion-icon name="heart"></ion-icon><small>26</small>
+                                                </p>
+                                            </div> -->
                                         </div>
-                                        <div class="comments-list">
-                                            <div class="user-profil comment-box">
-                                                <img src="images/user-1-pic.jpg">
-                                                <div class="">
-                                                    <div class="comment-pseudo-text">
-                                                        <a class="comment-pseudo">Jordan Gautier</a>
-                                                        <p class="comment-text">Voici le commentaire. Je vais essayer de faire un vrai comment avec des mots avec des espaces entre chaque oui voilà c'est parfait comme ca!</p>
-                                                    </div>
-                                                    <div class="comment-reaction">
-                                                        <p class="comment-react comment-info">Répondre</p>
-                                                        <p class="comment-react comment-info">Aimer</p>
-                                                        <p class="comment-info">06-01-2002</p>
-                                                    </div>
-                                                </div>
-                                                <div class="comment-number-like">
-                                                    <p><ion-icon name="heart"></ion-icon><small>26</small></p>
-                                                </div>
-                                            </div>
-                                            <div class="load-comments">
-                                                <div class="comments-bar"></div>
-                                                <span class="show-more-comments">Afficher les 4 réponses</span>
-                                            </div>
-                                        </div>
+                                        <!-- <div class="load-comments">
+                                            <div class="comments-bar"></div>
+                                            <span class="show-more-comments">Afficher les 4 réponses</span>
+                                        </div> -->
                                     </div>
                                 </div>
-
-                                <div><ion-icon name="share-social"></ion-icon><small>45</small></div>
-                                
+                                <?php } ?>
+                                <div>
+                                    <ion-icon name="share-social"></ion-icon>
+                                    <small><?= $postData[3] ?></small>
+                                </div>
                             </div>
                         </div>
                     </div>
+                    <?php } ?>
+                </div>
+            </div>
 
-        </div>
+        </div>   
+        <!-- Right Content -->
+        <?php 
+            if($vieweduser_id == $_SESSION['connected'])
+                define('CONVERSIONABLE','1');          
+            $friends_id = db_getFriends($vieweduser_id);
+            define('ARRAYFRIEND','1');
+            $onclickfct = 'submitFormProfilLink';
+            include_once(LISTFRIEND);
+        ?>    
+        
 
-    
+
     </main>
-
-<?php include_once(FOOTER); ?>
+    <?php include_once(FOOTER); ?>
 </body>
+
 </html>
