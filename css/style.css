@@ -1,0 +1,10 @@
+@import url("./color.css");
+
+html{ 
+    height: 100%;
+}
+
+
+body::-webkit-scrollbar{
+    width:0;
+}

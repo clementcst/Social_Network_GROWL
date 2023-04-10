@@ -1,0 +1,266 @@
+@import url(color.css);
+
+/* Main Style */
+
+html{ 
+    height: 100%;
+}
+
+body{
+    background-color: var(--bg-body-color);
+    transition: background 0.3s ease;
+    height:100%;
+    width:100%;
+    position:relative;
+}
+
+body::-webkit-scrollbar{
+    width: 0;
+}
+
+.main{
+    display: flex;
+}
+
+.left-content {
+    padding-top:70px;
+    flex-basis:30%;
+    position:sticky;
+    top:80px;
+    left:5%;
+    align-self: flex-start;
+}
+
+.middle-content{
+    margin-top: 40px;
+    flex-basis: 30%;
+}
+
+.right-content {
+    flex-basis:35%;
+    display:flex;
+    justify-content: flex-end;
+    /* z-index:-10; */
+}
+
+.settings-list{
+    font-size:xx-large;
+    background-color: white;
+    border-radius: 7px;
+    margin-bottom: 20px;
+    cursor:pointer;
+}
+
+.profile-disclosed{
+    background-color:whitesmoke;
+    border-radius: 7px;
+    margin-bottom: 20px;
+    color: grey;
+    display:none;
+    transition: 0.5s ease;
+}
+
+.theme-disclosed{
+    border-radius: 7px;
+    margin-bottom: 20px;
+    display:none;
+    transition: 0.5s ease;
+}
+
+.privacy-disclosed{
+    border-radius: 7px;
+    margin-bottom: 20px;
+    display:none;
+    transition: 0.5s ease;
+}
+
+.delete-disclosed{
+    border-radius: 7px;
+    margin-bottom: 20px;
+    display:none;
+    transition: 0.5s ease;
+}
+
+.menu-arrow{
+    display: inline-block;
+}
+
+.settings-list ion-icon{
+    transition: 0.3s ease;
+}
+
+.but_link{
+    border-radius: 4px;
+    margin: 2px;
+}
+
+#confirm{
+    background-color:springgreen;
+}
+
+#cancel{
+    background-color: crimson;
+}
+
+#formulaire{
+    color:black;
+}
+
+#formulaire input{
+    border-radius: 6px;
+    border-color:dimgrey;
+    width:200px;
+}
+
+#sexChoice input{
+    width:auto;
+}
+
+#profilePicture{
+    width:40px;
+    height:40px;
+    border-radius: 50%;
+    cursor:pointer;
+}
+
+/* Left-Content Style */
+
+.lateral {
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    background-color: transparent;
+    z-index:1;
+}
+
+.nav-laterral {
+    position:absolute;
+    left:-200%;
+    top:10px;
+    height:100%;
+    width:max-content;
+    transition:all 0.3s ease;
+    z-index:2;
+}
+
+.nav-close {
+    margin-bottom: 50%;
+}
+
+a {
+    color:black;
+    text-decoration:none;
+}
+
+.nav-link {
+    cursor:pointer;
+    font-size:20px;
+    margin-bottom: 20%;
+    display:flex;
+    align-items:center;
+}
+
+.nav-link:hover {
+    color: var(--bg-main-color);
+}
+
+.nav-link ion-icon {
+    margin-right:15px;
+}
+
+.nav-link, #nav-button {
+    transition: all 0.2s ease;
+}
+
+#nav-button{
+    font-size:40px;
+    cursor:pointer;
+    height:50px;
+    width:50px;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    border-radius:5px;
+}
+
+#nav-button:hover{
+    color: var(--bg-main-color);
+}
+
+/* Right-Content Style */
+
+.close-f {
+    display:flex;
+    align-items:center;
+    background-color: white;
+    margin:5px;
+    padding:5px;
+    border-radius: 10px;
+    text-align: center;
+    justify-content: space-between;
+    border:none;
+    cursor:pointer;
+}
+
+.close-f:hover {
+    background-color:var(--bg-body-color);
+}
+
+.close-f p{
+    margin-bottom:-5px;
+    font-weight: 500px;
+}
+
+.close-f ion-icon {
+    width:25px;
+    height:25px;
+    margin-right:20px;
+}
+
+.close-f ion-icon:hover {
+    color:white;
+}
+
+.friend-profil-link{
+    display:flex;
+}
+
+.friend-profil-link img{
+    margin-left:5px;
+}
+
+#pseudo-close-f-display{
+    margin-top:10px;
+}
+
+.close-f img {
+    width:45px;
+    height:45px;
+    border-radius:50%;
+    margin-right:10px;
+}
+
+.close-friends  {
+    text-align: center;
+    position:fixed;
+    width:21%;
+    transition: 0.3s ease;
+    transition-delay: 0s;
+}
+
+.close-friends b {
+    font-size:25px;
+    color:rgb(63, 62, 62);
+}
+
+.close-message {
+    position:relative;
+    float:right;
+}
+
+
+.close-message {
+    position:relative;
+    float:right;
+}
