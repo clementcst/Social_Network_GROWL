@@ -4,7 +4,6 @@
        require_once("./required.php");
      else
        require_once("./php/required.php");
-   
 
     function s_isConnected(){
         return isset($_SESSION['connected']);

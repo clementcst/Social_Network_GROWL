@@ -1,9 +1,4 @@
 <?php
-    if(file_exists("./required.php"))
-        require_once("./required.php");
-    else
-        require_once("./php/required.php");
-
     function AddNewPost()
     {   
         //faire la recherche sur le serveur d'un nouveau post                                                                                        
@@ -13,49 +8,13 @@
         return 0;
     }
 
-    function addNewMessage($message, $receiver)
+    function AddNewMessage()
     {   
-        $media = 'NULL';
-        $Extension=strrev(substr(strrev($message),0,strpos(strrev($message),'.')));
-        if(preg_match('/png|jpg|jpeg|gif/',$Extension)){
-            $media= $message;
-        }
-        $id_user = $_SESSION['connected'];
-        $id_receiver = db_selectColumns('user', ['UserID'], ['Username' => ['=', "'".$receiver."'", "0"]]);  
-        db_newMessage($id_user, $id_receiver, $message);                                                                           
+        //faire la recherche sur le serveur d'un nouveau message privé                                                                                     
         // renvoyer les valeurs sous cette forme : echo $tmptab[0].";".$tmptab[1].";".$ret_ses.";".$tmptab[2].";".$tmptab[3].";".$tmptab[4];    
         return 0;
     }
 
-    function changeConversation($username_friend) {
-        $id_user_connected=$_SESSION['connected'];
-        $id_friend = db_selectColumns(
-            table_name:'user',
-            columns:['UserID'], 
-            filters:['Username' => ['LIKE', '"'.$username_friend.'"','0']]
-         );
-        $friend_data = db_getUserData($id_friend[0][0]);
-        echo $friend_data[0].";".$friend_data[9].";".$id_user_connected.";";
-        $conversation = db_getConversation($id_user_connected, $id_friend[0][0]);
-        $number_message=count($conversation);
-        for($i=0;$i<$number_message;$i++){
-            echo $conversation[$i][1].";".$conversation[$i][2].";".$conversation[$i][3].";".$conversation[$i][4].";".$conversation[$i][5];
-            if($i<$number_message-1)echo";";
-        }
-        return 0;
-    }
-
-    function sendMessageIntoDB($username_friend, $content) {
-        $id_user_connected=$_SESSION['connected'];
-        $id_friend = db_selectColumns(
-            table_name:'user',
-            columns:['UserID'], 
-            filters:['Username' => ['LIKE', '"'.$username_friend.'"','0']]
-         );
-        db_newMessage($id_user_connected, $id_friend[0][0], $content);        
-        echo $username_friend;
-        return 0;
-    }
     
     function NewFilter()
     {
@@ -67,55 +26,39 @@
     if($_POST['fct']!== null)
     {
         $fct=$_POST['fct'];
-        switch($fct) {
-            case 'AddNP' :
-                if(1)//mettre des parametres si besoin
-                {
-                    //Fonction php avec des parametres si besoin
-                    AddNewPost();
-                }
-                else
-                    echo "error, not enough POST in ajax request";
-                break;
-            case 'AddNM' :
-                if($_POST['content']!== null && $_POST['UsernameReceiver'])
-                {
-                    AddNewMessage($_POST['Message'], $_POST['UsernameReceiver']);
-                }
-                else
-                    echo "error, not enough POST in ajax request";
-                break;   
-            case 'chngCV ' :
-                if($_POST['usernameFriend']!== null)
-                {
-                    changeConversation($_POST['usernameFriend']);
-                }
-                else
-                    echo "error, not enough POST in ajax request";
-                break;
-            case 'sendMIDB ' :
-                if($_POST['usernameFriend']!== null && $_POST['content']!== null)
-                {
-                    sendMessageIntoDB($_POST['usernameFriend'], $_POST['content']);
-                }
-                else
-                    echo "error, not enough POST in ajax request";
-                break;
-            case 'NewF ' :
-                if(1)
-                {   //Fonction php                
-                    NewFilter();
-                }
-                else
-                    echo "error, not enough POST in ajax request";
-                break;  
-            default :
-                echo "error POST fct invalid in ajax request";            
+        if($fct=='AddNP')
+        {
+            if(1)//mettre des parametres si besoin
+            {
+                //Fonction php avec des parametres si besoin
+                AddNewPost();
+            }
+            else
+                echo "error, not enough POST in ajax request";
+        }
+        elseif($fct=='AddNM')
+        {
+            if(1)
+            {
+                //Fonction php
+                AddNewMessage();
+            }
+            else
+                echo "error, not enough POST in ajax request";
+        }
+        elseif($fct=='NewF')
+        {
+            if(1)
+            {
+                //Fonction php                
+                NewFilter();
+            }
+            else
+                echo "error, not enough POST in ajax request";
         }
     }
     else
     {
-        java_log('oskour');
         echo "error POST fct not defined in ajax request";
     }
 ?>

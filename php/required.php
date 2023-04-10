@@ -1,5 +1,5 @@
 <?php
-        if(!defined('SESSION_START')) {
+       if(!defined('SESSION_START')) {
               session_start();
               define('SESSION_START','1');
        }
