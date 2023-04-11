@@ -18,10 +18,24 @@
             if(!s_isConnected())
                 redirect(INDEX);
 
+            if(isset($_GET["user_conv"])  && db_alreadyExist('user', 'Username', "'".$_GET["user_conv"]."'")) { // on récupère l'id de l personne à qui on souhaite parler
+                $user_selected = db_selectColumns('user',['UserID'], ['Username' => ['LIKE', "'".$_GET["user_conv"]."'", '0']])[0][0];
+            }
+
             $friends_id = db_order_lastConversation($_SESSION['connected']);
-            $last_communicate_friend = db_getUserData($friends_id[0]);
-            $conversation = db_getConversation($friends_id[0],$_SESSION['connected']);
-            $number_message = count($conversation);
+            if(isset($user_selected)){ // il y a un ami en get, on le sélectionne
+                $last_communicate_friend = db_getUserData($user_selected);
+                $conversation = db_getConversation($last_communicate_friend[0],$_SESSION['connected']);
+            } else {
+                $last_communicate_friend = db_getUserData($friends_id[0]);
+                $conversation = db_getConversation($friends_id[0],$_SESSION['connected']);
+            }
+            
+            if($conversation == 0){
+                $number_message = 0;
+            }else{
+                $number_message = count($conversation);
+            }
         ?>
         
         <main class="main">
@@ -32,20 +46,20 @@
             
              <div class="middle-content middle-message">
                 <div class="box_message">
-                <?php $taille_conversation = count($conversation);?>
 
                     <div class="title_message">
                         <div class="username_receiver_message">
                             <h3 id="current_speaking"><?= $last_communicate_friend[0]; ?></h3>
                         </div>
                         <div class="date_last_message">
-                            <span id="current_speaking_date_last_message"><script>changeFormatDate('<?=$conversation[$number_message-1][5]?>', 'current_speaking_date_last_message', '1')</script></span>
+                            <span id="current_speaking_date_last_message"><?php if($number_message !=0) echo "<script> changeFormatDate(".$conversation."[".$number_message." -1][5]?>', 'current_speaking_date_last_message', '1')</script> ";?></span>
                         </div>
                     </div>
 
                     <div id="conv" class="conv_message">
 
-                    <?php for($i=$taille_conversation-1;$i>=0; $i--){?>
+                    <?php if($number_message > 0)
+                        for($i=$number_message-1;$i>=0; $i--){?>
                     <div>
                         <div class=" <?php 
                             if($i>0){echo "my-empty-conv";}?>">                            
@@ -83,6 +97,9 @@
             <!-- Right Content -->
             <?php 
                 define('ARRAYFRIEND','1');
+                if(isset($_GET["user_conv"])){
+                    define('SELECTEDFRIEND','1');
+                }                 
                 $onclickfct = 'selectDiscussion';
                 include_once(LISTFRIEND);
             ?>           
