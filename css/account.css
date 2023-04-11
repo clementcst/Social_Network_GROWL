@@ -5,10 +5,14 @@
 
 }
 
+#logo_container{
+  margin-top: -20px;
+  margin-right: 20px;
+  width: 200px;
+}
+
 .logo{
-    max-width: 20%;
-    max-height: 100%;
-    margin-right: 50px;
+    max-width: 100%;
 }
 
 .onglet {
@@ -259,6 +263,10 @@
     transition: all 0.4s ease;
     font-size: 15px;
     font-weight: 600;
+  }
+
+  .bottom_btn{
+    margin-bottom: 0;
   }
 
   /* ==========================================================================
