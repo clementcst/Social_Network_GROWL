@@ -12,6 +12,9 @@ function sendMessage() {
 	var tableauMois = new Array('janvier','février','mars','mai','juillet','septembre','novembre','décembre');
     //On récupère le message qui est écrit dans le champ message
     let message = document.getElementById("actual_writen_message").value;
+	if(message == 0){
+        return;
+    }
 	
     //On récupère la div conversation pour y ajouter la nouvelle bulle message
     let conversation = document.getElementById("conv");
