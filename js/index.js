@@ -101,4 +101,8 @@ function sendComment() {
         comment_list[0].append(mother_div);
     }
     document.getElementById("actual_writen_message").value = "";
+
+    //On scroll vers le bas quand on ajoute un message
+    var objDiv = document.getElementsByClassName("comment-menu-height");
+    objDiv[0].scrollTop = objDiv[0].scrollHeight;
 }
