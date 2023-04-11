@@ -116,16 +116,16 @@
                                 </div> -->
 
                             </div>
-                            <div class="send_menu_comment">
-                                <input id="actual_writen_message" type="text" class="form-control comment-input" placeholder="Write your comment"  onkeypress="if (event.keyCode == 13) sendMessage()">
-                                <div class="send_icon_message" onclick="sendMessage()">
-                                    <ion-icon name="send"></ion-icon>
-                                </div>
-                            </div>
                             <!-- <div class="load-comments">
                                 <div class="comments-bar"></div>
                                 <span class="show-more-comments">Afficher les 4 réponses</span>
                             </div> -->
+                        </div>
+                        <div class="send_menu_comment">
+                            <input id="actual_writen_message" type="text" class="form-control comment-input" placeholder="Write your comment"  onkeypress="if (event.keyCode == 13) sendMessage()">
+                            <div class="send_icon_message" onclick="sendComment()">
+                                <ion-icon name="send"></ion-icon>
+                            </div>
                         </div>
                     </div>
                     <?php } ?>
