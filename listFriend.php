@@ -17,7 +17,11 @@
             for ($i=0; $i < count($friends_id); $i++) { 
                 $friendData = db_getUserData($friends_id[$i][0]);
         ?>
-        <div class="close-f friends_list <?php if($i==0){echo 'selected_friends';}?>" onclick='<?php echo $onclickfct ?>(<?=$i?>);'>  
+        <div class="close-f friends_list  <?php  if(!defined('SELECTEDFRIEND')) {
+            if($i==0){echo 'selected_friends';}
+        } else if($friendData[0] == $last_communicate_friend[0]){
+            echo 'selected_friends';
+        }?>" id="user<?=$i?>"  onclick='<?php echo $onclickfct ?>(<?=$i?>);'>  
             
             <div class="friend-profil-link" >
                 <img src="<?= $friendData[9] ?>" <?php if( $onclickfct == 'selectDiscussion'){echo "onclick = 'submitFormProfilLink($i)'";}?>>
@@ -30,7 +34,11 @@
             </div>
             <?php  if(defined('CONVERSIONABLE')) { ?>
             <div class="close-message">
-                <ion-icon name="paper-plane"></ion-icon>
+                <ion-icon name="paper-plane" onclick = 'submitFormConvLink(<?=$i?>)'>
+                    <form id="form-conversation-link<?=$i?>" method="GET" action="<?= CONVERSATION ?>">
+                        <input type="hidden" name="user_conv" id="user_conv" value="<?= $friendData[0] ?>">
+                    </form>
+                </ion-icon>
             </div>
             <?php } ?>
             <?php  if(defined('TRASHABLE')) { ?>
