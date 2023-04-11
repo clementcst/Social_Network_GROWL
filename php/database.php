@@ -385,6 +385,14 @@ function db_deleteRows(string $table_name, ?array $filters) {
          columns:['ConversationID','SenderID'], 
          filters:['ReceiverID' => ['LIKE', '"'.$user_id.'"','0']]
       ));
+      if($order_friends[0]==null){
+         $friends_id = db_getFriends($user_id);
+         for($j = 0; $j <count($friends_id); $j++) {
+            $friends_id[$j] = $friends_id[$j][0];
+         } 
+         return $friends_id;
+      }
+
       for ($i=0; $i<count($order_friends); $i++) {
          $order = intval(str_replace("CV","",$order_friends[$i][0]));
          $order_tab["$order"]= $i;
@@ -427,6 +435,9 @@ function db_deleteRows(string $table_name, ?array $filters) {
          filters:['SenderID' => ['LIKE', '"'.$user_id2.'"','1'],
                   'ReceiverID' => ['LIKE', '"'.$user_id1.'"','0']]
       ));
+      if($conversations[0]==null){
+         return 0;
+      }
    for ($i=0; $i<count($conversations); $i++) {
       $order = intval(str_replace("CV","",$conversations[$i][0]));
       $order_tab["$order"]= $i;
