@@ -52,10 +52,8 @@ body::-webkit-scrollbar{
 }
 
 .profile-disclosed{
-    background-color:whitesmoke;
     border-radius: 7px;
     margin-bottom: 20px;
-    color: grey;
     display:none;
     transition: 0.5s ease;
 }
@@ -75,6 +73,13 @@ body::-webkit-scrollbar{
 }
 
 .delete-disclosed{
+    border-radius: 7px;
+    margin-bottom: 20px;
+    display:none;
+    transition: 0.5s ease;
+}
+
+.password-disclosed{
     border-radius: 7px;
     margin-bottom: 20px;
     display:none;
@@ -102,6 +107,12 @@ body::-webkit-scrollbar{
     background-color: crimson;
 }
 
+.profile-param{
+    background-color:whitesmoke;
+    border-radius: 7px;
+    margin-top: 20px;
+}
+
 #formulaire{
     color:black;
 }
@@ -117,8 +128,8 @@ body::-webkit-scrollbar{
 }
 
 #profilePicture{
-    width:40px;
-    height:40px;
+    width:150px;
+    height:150px;
     border-radius: 50%;
     cursor:pointer;
 }
