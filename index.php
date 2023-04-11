@@ -139,7 +139,8 @@
         <?php } ?>
         </div>
         <!-- Right Content -->
-        <?php include_once(LISTFRIEND); ?>
+        <?php define('CONVERSIONABLE','1'); 
+        include_once(LISTFRIEND); ?>
 
     </main>
 
