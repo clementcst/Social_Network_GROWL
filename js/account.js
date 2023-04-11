@@ -1,13 +1,10 @@
-function displayOnglet(name){
-    if (name == "logIn"){
-        document.getElementById("log-in-account").classList.add("choosen-options");
-        document.getElementById("sign-up-account").classList.remove("choosen-options")
-        document.getElementById("form-registration").style.display="none";
-        document.getElementById("submit_Login").style.display="block";
+
+ function switchPage(){
+    if (document.getElementById("form-box").style.display == "flex"){
+        document.getElementById("form-box").style.display = "none"
+        document.getElementById("register-box").style.display = "flex"
     }else{
-        document.getElementById("sign-up-account").classList.add("choosen-options");
-        document.getElementById("log-in-account").classList.remove("choosen-options");
-        document.getElementById("form-registration").style.display="block";
-        document.getElementById("submit_Login").style.display="none";
+        document.getElementById("form-box").style.display = "flex"
+        document.getElementById("register-box").style.display = "none"
     }
-}
+ }
