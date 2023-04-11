@@ -51,7 +51,7 @@
                     <h2>Login</h2>
                     <div class="inputbox">
                         <ion-icon name="mail-outline"></ion-icon>
-                        <input type="email" name="identifiant" id="identifiant" required
+                        <input type="texte" name="identifiant" id="identifiant" required
                             value="<?php if(isset($_SESSION['conservedLogin'])){echo $_SESSION['conservedLogin'];unset($_SESSION['conservedLogin']);}else{echo "";} ?>">
                         <label for="">Email/Username</label>
                         <p id="errorMessage-registration-log" class="errorMessage">
