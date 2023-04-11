@@ -45,7 +45,9 @@
     
     <main>
         <div class="onglet">
-            <img src="images/logo.png" class="logo">
+            <div id="logo_container">
+                <img src="images/logo.png" class="logo">
+            </div>
 
             <div class="onglet_content">
                 <div class="choose-options">
@@ -173,10 +175,10 @@
                         </div>
                         <div class="row row-space">
                             <div class="col-2">
-                                <input type="submit" class="btn" name="submitRegistration" value="Valider inscription">
+                                <input type="submit" class="btn bottom_btn" name="submitRegistration" value="Valider inscription">
                             </div>
                             <div class="col-2">
-                                <input type="reset" class="btn" name="Reset" value="Annuler">
+                                <input type="reset" class="btn bottom_btn" name="Reset" value="Annuler">
                             </div>
                         </div>
                     </div>
