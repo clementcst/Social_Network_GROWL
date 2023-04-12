@@ -51,7 +51,7 @@
     {
         if(preg_match($pattern, $data) === 0)
         {
-            $_SESSION[$errorSessionName][$nameInput] = ucwords($dataName)." incorrect. Les caracteres autorisés sont ".$allowedCharacter.".";
+            $_SESSION[$errorSessionName][$nameInput] = "The authorized characters are: ".$allowedCharacter.".";
             return 1;
         }
         else
@@ -77,7 +77,7 @@
 
             // définition des tableaux des champs pouvant être verifier avec une expression regulière
             $checkWithPatternKeys = ["userName", "name", "firstName", "password", "country", "city", "phoneNumber"];
-            $patterns = ["userName" => "/^[\p{L}\d]{1,32}$/u", "name" => "/^[\p{L}\-]{1,32}$/u", "firstName" => "/^[\p{L}\-]{1,32}$/u",
+            $patterns = ["userName" => "/^[\p{L}\d+\s?]{1,32}$/u", "name" => "/^[\p{L}\-]{1,32}$/u", "firstName" => "/^[\p{L}\-]{1,32}$/u",
                     "password" => "/^(?=.*\d)(?=.*[A-Z])(?=.*[-!@#$%_])(?=.*[a-z])[0-9A-Za-z!@#$%_\-]{8,30}$/", 
                     "country" => "/^[\p{L}\-]{1,32}$/u",
                     "city" => "/^[\p{L}\-]{1,32}$/u", "phoneNumber" => "/^0\d{9}$/", 
@@ -114,7 +114,7 @@
                 {  
                     if($nameInput !== "sex" && $formInputs[$nameInput] === "") // verification si le champ est vide et génération d'un message d'erreur si c'est le cas
                     {
-                        $_SESSION[$errorSessionName][$nameInput] = "Veuillez bien remplir votre {$allDataName[$nameInput]}.";
+                        $_SESSION[$errorSessionName][$nameInput] = "Please indicate your gender.";
                         $errorNumber += 1;
                     }
                     else
@@ -123,7 +123,7 @@
                         if($dataValueValid !== $formInputs[$nameInput]) // verification de la validité de l'entré notament les caractères html
                         {
                             unset( $_SESSION[$errorSessionName]);
-                            $_SESSION[$errorSessionName][$submitKey] = "Les données envoyées par le formulaire ne sont pas conforment.";
+                            $_SESSION[$errorSessionName][$submitKey] = "The data sent through the form is not compliant.";
                             $errorNumber += 1;
                             break;
                         }
@@ -140,7 +140,7 @@
                             {
                                 if(!($formInputs[$nameInput] === "Man" || $formInputs[$nameInput] === "Woman" || $formInputs[$nameInput] === "Other"))
                                 {
-                                    $_SESSION[$errorSessionName][$nameInput] = "Une erreur est survenu. Veuillez indiquer votre {$allDataName[$nameInput]}.";
+                                    $_SESSION[$errorSessionName][$nameInput] = "Please indicate your gender.";
                                     $errorNumber += 1;
                                 }
                                 else
@@ -152,7 +152,7 @@
                             {
                                 if(!(valid_date_inf($formInputs[$nameInput], 12))) //verification de la date de naissance
                                 {
-                                    $_SESSION[$errorSessionName][$nameInput] = "Vous n'avez pas correctement indiqué votre {$allDataName[$nameInput]}. \nVous devez avoir au minimum 12 ans.";
+                                    $_SESSION[$errorSessionName][$nameInput] = "You have not correctly indicated your date of birth or you are under 12 years old/were born before 1900.";
                                     $errorNumber += 1;
                                 }
                                 else
@@ -164,7 +164,7 @@
                             {
                                 if(!filter_var($formInputs[$nameInput], FILTER_VALIDATE_EMAIL)) // verification du mail faite avec un filtre
                                 {
-                                    $_SESSION[$errorSessionName][$nameInput] = "Veuillez indiquer une adresse email valide.";
+                                    $_SESSION[$errorSessionName][$nameInput] = "Please provide a valid email address.";
                                     $errorNumber += 1;
                                 }
                                 else
@@ -176,7 +176,7 @@
                             {
                                 if(!filter_var($formInputs[$nameInput], FILTER_VALIDATE_EMAIL)) // verification du mail de confirmation avec le filtre
                                 {
-                                    $_SESSION[$errorSessionName][$nameInput] = "Veuillez indiquer une adresse email valide.";
+                                    $_SESSION[$errorSessionName][$nameInput] = "Please provide a valid email address.";
                                     $errorNumber += 1;
                                 }
                                 else
@@ -185,7 +185,7 @@
                     
                                     if(!(isset($formInputs["mail"]) && $formInputs["mail"] === $formInputs["confirmationMail"])) // verification de l'égalité entre le mail et le mail de confirmation
                                     {
-                                        $_SESSION[$errorSessionName][$nameInput] = "Les deux adresses email ne correspondent pas.";
+                                        $_SESSION[$errorSessionName][$nameInput] = "The two email addresses do not match.";
                                         $errorNumber += 1;
                                     }
                                 }
@@ -194,7 +194,7 @@
                             {
                                 if(!preg_match($patterns["password"], $formInputs[$nameInput]) === 0) // verification du mot de passe de confirmation avec une expression regulière
                                 {
-                                    $_SESSION[$errorSessionName][$nameInput] = "Veuillez indiquer un mot de passe valide.";
+                                    $_SESSION[$errorSessionName][$nameInput] = "Please enter a valid password.";
                                     $errorNumber += 1;
                                 }
                                 else
@@ -203,7 +203,7 @@
                     
                                     if(!(isset($formInputs["password"]) && $formInputs["password"] === $formInputs["confirmationPassword"])) // verification de l'égalité entre le mot de passe et le mot de passe de confirmation
                                     {
-                                        $_SESSION[$errorSessionName][$nameInput] = "Les deux mots de passe ne correspondent pas.";
+                                        $_SESSION[$errorSessionName][$nameInput] = "The two passwords do not match.ss";
                                         $errorNumber += 1;
                                     }
                                 }
@@ -219,11 +219,11 @@
                     rempli */
                     if($nameInput === "sex")
                     {
-                        $_SESSION[$errorSessionName][$nameInput] = "Veuillez indiquer votre {$allDataName[$nameInput]}.";
+                        $_SESSION[$errorSessionName][$nameInput] = "Please indicate your gender.";
                         $errorNumber += 1;
                     }
                     else{
-                        $_SESSION[$errorSessionName][$submitKey] = "Erreur lors de l'envoi du formulaire.";
+                        $_SESSION[$errorSessionName][$submitKey] = "There was an error sending the form.";
                         $errorNumber += 1;
                     }
                 }
