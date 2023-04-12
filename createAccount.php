@@ -54,19 +54,18 @@
                         <input type="texte" name="identifiant" id="identifiant" required
                             value="<?php if(isset($_SESSION['conservedLogin'])){echo $_SESSION['conservedLogin'];unset($_SESSION['conservedLogin']);}else{echo "";} ?>">
                         <label for="">Email/Username</label>
-                        <p id="errorMessage-registration-log" class="errorMessage">
-                            <?php if(isset($tab_errorMessage_log["log"])){echo $tab_errorMessage_log["log"];}else{echo "";} ?>
-                        </p>
-
                     </div>
+                    <p id="errorMessage-registration-log" class="errorMessage">
+                        <?php if(isset($tab_errorMessage_log["log"])){echo $tab_errorMessage_log["log"];}else{echo "";} ?>
+                    </p>
                     <div class="inputbox">
                         <ion-icon name="lock-closed-outline"></ion-icon>
                         <input type="password" type="password" name="password_log" id="password_log" required>
                         <label for="">Password</label>
-                        <p id="errorMessage-registration-passwordLog" class="errorMessage">
-                            <?php if(isset($tab_errorMessage_log["passwordLog"])){echo $tab_errorMessage_log["passwordLog"];}else{echo "";} ?>
-                        </p>
                     </div>
+                    <p id="errorMessage-registration-passwordLog" class="errorMessage">
+                        <?php if(isset($tab_errorMessage_log["passwordLog"])){echo $tab_errorMessage_log["passwordLog"];}else{echo "";} ?>
+                    </p>
                     <button class="button1" name="submitLogin">Log in</button>
                     <div class="register">
                         <p>Don't have a account <a href="#" onclick="switchPage()">Register</a></p>
