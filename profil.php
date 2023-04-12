@@ -47,11 +47,11 @@
                     </div>
                     <div class="statistique-profil">
                         <?php 
-                            $postLikes = db_selectColumns('post',['NumberOfLikes'],['PostedBy_UserID' => ['=', "'".$_SESSION['connected']."'", '0']]);
+                            $postLikes = db_selectColumns('post',['NumberOfLikes'],['PostedBy_UserID' => ['=', "'".$vieweduser_id."'", '0']]);
                             $nbPosts = count($postLikes);
                             $nbFriends = count(db_selectColumns('friends',['UserID_1'],
-                                ['UserID_1' => ['=', "'".$_SESSION['connected']."'", '2'],
-                                'UserID_2' => ['=', "'".$_SESSION['connected']."'", '0'] ]));
+                                ['UserID_1' => ['=', "'".$vieweduser_id."'", '2'],
+                                'UserID_2' => ['=', "'".$vieweduser_id."'", '0'] ]));
                             $nbLikes = 0;
                             for ($i=0; $i < $nbPosts; $i++) { 
                                 $nbLikes += $postLikes[$i][0];

@@ -17,13 +17,14 @@
             for ($i=0; $i < count($friends_id); $i++) { 
                 $friendData = db_getUserData($friends_id[$i][0]);
         ?>
-        <div class="close-f friends_list  <?php  if(!defined('SELECTEDFRIEND')) {
-            if($i==0){echo 'selected_friends';}
-        } else if($friendData[0] == $last_communicate_friend[0]){
-            echo 'selected_friends';
-        }?>" id="user<?=$i?>"  onclick='<?php echo $onclickfct ?>(<?=$i?>);'>  
-            
-            <div class="friend-profil-link" >
+        <div class="close-f friends_list  
+            <?php  if(!defined('SELECTEDFRIEND')) {
+                if($i==0){ echo 'selected_friends'; }
+                } else if($friendData[0] == $last_communicate_friend[0]) { echo 'selected_friends'; }
+            ?>"
+        id="user<?=$i?>" <?php if(!defined('CONVERSIONABLE')) {  ?>onclick='<?php echo $onclickfct ?>(<?=$i?>);'<?php ; } ?>>  
+        
+            <div class="friend-profil-link"  onclick='<?php echo $onclickfct ?>(<?=$i?>);'>
                 <img src="<?= $friendData[9] ?>" <?php if( $onclickfct == 'selectDiscussion'){echo "onclick = 'submitFormProfilLink($i)'";}?>>
                 <div>
                      <p id="pseudo-close-f-display" class="userName<?=$i?>"><?= $friendData[0] ?></p>
