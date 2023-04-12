@@ -166,6 +166,15 @@ top: -5px;
     max-width:250px;
 }
 
+.form-box .errorMessage {
+    margin-top: -22px;
+    color : red;
+}
+
+.form-box .inputbox {
+    margin-top: 50px;
+}
+
 
 .register-input label {
     width: 88%;
