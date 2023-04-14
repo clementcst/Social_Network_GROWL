@@ -56,6 +56,34 @@
         echo $username_friend;
         return 0;
     }
+
+    function createComment($post_id){
+        $comments = db_selectColumns(
+            table_name:'comment',
+            columns:['CommentID', 'Comment_DateTime', 'Content', 'PostedBy_UserID'], 
+            filters:['ReplyTo_PostID' => ['LIKE', '"'.$post_id.'"','0']]
+        );
+        $numberComments =count($comments);
+        for($i=0;$i<$numberComments;$i++){
+            echo $comments[$i][0].";".$comments[$i][1].";".$comments[$i][2].";".$comments[$i][3];
+            if($i<$numberComments-1)echo";";
+        }
+        return 0;
+    }
+
+    function getAnswers($comment_id){
+        $answers = db_selectColumns(
+            table_name:'answer',
+            columns:['AnswerID', 'Answer_DateTime', 'Content', 'PostedBy_UserID'], 
+            filters:['ReplyTo_CommentID' => ['LIKE', '"'.$comment_id.'"','0']]
+         );
+        $numberAnswer =count($answers);
+        for($i=0;$i<$numberAnswer;$i++){
+            echo $answers[$i][0].";".$answers[$i][1].";".$answers[$i][2].";".$answers[$i][3];
+            if($i<$numberAnswer-1)echo";";
+        }
+        return 0;
+    }
     
     function NewFilter()
     {
@@ -97,6 +125,22 @@
                 if($_POST['usernameFriend']!== null && $_POST['content']!== null)
                 {
                     sendMessageIntoDB($_POST['usernameFriend'], $_POST['content']);
+                }
+                else
+                    echo "error, not enough POST in ajax request";
+                break;
+            case 'CCM ' :
+                if($_POST['postID']!== null)
+                {
+                    createComment($_POST['postID']);
+                }
+                else
+                    echo "error, not enough POST in ajax request";
+                break;
+            case 'gA ' :
+                if($_POST['commentID']!== null)
+                {
+                    getAnswers($_POST['commentID']);
                 }
                 else
                     echo "error, not enough POST in ajax request";
