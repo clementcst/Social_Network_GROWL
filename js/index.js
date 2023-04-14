@@ -1,8 +1,9 @@
 
 //Cherche le deuxième enfait de la div qui contient l'image commentaire. Le deuxième enfant est la div 'bulle commentaire' qui apparait et disparait quand on clique sur la div mère
-function CommentSectionOpen(number_menu){
-    number_menu = number_menu.replace('menu', '')
-    selected_comment_menu = document.getElementById("close" + number_menu)
+function CommentSectionOpen(menu_id){
+    menu_id = menu_id.replace('CommentSection', '');
+    all_comments = createComments(menu_id);
+    selected_comment_menu = document.getElementById("close" + menu_id);
     selected_comment_menu.classList.toggle("comment-menu-height");
 }
 
