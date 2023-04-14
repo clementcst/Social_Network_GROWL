@@ -47,7 +47,7 @@
 
         <div class="form-box" id="form-box" style="display: flex;">
             <div class="form-value">
-                <form id="submit_Login" action="./php/loginProcess.php" method="post">
+                <form id="submit_Login" action="<?= PHP.LOGIN_PRO ?>" method="post">
                     <h2>Login</h2>
                     <div class="inputbox">
                         <ion-icon name="mail-outline"></ion-icon>
@@ -77,7 +77,7 @@
         <div class="register-box" id="register-box" style="display:none">
             <div class="form-value">
                 <form id="form-registration" onsubmit="return (checkingForm('registration'))"
-                    action="./php/processCreateAccount.php" method="post">
+                    action="<?= PHP.ACCOUNT_PRO ?>" method="post">
                     <div class="register-all">
 
 
