@@ -104,7 +104,7 @@
                                         <p class="comment-text"><?= $postCommentData[2] ?></p>
                                     </div>
                                     <div class="comment-reaction">
-                                        <p class="comment-react comment-info">Répondre</p>
+                                        <p id="db_id_commentaire" class="comment-react comment-info" onclick="CreateInputTexte(this.id)">Répondre</p>
                                         <!-- <p class="comment-react comment-info">Aimer</p> -->
                                         <p class="comment-info"><?= $postCommentData[1] ?></p>
                                     </div>
@@ -116,10 +116,15 @@
                                 </div> -->
 
                             </div>
+                            
                             <!-- <div class="load-comments">
                                 <div class="comments-bar"></div>
                                 <span class="show-more-comments">Afficher les 4 réponses</span>
                             </div> -->
+                            <div id="db_id_commentaire_answer_section" class="answers_div"> <!-- Generer cette id avec concatenation de bd_id et "_answer_section"-->
+                        </div>
+                        
+                            
                         </div>
                         <div class="send_menu_comment">
                             <input id="actual_writen_message" type="text" class="form-control comment-input" placeholder="Write your comment"  onkeypress="if (event.keyCode == 13) sendComment()">
