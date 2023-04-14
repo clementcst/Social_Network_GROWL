@@ -100,6 +100,65 @@ function sendMessageIntoDB(content){
     return 0;   
 }
 
+function createComments(post_id){
+    var requestCCM= getXhr();
+    requestCCM.open("POST","./php/ajaxRequest.php",true);
+    requestCCM.onreadystatechange = function(){
+        if(requestCCM.readyState == 4 && requestCCM.status == 200){
+            var reponse=requestCCM.responseText;
+            if(reponse==0){
+                return 0;
+            }
+            var res=reponse.split(";");
+            res[0] = res[0].replace(' \r\n\r\n\r\n\r\n\r\n','');
+            var number_comments = res.length/4;
+            let comments = [];
+            for(var i=0; i<number_comments;i++){
+                comments[i]=[];
+                comments[i][0] = res[i*4];
+                comments[i][1] = res[i*4+1];
+                comments[i][2] = res[i*4+2];
+                comments[i][3] = res[i*4+3];
+            }
+            console.log(comments);
+            //écris les fonction ici Adam
+        }
+    }
+    requestCCM.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8');
+    requestCCM.send('fct=CCM '+ '&postID=' + post_id);
+    return 0;   
+}
+
+function getAnswers(comment_id){
+    var requestgA= getXhr();
+    requestgA.open("POST","./php/ajaxRequest.php",true);
+    requestgA.onreadystatechange = function(){
+        if(requestgA.readyState == 4 && requestgA.status == 200){
+            var reponse=requestgA.responseText;
+            if(reponse==0){
+                return 0;
+            }
+            var res=reponse.split(";");
+            res[0] = res[0].replace(' \r\n\r\n\r\n\r\n\r\n','');
+            var number_answers = res.length/4;
+            let answers = [];
+            for(var i=0; i<number_answers;i++){
+                answers[i]=[];
+                answers[i][0] = res[i*4];
+                answers[i][1] = res[i*4+1];
+                answers[i][2] = res[i*4+2];
+                answers[i][3] = res[i*4+3];
+            }
+            console.log(answers);
+            //écris les fonction ici Adam
+        }
+    }
+    requestgA.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8');
+    requestgA.send('fct=gA '+ '&commentID=' + comment_id);
+    return 0;   
+}
+
+
 function NewFilter(){
     var requestCartF= getXhr();
     requestCartF.open("POST","./php/ajaxRequest.php",true);
