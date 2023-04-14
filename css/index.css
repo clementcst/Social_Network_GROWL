@@ -232,8 +232,23 @@ main{
     padding-left: 0%;
 }
 
+.answers_div{
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+    padding-left: 20px;
+    border-left: solid 1px black;
+}
+
 .send_menu_comment{
     margin: 0 10px 10px 10px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    display: flex;
+    align-items: center;
+}
+
+.send_menu_answer{
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
     display: flex;
