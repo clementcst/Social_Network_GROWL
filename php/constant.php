@@ -17,6 +17,8 @@
         define('M_FORMS','manage_form.php');
         define('ACCOUNT_PRO','processCreateAccount.php');
         define('LOGIN_PRO','loginProcess.php');
+        define('SETTINGS_PRO','settingsProcess.php');
+
     /** in ROOT */
         define('INDEX','index.php');
         define('ACCOUNT','createAccount.php');
