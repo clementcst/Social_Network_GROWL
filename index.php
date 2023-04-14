@@ -82,8 +82,8 @@
                         $postComments = db_selectColumns('comment', ['*'], ['ReplyTo_PostID' => ['=', "'".$postData[0]."'", '0']]);
                         $nbComments = count($postComments);                            
                     ?>
-                    <div>
-                        <ion-icon id="menu<?=$i+1?>" name="chatbox-ellipses" onclick="CommentSectionOpen(this.id)">
+                   <div>
+                        <ion-icon id="CommentSection<?=$postData[0]?>" name="chatbox-ellipses" onclick="CommentSectionOpen(this.id)">
                         </ion-icon>
                         <small><?= $nbComments ?></small>
                     </div>
@@ -94,7 +94,7 @@
                             $postCommentData[2] = urldecode($postCommentData[2]);
                             $CommentUserData = db_getUserData($postCommentData[3]);
                     ?>
-                    <div class="comment-menu" id="close<?=$i+1?>">
+                    <div class="comment-menu" id="close<?=$postData[0]?>">
                         <div class="comments-list">
                             <div class="user-profil comment-box">
                                 <img src="<?= $CommentUserData[9] ?>">
