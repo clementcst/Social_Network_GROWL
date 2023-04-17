@@ -87,11 +87,40 @@ main{
 .my_bulle_message{
     position:relative;
     float:right;
-    background-color: var(--bg-main-color);
+    background: var(--bg-main-color);
     margin-right: 20px;
     color: var(--bg-post-color);
 }
 
+#new-post-images{
+    background: transparent;
+    width: auto;
+    height: auto;
+    border-radius:10px;
+    padding:5px;
+}
+
+#new-post-images button {
+    position: absolute;
+    margin-left:2%;
+    width: 20px;
+    height: 20px;
+    background-color: red;
+    border: none;
+    border-radius: 50%;
+    color: white;
+    font-size: 12px;
+    line-height: 20px;
+    text-align: center;
+    cursor: pointer;
+}
+
+#new-post-images img{
+    border-radius:10px;
+    position:relative;
+    float:right;
+    margin-right:0;
+}
 .my-empty-conv{
     width: 100%;
 }
