@@ -50,7 +50,6 @@
         <div class="main">
             <!-- Left Content -->
             <?php include_once(ASIDE); ?>
-            <div class="left-content"></div>
             <script rel="stylesheet" src="js/aside.js"></script>
             <!-- Middle Content -->
             <div class="middle-content">
