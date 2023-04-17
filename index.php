@@ -53,6 +53,7 @@
                             
                     </div>
                 </form>
+              </div>
         <!-- Posts -->
         <?php 
             $posts = db_selectColumns('post', ['*']);
