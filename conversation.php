@@ -78,15 +78,19 @@
                             <span id="<?=$i;?>" class="message_info date_message" ><script>changeFormatDate('<?=$conversation[$i][5]?>', '<?=$i?>', '1')</script></span>  
                         </div>
                     </div>
-                    <?php } ?>                              
-
+                    <?php } ?>     
                     </div>
+
+                            <div id="new-post-images">
+                            </div>  
+         
 
                     <div class="send_menu_message">
                         <div class="message_image_file">
-                            <input type="file" id="hiddenfile" onchange="displayFile()" style="display:none"/>
+                        <input type="file" name="picture" id="hiddenfile" onchange="previewPicture(this)"style="display:none" multiple>
                             <ion-icon name='images' onclick="getfile()" ></ion-icon>
                         </div>
+
                         <input id="actual_writen_message" type="text" class="form-control" placeholder="Write message..."  onkeypress="if (event.keyCode == 13) sendMessage()">
                         <div class="send_icon_message" onclick="sendMessage()">
                             <ion-icon name="send"></ion-icon>
