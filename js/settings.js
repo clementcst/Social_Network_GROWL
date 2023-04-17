@@ -95,3 +95,31 @@ function delete_friend(){
         }
     });
 }
+
+function previewPicture(e){
+        
+    var divImages = document.getElementById("profilePicture");
+        element = Array.from(e.files)[0]
+
+        if (element) {
+            var oImg = document.createElement("img");
+            oImg.setAttribute('src', URL.createObjectURL(element));            
+            fetch(oImg.src) .then((res) => res.blob()) .then((blob) => {
+                // Read the Blob as DataURL using the FileReader API
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                    divImages.src = reader.result;
+                    document.getElementById("srcPP_base64").setAttribute('value', (reader.result).split("base64,")[1]);
+                    document.getElementById("srcPP_type").setAttribute('value', (reader.result).split(";")[0].split("data:")[1]); 
+                };
+                reader.readAsDataURL(blob);
+            });
+            
+            divImages.appendChild(oImg);
+        }
+        
+}
+
+function getfile(){
+    document.getElementById('hiddenfile').click();
+}
