@@ -20,9 +20,19 @@ function previewPicture(e){
             if (element) {
                 var oImg = document.createElement("img");
                 oImg.setAttribute('src', URL.createObjectURL(element));
+                oImg.setAttribute('accept', 'image/jpeg, image/jpg, image/png');
                 oImg.setAttribute('alt', 'na');
                 oImg.setAttribute('width', '500px');
                 oImg.setAttribute('class', 'post-input-images');
+
+                // Créer un bouton de suppression pour cette image
+                var deleteBtn = document.createElement("button");
+                //deleteBtn.setAttribute('width', '500px');
+                deleteBtn.innerHTML = "X";
+                deleteBtn.addEventListener("click", function() {
+                    divImages.removeChild(oImg);
+                    divImages.removeChild(deleteBtn);
+                });
                 
                 fetch(oImg.src) .then((res) => res.blob()) .then((blob) => {
                     // Read the Blob as DataURL using the FileReader API
@@ -35,6 +45,7 @@ function previewPicture(e){
                 });
                 
                 divImages.appendChild(oImg);
+                divImages.appendChild(deleteBtn);
             }
         })
 } 
