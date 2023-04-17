@@ -44,7 +44,7 @@
             <?php } ?>
             <?php  if(defined('TRASHABLE')) { ?>
             <div class="close-message">
-                <ion-icon name="trash"></ion-icon>
+                <ion-icon name="trash" onclick="delete_friend()"></ion-icon>
             </div>
             <?php } ?>
         </div>
