@@ -44,15 +44,15 @@
 
                                 </div>
                             </div>
-
-                            <input type="file" name="picture" id="hiddenfile" onchange="previewPicture(this)"
-                                style="display:none" multiple>
-                            <ion-icon name='camera' onclick="getfile()"></ion-icon>Add Photos/Videos
-                            <input type="submit" value="Submit" />
+                            <div class="bottom-input">
+                                <div> <input type="file" name="picture" id="hiddenfile" onchange="previewPicture(this)"style="display:none" multiple>
+                                <ion-icon name='camera' onclick="getfile()"></ion-icon>Add Photos/Videos</div>
+                                <input id="submit-post" type="submit" value="Submit" />
+                                </div>
+                            </div>
+                            
+                    </div>
                 </form>
-            </div>
-        </div>
-        </div>
         <!-- Posts -->
         <?php 
             $posts = db_selectColumns('post', ['*']);
