@@ -84,5 +84,11 @@
 
         </div> 
     </nav>
+    <script rel="stylesheet" src="js/header.js"></script>
+    <?php 
+        if($userData[12] == "1") {
+                ?><script type="text/javascript"> toggleDarkMode();</script><?php
+        }
+    ?>
 </header>
                 
