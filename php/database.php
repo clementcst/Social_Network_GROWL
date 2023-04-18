@@ -8,7 +8,7 @@
    
 /**
    ┌──────────────────────────────────────────────────────────────────────────┐
-   │                     Functions for mysql Database                         │
+   │                     Functions for mysql Database  (made by Joan.Legrand) │
    └──────────────────────────────────────────────────────────────────────────┘
 **/   
 /** 
@@ -227,7 +227,7 @@
       if(!$result)
          php_err("error while trying update statement :\\n".$sql);
       else
-         java_log("Row succesfully updated in table ".$table_name);
+         java_log("Row succesfully updated in table ".$table_name." : ".$sql);
       return $result;      
    }
 
@@ -469,19 +469,13 @@ function db_deleteRows(string $table_name, ?array $filters) {
   }
 
   function db_getFriendRequest(string $user_id) {
-   return (array_merge(
+   return (
       db_selectColumns(
          table_name:'friends',
          columns:['UserID_1'], 
          filters:['UserID_2' => ['LIKE', '"'.$user_id.'"','1'],
                   'Accepted' => ['=', '0', '0']]
-      ),
-      db_selectColumns(
-         table_name:'friends',
-         columns:['UserID_2'], 
-         filters:['UserID_1' => ['LIKE', '"'.$user_id.'"','1'],
-                  'Accepted' => ['=', '0', '0']]
-      )));
+      ));
   }
 
 function db_updateUser($userID, $user_infos) {

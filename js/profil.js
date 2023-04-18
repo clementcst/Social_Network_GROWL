@@ -23,3 +23,11 @@ box1.addEventListener("click", function() {
     content2.style.display = "none";
     content3.style.display = "block";
   });
+
+function submitFormConvLinkProfil() {
+    document.getElementById("form-conversation-link-profil").submit();
+}
+
+function submitFormSendFriendReq() {
+  document.getElementById("form-send-f-req").submit();
+}

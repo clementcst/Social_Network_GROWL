@@ -18,6 +18,7 @@
         define('ACCOUNT_PRO','processCreateAccount.php');
         define('LOGIN_PRO','loginProcess.php');
         define('SETTINGS_PRO','settingsProcess.php');
+        define('FRIEND_PRO','friendProcess.php');
         define('ABOUTUS','aboutUs.php');
 
     /** in ROOT */

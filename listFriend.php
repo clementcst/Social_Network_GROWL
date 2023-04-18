@@ -60,23 +60,31 @@
         </div>
         <?php $compteurform = $i; } ?>
         <!-- FRIEND REQUEST -->
-        <?php if(defined('CONVERSIONABLE')) { ?>
+        <?php 
+            $friend_requests = db_getFriendRequest($_SESSION['connected']);
+            if(defined('CONVERSIONABLE') && count($friend_requests) > 0) { 
+        ?>
         <b>Friend Requests</b>
         <div id="div_friend_requests" class="close-friends">
             <?php 
-                $friend_requests = db_getFriendRequest($_SESSION['connected']);
+               
                 for ($i=0; $i < count($friend_requests) ; $i++) {
                     $compteurform++;
                     $friendReqData = db_getUserData($friend_requests[$i][0]);
                     ?>
-                        <div class="close-f friend-profil-link" onclick="submitFormProfilLink(<?=$compteurform?>)">
+                    <div class="close-f">
+                        <div class="friend-profil-link" onclick="submitFormProfilLink(<?=$compteurform?>)">
                             <img src='<?= $friendReqData[9]?>'></img>
                             <span id='friend_req<?= $friendReqData[0]?>'><?= $friendReqData[0]?></span>
-                            <ion-icon name="checkmark"></ion-icon>
                         </div>
+                        <ion-icon name="checkmark" onclick="submitFormAcceptFReq(<?=$compteurform?>)"></ion-icon>
                         <form id="form-profil-link<?=$compteurform?>" method="GET" action="<?= PROFIL ?>">
                             <input type="hidden" name="user" id="user<?=$i?>" value="<?= $friendReqData[0] ?>">
                         </form>
+                        <form id="form-f-req<?=$compteurform?>" method="POST" action="<?= PHP.FRIEND_PRO ?>">
+                            <input type="hidden" name="UsernameFuturFriend" id="user<?=$compteurform?>" value="<?= $friendReqData[0] ?>">
+                        </form>
+                    </div>
                     <?php
                 }
             ?>
