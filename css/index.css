@@ -1,4 +1,28 @@
 @import url("./style.css");
+/* Main Style */
+
+body{
+    background-color: var(--bg-body-color);
+    transition: background 0.3s ease;
+    height:100%;
+    width:100%;
+    position:relative;
+}
+
+/* Body Style */
+
+main{
+    display:flex;
+    justify-content: space-between;
+    padding: 13px 52px 13px 5%;
+}
+
+
+/* j'ai passer right content et ces css des div à l'interieur dans listFriend.css */
+
+.middle-content {
+    flex-basis:50%;
+}
 
 /* Middle-content Style */
 
@@ -50,7 +74,7 @@
   
 .add-post button {
     position: absolute;
-    margin-left:2%;
+    margin-left:-2%;
     width: 20px;
     height: 20px;
     background-color: red;
@@ -63,6 +87,16 @@
     cursor: pointer;
 }
 
+#new-post-images{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 10px;
+}
+
+#new-post-images img{
+   width:250px;
+   height:auto;
+}
 
 #submit-post {
     background-color:var(--bg-main-color); /* couleur de fond bleue */
@@ -312,6 +346,28 @@
     border-radius:5px;
     font-size:15px;
 
+}
+
+/*Other Style */
+
+
+@media  screen and (max-width:650px) {
+   
+    .logo{
+        display: none;
+    }
+
+    .left-content{
+        display:none;
+    }
+
+    .right-content{
+        display:none;
+    }
+
+    .main{
+        display:block;
+    }
 }
 
 
