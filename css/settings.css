@@ -1,48 +1,5 @@
 @import url(color.css);
 
-/* Main Style */
-
-html{ 
-    height: 100%;
-}
-
-body{
-    background-color: var(--bg-body-color);
-    transition: background 0.3s ease;
-    height:100%;
-    width:100%;
-    position:relative;
-}
-
-body::-webkit-scrollbar{
-    width: 0;
-}
-
-.main{
-    display: flex;
-}
-
-.left-content {
-    padding-top:70px;
-    flex-basis:30%;
-    position:sticky;
-    top:80px;
-    left:5%;
-    align-self: flex-start;
-}
-
-.middle-content{
-    margin-top: 40px;
-    flex-basis: 30%;
-}
-
-.right-content {
-    flex-basis:35%;
-    display:flex;
-    justify-content: flex-end;
-    /* z-index:-10; */
-}
-
 .settings-list{
     font-size:xx-large;
     background-color: white;
