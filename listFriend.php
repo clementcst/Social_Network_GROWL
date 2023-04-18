@@ -27,17 +27,17 @@
             <div class="friend-profil-link"  onclick='<?php echo $onclickfct ?>(<?=$i?>);'>
                 <img src="<?= $friendData[9] ?>" <?php if( $onclickfct == 'selectDiscussion'){echo "onclick = 'submitFormProfilLink($i)'";}?>>
                 <div>
-                     <p id="pseudo-close-f-display" class="userName<?=$i?>"><?= $friendData[0] ?></p>
+                     <p id="pseudo-close-f-display<?=$i?>" class="userName<?=$i?>"><?= $friendData[0] ?></p>
                 </div>
                 <form id="form-profil-link<?=$i?>" method="GET" action="<?= PROFIL ?>">
-                    <input type="hidden" name="user" id="user" value="<?= $friendData[0] ?>">
+                    <input type="hidden" name="user" id="user<?=$i?>" value="<?= $friendData[0] ?>">
                 </form>
             </div>
             <?php  if(defined('CONVERSIONABLE')) { ?>
             <div class="close-message">
                 <ion-icon name="paper-plane" onclick = 'submitFormConvLink(<?=$i?>)'>
                     <form id="form-conversation-link<?=$i?>" method="GET" action="<?= CONVERSATION ?>">
-                        <input type="hidden" name="user_conv" id="user_conv" value="<?= $friendData[0] ?>">
+                        <input type="hidden" name="user_conv" value="<?= $friendData[0] ?>">
                     </form>
                 </ion-icon>
             </div>
