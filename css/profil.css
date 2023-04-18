@@ -1,5 +1,9 @@
 @import url("./style.css");
 
+.central{
+    width:60%;
+}
+
 .post-profil::-webkit-scrollbar{
     width:0;
 }
