@@ -457,12 +457,30 @@ function db_deleteRows(string $table_name, ?array $filters) {
       db_selectColumns(
          table_name:'friends',
          columns:['UserID_1'], 
-         filters:['UserID_2' => ['LIKE', '"'.$user_id.'"','0']]
+         filters:['UserID_2' => ['LIKE', '"'.$user_id.'"','1'],
+                  'Accepted' => ['=', '1', '0']]
       ),
       db_selectColumns(
          table_name:'friends',
          columns:['UserID_2'], 
-         filters:['UserID_1' => ['LIKE', '"'.$user_id.'"','0']]
+         filters:['UserID_1' => ['LIKE', '"'.$user_id.'"','1'],
+                  'Accepted' => ['=', '1', '0']]
+      )));
+  }
+
+  function db_getFriendRequest(string $user_id) {
+   return (array_merge(
+      db_selectColumns(
+         table_name:'friends',
+         columns:['UserID_1'], 
+         filters:['UserID_2' => ['LIKE', '"'.$user_id.'"','1'],
+                  'Accepted' => ['=', '0', '0']]
+      ),
+      db_selectColumns(
+         table_name:'friends',
+         columns:['UserID_2'], 
+         filters:['UserID_1' => ['LIKE', '"'.$user_id.'"','1'],
+                  'Accepted' => ['=', '0', '0']]
       )));
   }
 

@@ -1,9 +1,4 @@
 @import url("./style.css");
-
-.central{
-    width:60%;
-}
-
 .post-profil::-webkit-scrollbar{
     width:0;
 }
@@ -81,7 +76,7 @@
 }
 
 
-#send-messages{
+.button_profil{
     width:150px;
     height:35px;
     font-size: 17px;
@@ -96,7 +91,7 @@
     box-shadow: 0px -0px 0px 0px rgba(143, 64, 248, .5), 0px 0px 0px 0px rgba(56, 113, 235, 0.5);
 }
 
-#send-messages::after{
+.button_profil::after{
     content: '';
     width: 400px;
     height: 400px;
@@ -108,11 +103,11 @@
     transition: all .5s;
 }
 
-#send-messages:hover::after {
+.button_profil:hover::after {
     transform: rotate(150deg);
 }
   
-#send-messages:hover {
+.button_profil:hover {
     transform: translate(0,-3px);
     box-shadow: 10px -10px 25px 0px rgba(143, 64, 248, .25), -10px 10px 25px 0px rgba(8, 77, 100, 0.25);
 }
@@ -284,7 +279,7 @@
       font-size: 12px;
   }
 
-.post-profil{
+  .post-profil{
     height: 95%;
     width:90%;
     overflow-y:scroll;
@@ -292,76 +287,13 @@
     padding:5px;
     padding-right:20px;
     padding-bottom:30px;
+    margin-top:5px;
 }
 
 hr {
     color:white;
     width:100%;
-}
-
-.container-btn-post{
-    display:flex;
-    justify-content: space-between;
-
-
-}
-
-.container-btn-post btn {
-    width: 30%;
-    height: 30px;
-    border: 2px solid var(--bg-main-color);
-    border-radius: 10px;
-    margin-bottom: 30px;
-    background-color: var(--bg-main-color);
-    color: #fff;
-    font-size: 16px;
-    font-weight: bold;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    text-transform: uppercase;
   }
-  
-  .container-btn-post btn:hover {
-    background-color: #b7b6b6;
-    color:var(--bg-main-color);
-    transition: all 0.3s ease;
-  }
-  
-  .container-btn-post btn:focus {
-    outline: none;
-  }
-  
-
-.content-posts{
-    width:100%;
-    height:70%;
-    overflow: auto;
-    text-align:center;
-}
-
-.content1{
-    border:solid red 2px;
-    height:120px;
-}
-
-.content-posts::-webkit-scrollbar {
-    width: 6px;
-  }
-  
-  .content-posts::-webkit-scrollbar-thumb {
-    background-color:var(--bg-main-color);
-    border-radius: 3px;
-  }
-  
-  .content-posts::-webkit-scrollbar-track {
-    background-color: #f2f2f2;
-    border-radius: 3px;
-  }
-
-  
 
  
  
