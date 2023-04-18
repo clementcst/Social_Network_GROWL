@@ -65,7 +65,8 @@
         );
         $numberComments =count($comments);
         for($i=0;$i<$numberComments;$i++){
-            echo $comments[$i][0].";".$comments[$i][1].";".$comments[$i][2].";".$comments[$i][3];
+            $user = db_getUserData($comments[$i][3]);
+            echo $comments[$i][0]."***".$comments[$i][1]."***".$comments[$i][2]."***".$comments[$i][3]."***".$user[0]."***".$user[9];
             if($i<$numberComments-1)echo";";
         }
         return 0;
