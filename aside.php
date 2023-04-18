@@ -19,7 +19,7 @@
                 <ion-icon name="settings"></ion-icon>Settings
             </div></a>
             <hr>
-            <small>About us</small>
+            <a href=<?=ABOUTUS?>><small>About us</small></a>
         </div>
     </div>
     <nav class="lateral">
