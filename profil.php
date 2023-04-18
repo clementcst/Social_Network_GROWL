@@ -39,9 +39,13 @@
                         <a href="<?= SETTINGS ?>">
                             <ion-icon name="settings"></ion-icon>
                         </a>
-                        <?php }else{ ?>
-                            <button id="send-messages">
+                        <?php }else if(in_array(array($vieweduser_id), db_getFriends($_SESSION['connected']))){ ?>
+                            <button id="send-messages" class="button_profil">
                                 Send Messages
+                            </button>
+                        <?php } else { ?>
+                            <button id="send-f-request" class="button_profil">
+                                Send Friend Request
                             </button>
                         <?php } ?>
                     </div>
@@ -72,7 +76,8 @@
                     </div>
                 </div>
             </div>
-            <hr><br>
+
+             <hr><br>
             <div class="bottom-profil">
                 
                 <div class="container-btn-post">

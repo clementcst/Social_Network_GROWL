@@ -95,35 +95,34 @@ INSERT INTO `conversation` (`ConversationID`, `SenderID`, `ReceiverID`, `Content
 CREATE TABLE `friends` (
   `UserID_1` varchar(50) NOT NULL,
   `UserID_2` varchar(50) NOT NULL,
-  `Level` int(11) NOT NULL DEFAULT '0'
+  `Accepted` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 --
 -- Dumping data for table `friends`
 --
 
-INSERT INTO `friends` (`UserID_1`, `UserID_2`, `Level`) VALUES
-('U0', 'U1', 0),
-('U0', 'U2', 0),
-('U0', 'U3', 0),
-('U0', 'U4', 0),
+INSERT INTO `friends` (`UserID_1`, `UserID_2`, `Accepted`) VALUES
+('U0', 'U1', 1),
+('U0', 'U2', 1),
+('U0', 'U3', 1),
+('U0', 'U4', 1),
 ('U0', 'U5', 0),
 ('U0', 'U6', 0),
-('U1', 'U2', 0),
-('U1', 'U3', 0),
-('U1', 'U4', 0),
+('U1', 'U2', 1),
+('U1', 'U3', 1),
+('U1', 'U4', 1),
 ('U1', 'U5', 0),
-('U1', 'U6', 0),
+('U1', 'U6', 1),
 ('U2', 'U3', 0),
-('U2', 'U4', 0),
+('U2', 'U4', 1),
 ('U2', 'U5', 0),
-('U2', 'U6', 0),
-('U3', 'U4', 0),
-('U3', 'U5', 0),
+('U2', 'U6', 1),
+('U3', 'U4', 1),
+('U3', 'U5', 1),
 ('U3', 'U6', 0),
-('U4', 'U5', 0),
+('U4', 'U5', 1),
 ('U4', 'U6', 0),
-('U5', 'U6', 0);
+('U5', 'U6', 1);
 
 -- --------------------------------------------------------
 
@@ -152,7 +151,7 @@ INSERT INTO `liked_post` (`UserID`, `PostID`, `Liked_DateTime`) VALUES
 
 CREATE TABLE `media` (
   `MediaID` varchar(50) NOT NULL DEFAULT 'NaM',
-  `Base64` mediumtext NOT NULL,
+  `Base64` longtext NOT NULL,
   `Type` varchar(50) NOT NULL DEFAULT 'image/jpeg'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -228,7 +227,7 @@ CREATE TABLE `post` (
   `NumberOfLikes` int(11) NOT NULL DEFAULT '0',
   `NumberOfShares` int(11) NOT NULL DEFAULT '0',
   `NumberOfMedia` int(11) NOT NULL DEFAULT '0',
-  `Title` tinytext,
+  `KeyWords` mediumtext,
   `Content` text,
   `PostedBy_UserID` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -237,7 +236,7 @@ CREATE TABLE `post` (
 -- Dumping data for table `post`
 --
 
-INSERT INTO `post` (`PostID`, `Posted_DateTime`, `NumberOfLikes`, `NumberOfShares`, `NumberOfMedia`, `Title`, `Content`, `PostedBy_UserID`) VALUES
+INSERT INTO `post` (`PostID`, `Posted_DateTime`, `NumberOfLikes`, `NumberOfShares`, `NumberOfMedia`, `KeyWords`, `Content`, `PostedBy_UserID`) VALUES
 ('P1', '2023-03-15 17:11:13', 0, 0, 1, 'Yoda LUL', 'Look, he\'s green LOL', 'U1');
 
 -- --------------------------------------------------------
