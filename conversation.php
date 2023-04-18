@@ -52,7 +52,7 @@
                             <h3 id="current_speaking"><?= $last_communicate_friend[0]; ?></h3>
                         </div>
                         <div class="date_last_message">
-                            <span id="current_speaking_date_last_message"><?php if($number_message !=0) echo "<script> changeFormatDate(".$conversation."[".$number_message." -1][5]?>', 'current_speaking_date_last_message', '1')</script> ";?></span>
+                            <span id="current_speaking_date_last_message"><?php if($number_message !=0) echo "<script> changeFormatDate('".$conversation[$number_message-1][5]."', 'current_speaking_date_last_message', 1)</script> ";?></span>
                         </div>
                     </div>
 
