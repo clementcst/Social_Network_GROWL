@@ -1,8 +1,23 @@
 
-//Cherche le deuxième enfait de la div qui contient l'image commentaire. Le deuxième enfant est la div 'bulle commentaire' qui apparait et disparait quand on clique sur la div mère
-function CommentSectionOpen(menu_id){
+//Regarde si la box commentaire a déjà été crée, et appelle les fonctions selon ce test
+function CommentSectionCall(menu_id) {
     menu_id = menu_id.replace('CommentSection', '');
-    all_comments = createComments(menu_id);
+    let existCommentSection = document.getElementById("close" + menu_id);
+    if(existCommentSection == null){
+        CommentSectionCreate(menu_id);
+    }
+    else{
+        CommentSectionOpen(menu_id);
+    }
+}
+
+//Crée la bulle commentaire avec Ajax lors du premier clique sur la commentSection. Pour les clics suivants, ce sera la fonction CommentSectionOpen qui ouvrira/fermera la section commentaire
+function CommentSectionCreate(menu_id) {
+    createComments(menu_id);
+}
+
+//Cherche le deuxième enfant de la div qui contient l'image commentaire. Le deuxième enfant est la div 'bulle commentaire' qui apparait et disparait quand on clique sur la div mère
+function CommentSectionOpen(menu_id){
     selected_comment_menu = document.getElementById("close" + menu_id);
     selected_comment_menu.classList.toggle("comment-menu-height");
 }
