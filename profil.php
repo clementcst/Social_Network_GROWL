@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>page profil Perso</title>
     <link rel="stylesheet" href="css/profil.css">
+    
 </head>
 
 <body>
@@ -40,13 +41,23 @@
                             <ion-icon name="settings"></ion-icon>
                         </a>
                         <?php }else if(in_array(array($vieweduser_id), db_getFriends($_SESSION['connected']))){ ?>
-                            <button id="send-messages" class="button_profil">
+
+                            <button id="send-messages" class="button_profil" onclick="submitFormConvLinkProfil()">
                                 Send Messages
                             </button>
-                        <?php } else { ?>
-                            <button id="send-f-request" class="button_profil">
+                            <form id="form-conversation-link-profil" method="GET" action="<?= CONVERSATION ?>">
+                                 <input type="hidden" name="user_conv" value="<?= $vieweduserData[0] ?>">
+                            </form>
+
+                        <?php } else if(!in_array(array($vieweduser_id), db_getFriendRequest($_SESSION['connected']))){ ?>
+
+                            <button id="send-f-request" class="button_profil" onclick="submitFormSendFriendReq()">
                                 Send Friend Request
                             </button>
+                            <form id="form-send-f-req" method="POST" action="<?= PHP.FRIEND_PRO ?>">
+                                 <input type="hidden" name="SendReqUser" value="<?= $vieweduserData[0] ?>">
+                            </form>
+
                         <?php } ?>
                     </div>
                     <div class="statistique-profil">
