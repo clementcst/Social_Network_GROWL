@@ -96,7 +96,7 @@
 
                     <div class="send_menu_message">
                         <div class="message_image_file">
-                        <input type="file" name="picture" id="hiddenfile" onchange="previewPicture(this)"    style="display:none">
+                        <input type="file" name="picture" id="hiddenfile" onchange="previewPicture(this)"  accept=".jpeg, .jpg, .png"  style="display:none">
                             <ion-icon name='images' onclick="getfile()" ></ion-icon>
                         </div>
 
