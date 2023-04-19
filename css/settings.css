@@ -1,4 +1,10 @@
-@import url(color.css);
+@import url("./style.css");
+
+.main{
+    display: flex;
+    justify-content: space-between;
+    padding: 13px 52px 13px 5%;
+}
 
 .settings-list{
     font-size:xx-large;
@@ -89,146 +95,4 @@
     height:150px;
     border-radius: 50%;
     cursor:pointer;
-}
-
-/* Left-Content Style */
-
-.lateral {
-    position:absolute;
-    top:0;
-    left:0;
-    width:100%;
-    background-color: transparent;
-    z-index:1;
-}
-
-.nav-laterral {
-    position:absolute;
-    left:-200%;
-    top:10px;
-    height:100%;
-    width:max-content;
-    transition:all 0.3s ease;
-    z-index:2;
-}
-
-.nav-close {
-    margin-bottom: 50%;
-}
-
-a {
-    color:black;
-    text-decoration:none;
-}
-
-.nav-link {
-    cursor:pointer;
-    font-size:20px;
-    margin-bottom: 20%;
-    display:flex;
-    align-items:center;
-}
-
-.nav-link:hover {
-    color: var(--bg-main-color);
-}
-
-.nav-link ion-icon {
-    margin-right:15px;
-}
-
-.nav-link, #nav-button {
-    transition: all 0.2s ease;
-}
-
-#nav-button{
-    font-size:40px;
-    cursor:pointer;
-    height:50px;
-    width:50px;
-    display:flex;
-    align-items: center;
-    justify-content: center;
-    border-radius:5px;
-}
-
-#nav-button:hover{
-    color: var(--bg-main-color);
-}
-
-/* Right-Content Style */
-
-.close-f {
-    display:flex;
-    align-items:center;
-    background-color: white;
-    margin:5px;
-    padding:5px;
-    border-radius: 10px;
-    text-align: center;
-    justify-content: space-between;
-    border:none;
-    cursor:pointer;
-}
-
-.close-f:hover {
-    background-color:var(--bg-body-color);
-}
-
-.close-f p{
-    margin-bottom:-5px;
-    font-weight: 500px;
-}
-
-.close-f ion-icon {
-    width:25px;
-    height:25px;
-    margin-right:20px;
-}
-
-.close-f ion-icon:hover {
-    color:white;
-}
-
-.friend-profil-link{
-    display:flex;
-}
-
-.friend-profil-link img{
-    margin-left:5px;
-}
-
-#pseudo-close-f-display{
-    margin-top:10px;
-}
-
-.close-f img {
-    width:45px;
-    height:45px;
-    border-radius:50%;
-    margin-right:10px;
-}
-
-.close-friends  {
-    text-align: center;
-    position:fixed;
-    width:21%;
-    transition: 0.3s ease;
-    transition-delay: 0s;
-}
-
-.close-friends b {
-    font-size:25px;
-    color:rgb(63, 62, 62);
-}
-
-.close-message {
-    position:relative;
-    float:right;
-}
-
-
-.close-message {
-    position:relative;
-    float:right;
 }
