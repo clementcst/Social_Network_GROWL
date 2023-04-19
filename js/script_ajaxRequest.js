@@ -62,15 +62,16 @@ function changeConversation(username_friend){
                 return 0;
             }
             var res=reponse.split(";");
-            var number_messages = (res.length-4)/5;
+            var number_messages = (res.length-4)/6;
             let all_messages = [];
             let data = [res[0],res[1],res[3]];//variable contenant les informations de l'ami dont la fenetre de discussion est ouverte avec un 0 son username et en 1 sa photo
             for(var j=0;j<(number_messages);j++){
                 all_messages[j] = []; // tableau de la taille du nombre de message
-                for(var k = 0;k<5;k++){
-                    all_messages[j][k] = res[5*j+4+k]// dans le tableau on y met un tableau contenant toutes les infos du message
+                for(var k = 0;k<6;k++){
+                    all_messages[j][k] = res[6*j+4+k]// dans le tableau on y met un tableau contenant toutes les infos du message
                 }
             }
+            // console.log(all_messages[0][2]);
             updateConvMessage(data,all_messages);
         }
     }
@@ -79,8 +80,8 @@ function changeConversation(username_friend){
     return 0;    
 }
 
-function sendMessageIntoDB(content){
-    encodeURI(content);
+function sendMessageIntoDB(content, type){
+    encodeURI(content);  
     var username_friend = document.getElementById('current_speaking').innerHTML;
     username_friend = username_friend.trim();
     var requestsendMIDB= getXhr();
@@ -96,7 +97,7 @@ function sendMessageIntoDB(content){
         }
     }
     requestsendMIDB.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8');
-    requestsendMIDB.send('fct=sendMIDB '+ '&usernameFriend=' + username_friend + '&content=' + content);
+    requestsendMIDB.send('fct=sendMIDB '+ '&usernameFriend=' + username_friend + '&content=' + content + '&type=' + type);
     return 0;   
 }
 
@@ -282,7 +283,7 @@ function changeFormatDate(date_complete, id, have_to_whrite) {
 }
 
 
-function createBulbleMessage(name_friend, text_message, date_message, im_speaker,div_one_message){
+function createBulbleMessage(name_friend, text_message, base_media, type_media, date_message, im_speaker,div_one_message){  
     var number_message = document.getElementsByClassName('bulle');
     var bulle_message = document.createElement('div');
     if(im_speaker == 1){
@@ -294,17 +295,26 @@ function createBulbleMessage(name_friend, text_message, date_message, im_speaker
     var speaker = document.createElement('span');
     if(im_speaker == 1){
         speaker.className = 'message_info';
-        speaker.innerHTML = "Moi";
+        speaker.innerHTML = "Me";
     } else {
         speaker.className = 'message_info friend_name_message';
         speaker.innerHTML = name_friend;
     }
     bulle_message.appendChild(speaker);                
 
-    var text = document.createElement('span');
-    text.className = 'text_message';
-    text.innerHTML = decodeURI(text_message);
-    bulle_message.appendChild(text);
+    if(text_message.length != 0){
+        var text = document.createElement('span');
+        text.className = 'text_message';
+        text.innerHTML = decodeURI(text_message);
+        bulle_message.appendChild(text);
+    } else if(type_media.length != 0){
+        content = document.createElement("img");
+        base_media = decodeURI(base_media);
+        content.src = "data:"+type_media+";base64,"+base_media;
+        content.id = "image_message";
+        content.className = "text_message";
+        bulle_message.appendChild(content);
+    }
 
     var date_message_buble = document.createElement('span');
     date_message_buble.id = number_message.length + 1;
@@ -334,9 +344,9 @@ function updateConvMessage(data, messages){
             zone_message.appendChild(space_between_message);
         }
         if((messages[i][0]) == data[2]){
-            createBulbleMessage(data[0], messages[i][2],messages[i][4],"1", div_one_message);
+            createBulbleMessage(data[0], messages[i][2],messages[i][3], messages[i][5],messages[i][4],"1", div_one_message);
         } else {
-            createBulbleMessage(data[0], messages[i][2],messages[i][4],"0", div_one_message);               
+            createBulbleMessage(data[0], messages[i][2],messages[i][3], messages[i][5],messages[i][4],"0", div_one_message);               
         }   
         zone_message.appendChild(div_one_message );
     }
