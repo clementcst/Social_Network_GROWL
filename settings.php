@@ -62,14 +62,15 @@
                         $user = db_getUserData($_SESSION['connected']);
                     ?>
                     <div class="profile-param">
-                        <form  id="form-registration" onsubmit="return (checkingForm('registration'))" action="./php/processCreateAccount.php" method="post">
+                        <form  id="form-registration" onsubmit="return (checkingForm('registration'))" action="<?= PHP.SETTINGS_PRO ?>" method="post">
+                        <input type="hidden" name="src_username" id="src_username" value="<?= $userData[0]?>">
                         <div id="formulaire">
                             <table>
                                 <tr>
                                     <td>
                                         <div class="input_label">
                                             <label for="userName">Username</label>
-                                            <input type="text" name="userName" id="userName" placeholder=<?php echo json_encode($user[0]);?> size="32" value="<?php if(isset($tabCorrectInput["userName"])){echo $tabCorrectInput["userName"];}else{echo "";} ?>">
+                                            <input type="text" name="userName" id="userName" size="32" value="<?php echo $user[0];?>">
                                             <p id="errorMessage-registration-userName" class="errorMessage"><?php if(isset($tabErrorMessage["userName"])){echo $tabErrorMessage["userName"];}else{echo "";} ?></p>
                                         </div> 
                                     </td>
@@ -78,14 +79,14 @@
                                     <td>
                                         <div class="input_label">
                                             <label for="name">Last Name</label>
-                                            <input type="text" name="name" id="name" placeholder=<?php echo json_encode($user[1]);?> size="32" value="<?php if(isset($tabCorrectInput["name"])){echo $tabCorrectInput["name"];}else{echo "";} ?>">
+                                            <input type="text" name="name" id="name" size="32" value="<?php echo $user[1];?>">
                                             <p id="errorMessage-registration-name" class="errorMessage"><?php if(isset($tabErrorMessage["name"])){echo $tabErrorMessage["name"];}else{echo "";} ?></p>
                                         </div> 
                                     </td>
                                     <td>
                                         <div class="input_label">
                                             <label for="firstName">First Name</label><br>
-                                            <input type="text" name="firstName" id="firstName" placeholder=<?php echo json_encode($user[2]);?> size="32" value="<?php if(isset($tabCorrectInput["firstName"])){echo $tabCorrectInput["firstName"];}else{echo "";} ?>">
+                                            <input type="text" name="firstName" id="firstName" size="32" value="<?php echo $user[2];?>">
                                             <p id="errorMessage-registration-firstName" class="errorMessage"><?php if(isset($tabErrorMessage["firstName"])){echo $tabErrorMessage["firstName"];}else{echo "";} ?></p>
                                         </div>
                                     </td>
@@ -95,13 +96,13 @@
                                         <div class="input_label">
                                             <label for="sexChoice">Sex</label> 
                                             <div id="sexChoice">
-                                                <input type="radio" id="sexMan" <?php if(json_encode($user[8], JSON_NUMERIC_CHECK) == 1){echo "checked";}?> name="sex" value="Man" <?php if(isset($tabCorrectInput["sex"]) && $tabCorrectInput["sex"] === "Man"){echo "checked";}else{echo "";} ?>>
+                                                <input type="radio" id="sexMan" <?php if($user[8] == 1){echo "checked";}?> name="sex" value="Man" <?php if(isset($tabCorrectInput["sex"]) && $tabCorrectInput["sex"] === "Man"){echo "checked";}else{echo "";} ?>>
                                                 <label for="sexMan">Man</label>
                                                 <br>
-                                                <input type="radio" id="sexWoman" <?php if(json_encode($user[8], JSON_NUMERIC_CHECK) == 0){echo "checked";}?> name="sex" value="Woman" <?php if(isset($tabCorrectInput["sex"]) && $tabCorrectInput["sex"] === "Woman"){echo "checked";}else{echo "";} ?>>
+                                                <input type="radio" id="sexWoman" <?php if($user[8] == 0){echo "checked";}?> name="sex" value="Woman" <?php if(isset($tabCorrectInput["sex"]) && $tabCorrectInput["sex"] === "Woman"){echo "checked";}else{echo "";} ?>>
                                                 <label for="sexWoman">Woman</label>
                                                 <br>
-                                                <input type="radio" id="sexOther" <?php if(json_encode($user[8], JSON_NUMERIC_CHECK) == 2){echo "checked";}?> name="sex" value="Other" <?php if(isset($tabCorrectInput["sex"]) && $tabCorrectInput["sex"] === "Other"){echo "checked";}else{echo "";} ?>>
+                                                <input type="radio" id="sexOther" <?php if($user[8] == 2){echo "checked";}?> name="sex" value="Other" <?php if(isset($tabCorrectInput["sex"]) && $tabCorrectInput["sex"] === "Other"){echo "checked";}else{echo "";} ?>>
                                                 <label for="sexOther">Other</label>
                                             </div>  
                                             <p id="errorMessage-registration-sex" class="errorMessage"><?php if(isset($tabErrorMessage["sex"])){echo $tabErrorMessage["sex"];}else{echo "";} ?></p>
@@ -110,7 +111,7 @@
                                     <td>
                                         <div class="input_label">
                                             <label for="birthDate">Birth Date</label><br>
-                                            <input type="date" name="birthDate" id="birthDate" placeholder=<?php echo json_encode($user[6]);?> value="<?php if(isset($tabCorrectInput["birthDate"])){echo $tabCorrectInput["birthDate"];}else{echo "";} ?>">
+                                            <input type="date" name="birthDate" id="birthDate" value="<?php echo $user[6];?>">
                                             <p id="errorMessage-registration-birthDate" class="errorMessage"><?php if(isset($tabErrorMessage["birthDate"])){echo $tabErrorMessage["birthDate"];}else{echo "";} ?></p>
                                         </div>
                                     </td>
@@ -119,15 +120,8 @@
                                     <td>
                                         <div class="input_label">
                                             <label for="mail">Email Adress</label>
-                                            <input type="email" name="mail" id="mail"  placeholder=<?php echo json_encode($user[3]);?> size="25" value="<?php if(isset($tabCorrectInput["mail"])){echo $tabCorrectInput["mail"];}else{echo "";} ?>">
+                                            <input type="email" name="mail" id="mail" size="25" value="<?php echo $user[3];?>">
                                             <p id="errorMessage-registration-mail" class="errorMessage"><?php if(isset($tabErrorMessage["mail"])){echo $tabErrorMessage["mail"];}else{echo "";} ?></p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="input_label">
-                                            <label for="confirmationMail">Email Confirmation</label>
-                                            <input type="email" name="confirmationMail" id="confirmationMail" onpaste="return false;" placeholder=<?php echo json_encode($user[3]);?> size="25" value="<?php if(isset($tabCorrectInput["confirmationMail"])){echo $tabCorrectInput["confirmationMail"];}else{echo "";} ?>">
-                                            <p id="errorMessage-registration-confirmationMail" class="errorMessage"><?php if(isset($tabErrorMessage["confirmationMail"])){echo $tabErrorMessage["confirmationMail"];}else{echo "";} ?></p>
                                         </div>
                                     </td>
                                 </tr>
@@ -135,7 +129,7 @@
                                     <td colspan="2">
                                         <div class="input_label">
                                             <label for="country">Country</label><br>
-                                            <input class="country" name="country" id="country" placeholder=<?php echo json_encode($user[4]);?> rows="3" value="<?php if(isset($tabCorrectInput["country"])){echo $tabCorrectInput["country"];}else{echo "";} ?>">
+                                            <input class="country" name="country" id="country" rows="3" value="<?php echo $user[4];?>">
                                             <p id="errorMessage-registration-country" class="errorMessage"><?php if(isset($tabErrorMessage["country"])){echo $tabErrorMessage["country"];}else{echo "";} ?></p>
                                         </div>
                                     </td>
@@ -144,14 +138,14 @@
                                     <td>
                                         <div class="input_label">
                                             <label for="city">City</label><br>
-                                            <input type="text" name="city" id="city" placeholder=<?php echo json_encode($user[5]);?> value="<?php if(isset($tabCorrectInput["city"])){echo $tabCorrectInput["city"];}else{echo "";} ?>">
+                                            <input type="text" name="city" id="city" value="<?php echo $user[5];?>">
                                             <p id="errorMessage-registration-city" class="errorMessage"><?php if(isset($tabErrorMessage["city"])){echo $tabErrorMessage["city"];}else{echo "";} ?></p>
                                         </div>
                                     </td>
                                     <td>
                                         <div class="input_label">
                                             <label for="phoneNumber">Phone Number</label>
-                                            <input type="tel" name="phoneNumber" id="phoneNumber" placeholder=<?php echo json_encode($user[7]);?> value="<?php if(isset($tabCorrectInput["phoneNumber"])){echo $tabCorrectInput["phoneNumber"];}else{echo "";} ?>">
+                                            <input type="tel" name="phoneNumber" id="phoneNumber" value="<?php echo $user[7];?>">
                                             <p id="errorMessage-registration-phoneNumber" class="errorMessage"><?php if(isset($tabErrorMessage["phoneNumber"])){echo $tabErrorMessage["phoneNumber"];}else{echo "";} ?></p>
                                         </div>
                                     </td>
@@ -171,7 +165,7 @@
                     <div class="profile-param">
                         <form method="post" name="profile_picture_update" id="profile_picture_update" action="<?= PHP.SETTINGS_PRO ?>">
                             <img id="profilePicture" src="<?= $userData[9]?>">
-                            <input type="file" name="picture" id="hiddenfile" onchange="previewPicture(this)">
+                            <input type="file" accept=".png,.jpg" name="picture" id="hiddenfile" onchange="previewPicture(this)">
                             <input type="hidden" name="srcPP_base64" id="srcPP_base64">
                             <input type="hidden" name="srcPP_type" id="srcPP_type">
                             <input type="hidden" name="srcPP_username" id="srcPP_username" value="<?= $userData[0]?>">
@@ -219,7 +213,7 @@
                     </div>
                     </form>
                 </div>
-                <!--Thème-->
+                <!--Thème O LIGHT 1 DARK-->
                 <div class="settings-list" id="theme" name="Closed">
                     <ion-icon name="color-palette-outline"></ion-icon> Theme Settings<div class="menu-arrow"><ion-icon id="menu-arrow-theme" name="chevron-forward-outline"></ion-icon></div>
                 </div>
@@ -240,7 +234,7 @@
                     <form action="">
                         <label for="">Who can see your profile?</label>
                         <select id="">
-                            <option value="" disabled selected><?php if(json_encode($user[10], JSON_NUMERIC_CHECK) == 0){echo "Everyone";}elseif(json_encode($user[10], JSON_NUMERIC_CHECK) == 1){echo "Friends";}elseif(json_encode($user[10], JSON_NUMERIC_CHECK) == 2){echo "Nobody";}?></option>
+                            <option value="" disabled selected><?php if($user[10] == 0){echo "Everyone";}elseif($user[10] == 1){echo "Friends";}elseif($user[10] == 2){echo "Nobody";}?></option>
                             <option value="">Everyone</option>
                             <option value="">Friends</option>
                             <option value="">Nobody</option>
@@ -248,7 +242,7 @@
                         <br>
                         <label for="">Who can see your posts?</label>
                         <select id="">
-                            <option value="" disabled selected><?php if(json_encode($user[10], JSON_NUMERIC_CHECK) == 0){echo "Everyone";}elseif(json_encode($user[10], JSON_NUMERIC_CHECK) == 1){echo "Friends";}elseif(json_encode($user[10], JSON_NUMERIC_CHECK) == 2){echo "Nobody";}?></option>
+                            <option value="" disabled selected><?php if($user[10] == 0){echo "Everyone";}elseif($user[10] == 1){echo "Friends";}elseif($user[10] == 2){echo "Nobody";}?></option>
                             <option value="">Everyone</option>
                             <option value="">Friends</option>
                             <option value="">Nobody</option>
@@ -273,7 +267,7 @@
                 include_once(LISTFRIEND);
             ?>
         </div>
-        <br><br><br><br><br><br><br><br><br><br><br>
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
         <?php 
             include_once(FOOTER);
         ?>

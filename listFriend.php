@@ -43,20 +43,18 @@
                     <input type="hidden" name="user" id="user<?=$i?>" value="<?= $friendData[0] ?>">
                 </form>
             </div>
-            <?php  if(defined('CONVERSIONABLE')) { ?>
             <div class="close-message">
+                <?php  if(defined('CONVERSIONABLE')) { ?>
                 <ion-icon name="paper-plane" onclick = 'submitFormConvLink(<?=$i?>)'>
                     <form id="form-conversation-link<?=$i?>" method="GET" action="<?= CONVERSATION ?>">
                         <input type="hidden" name="user_conv" value="<?= $friendData[0] ?>">
                     </form>
                 </ion-icon>
-            </div>
-            <?php } ?>
-            <?php  if(defined('TRASHABLE')) { ?>
-            <div class="close-message">
+                <?php } ?>
+                <?php  if(defined('TRASHABLE')) { ?>
                 <ion-icon name="trash" onclick="delete_friend()"></ion-icon>
+                <?php }  ?>
             </div>
-            <?php }  ?>
         </div>
         <?php $compteurform = $i; } ?>
         <!-- FRIEND REQUEST -->
