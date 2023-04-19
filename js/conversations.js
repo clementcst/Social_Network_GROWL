@@ -12,11 +12,14 @@ function getfile(){
 }
 
 function previewPicture(e){
-        
-    var divImages = document.getElementById("new-post-images");
+    var boxmessages =  document.getElementsByClassName("box_message")[0];
+    var textzone = document.getElementsByClassName("send_menu_message")[0];
+    
         Array.from(e.files).forEach(element => {
 
             if (element) {
+                var divImages = document.createElement("div");
+                divImages.id= "new-post-images";
                 var oImg = document.createElement("img");
                 oImg.setAttribute('src', URL.createObjectURL(element));
                 oImg.setAttribute('accept', 'image/jpeg, image/jpg, image/png');
@@ -29,8 +32,10 @@ function previewPicture(e){
                 //deleteBtn.setAttribute('width', '500px');
                 deleteBtn.innerHTML = "X";
                 deleteBtn.addEventListener("click", function() {
+                    document.getElementById("hiddenfile").value = "";
                     divImages.removeChild(oImg);
                     divImages.removeChild(deleteBtn);
+                    boxmessages.removeChild(divImages);
                 });
                 
                 fetch(oImg.src) .then((res) => res.blob()) .then((blob) => {
@@ -45,31 +50,55 @@ function previewPicture(e){
                 
                 divImages.appendChild(oImg);
                 divImages.appendChild(deleteBtn);
+                boxmessages.appendChild(divImages);
+                boxmessages.insertBefore(textzone, divImages.nextSibling)
             }
         })
-} 
+}
 
 
 function sendMessage() {
 	let now = new Date();
 	var tableauMois = new Array('janvier','février','mars','mai','juillet','septembre','novembre','décembre');
+    let message = [];
     //On récupère le message qui est écrit dans le champ message
-    let message = document.getElementById("actual_writen_message").value;
-	if(message == 0){
-        return;
+    if(!document.getElementsByClassName("post-input-images").length == '0'){
+        var img = document.getElementsByClassName("post-input-images")[0].src;
+        message[0] = img.split("base64,")[1];
+        message[1] = img.split(";")[0].split("data:")[1];
+    } else{
+        message[0] = document.getElementById("actual_writen_message").value;
+        if(message == 0){
+            return;
+        }
+        message[1]=null;
     }
-	
     //On récupère la div conversation pour y ajouter la nouvelle bulle message
     let conversation = document.getElementById("conv");
 	
     //On crée la nouvelle bulle avec la bonne classe
     let new_bulle = document.createElement("div");
     new_bulle.className = "bulle my_bulle_message";
+    var speaker = document.createElement('span');
+    speaker.className = 'message_info';
+    speaker.innerHTML = "Me";
+    var content;
 	
-    //Cette bulle doit contenir le contenu du message et les informations annexes avec les bonnes classes css
-    let text_message = document.createElement("span");
-    text_message.textContent = message;
-    text_message.className = "text_message";
+    if(message[1] != null){ // cas ou on envoie une image
+        content = document.createElement("img");
+        content.src = "data:"+message[1]+";base64,"+message[0];
+        content.id = "image_message";
+        content.className = "text_message";
+        var delete_preview_image = document.getElementById("new-post-images");
+        delete_preview_image.innerHTML = "";
+        delete_preview_image.remove();
+
+    }else { // cas ou on envoie du texte
+        //Cette bulle doit contenir le contenu du message et les informations annexes avec les bonnes classes css
+        content = document.createElement("span");
+        content.textContent = message[0];
+        content.className = "text_message";
+    }
 	
     let info_message = document.createElement("span");
     info_message.className = "message_info date_message";
@@ -84,7 +113,8 @@ function sendMessage() {
     //Le tout doit être mit dans une div qui prend 100% de la taille du champ conversation
     let mother_div = document.createElement("div");
 
-    new_bulle.append(text_message);
+    new_bulle.append(speaker);
+    new_bulle.append(content);
     new_bulle.append(info_message);
 
     mother_div.append(empty_div);
@@ -92,6 +122,6 @@ function sendMessage() {
 
     conversation.prepend(mother_div);
     document.getElementById("actual_writen_message").value = "";
-    sendMessageIntoDB(message);
+    sendMessageIntoDB(message[0],message[1]);
     document.getElementById('current_speaking_date_last_message').innerHTML = date;
 }
