@@ -355,26 +355,25 @@ function db_deleteRows(string $table_name, ?array $filters) {
    }
 
    // java_log(json_encode(db_selectColumns('user',['Username','Name'])));
-
-     function db_newMessage($id_sender, $id_receiver, $content, $media) {
-         date_default_timezone_set('Europe/Paris');
-         if($content == NULL){
-         $conversation = array(
+ function db_newMessage($id_sender, $id_receiver, $content, $media) {
+      date_default_timezone_set('Europe/Paris');
+      if($content == NULL){
+      $conversation = array(
+                          'ConversationID' => db_generateId("conversation"),
+                          'SenderID' => $id_sender,
+                          'ReceiverID' => $id_receiver,
+                          'MediaID' => $media,
+                          'Posted_DateTime' => date("Y-m-d H:i:s"));
+      } elseif($media == NULL){
+      $conversation = array(
                            'ConversationID' => db_generateId("conversation"),
                            'SenderID' => $id_sender,
                            'ReceiverID' => $id_receiver,
-                           'MediaID' => $media,
+                           'Content' => $content,
                            'Posted_DateTime' => date("Y-m-d H:i:s"));
-         } elseif($media == NULL){
-         $conversation = array(
-                              'ConversationID' => db_generateId("conversation"),
-                              'SenderID' => $id_sender,
-                              'ReceiverID' => $id_receiver,
-                              'Content' => $content,
-                              'Posted_DateTime' => date("Y-m-d H:i:s"));
-         }
-         db_newRow('conversation', $conversation); 
-   }
+      }
+      db_newRow('conversation', $conversation); 
+  }
 
   function db_newFriend($id_user1, $id_user2) {
       db_newRow('friends', ['UserID_1' => $id_user1,
@@ -382,100 +381,9 @@ function db_deleteRows(string $table_name, ?array $filters) {
                             'Level' => '0']); 
   }
   
-  function db_order_lastConversation($user_id){
-   $order_friends = 
-   array_merge(db_selectColumns(
-      table_name:'conversation',
-      columns:['ConversationID','ReceiverID'], 
-      filters:['SenderID' => ['LIKE', '"'.$user_id.'"','0']]
-      ),
-      db_selectColumns(
-         table_name:'conversation',
-         columns:['ConversationID','SenderID'], 
-         filters:['ReceiverID' => ['LIKE', '"'.$user_id.'"','0']]
-      ));
-      if($order_friends[0]==null){
-         $friends_id = db_getFriends($user_id);
-         for($j = 0; $j <count($friends_id); $j++) {
-            $friends_id[$j] = $friends_id[$j][0];
-         } 
-         return $friends_id;
-      }
-
-      for ($i=0; $i<count($order_friends); $i++) {
-         $order = intval(str_replace("CV","",$order_friends[$i][0]));
-         $order_tab["$order"]= $i;
-      }    
-      krsort($order_tab, SORT_NUMERIC);
-      $cmp = 0;
-      foreach($order_tab as $value) {
-         $final_order[$cmp] = $order_friends[$value][1];
-         $cmp++;
-      }
-      $final_order = array_values(array_unique($final_order));
-      $friends_id = db_getFriends($user_id);
-      for($j = 0; $j <count($friends_id); $j++) {
-         $friends_id[$j] = $friends_id[$j][0];
-      } 
-      $friends_id = array_merge($final_order, $friends_id);
-     
-      $unique_friends = array();
-      for ($i = 0; $i < count($friends_id); $i++) {
-         if (!in_array($friends_id[$i], $unique_friends)) {
-             $unique_friends[] = $friends_id[$i];
-         }
-      }    
-      return $unique_friends;
-  }
-
-
   
-  function db_order_lastConversation($user_id){
-   $order_friends = 
-   array_merge(db_selectColumns(
-      table_name:'conversation',
-      columns:['ConversationID','ReceiverID'], 
-      filters:['SenderID' => ['LIKE', '"'.$user_id.'"','0']]
-      ),
-      db_selectColumns(
-         table_name:'conversation',
-         columns:['ConversationID','SenderID'], 
-         filters:['ReceiverID' => ['LIKE', '"'.$user_id.'"','0']]
-      ));
-      if($order_friends[0]==null){
-         $friends_id = db_getFriends($user_id);
-         for($j = 0; $j <count($friends_id); $j++) {
-            $friends_id[$j] = $friends_id[$j][0];
-         } 
-         return $friends_id;
-      }
-
-      for ($i=0; $i<count($order_friends); $i++) {
-         $order = intval(str_replace("CV","",$order_friends[$i][0]));
-         $order_tab["$order"]= $i;
-      }    
-      krsort($order_tab, SORT_NUMERIC);
-      $cmp = 0;
-      foreach($order_tab as $value) {
-         $final_order[$cmp] = $order_friends[$value][1];
-         $cmp++;
-      }
-      $final_order = array_values(array_unique($final_order));
-      $friends_id = db_getFriends($user_id);
-      for($j = 0; $j <count($friends_id); $j++) {
-         $friends_id[$j] = $friends_id[$j][0];
-      } 
-      $friends_id = array_merge($final_order, $friends_id);
-     
-      $unique_friends = array();
-      for ($i = 0; $i < count($friends_id); $i++) {
-         if (!in_array($friends_id[$i], $unique_friends)) {
-             $unique_friends[] = $friends_id[$i];
-         }
-      }    
-      return $unique_friends;
-  }
-
+  
+ 
 
 function db_getConversation($user_id1, $user_id2) {
    $conversations = array_merge(
@@ -507,14 +415,18 @@ function db_getConversation($user_id1, $user_id2) {
    return $final_conv;
   }
 
-  function db_getFriendRequest(string $user_id) {
-   return (
+  function db_getFriends(string $user_id) {
+   return (array_merge(
       db_selectColumns(
          table_name:'friends',
          columns:['UserID_1'], 
-         filters:['UserID_2' => ['LIKE', '"'.$user_id.'"','1'],
-                  'Accepted' => ['=', '0', '0']]
-      ));
+         filters:['UserID_2' => ['LIKE', '"'.$user_id.'"','0']]
+      ),
+      db_selectColumns(
+         table_name:'friends',
+         columns:['UserID_2'], 
+         filters:['UserID_1' => ['LIKE', '"'.$user_id.'"','0']]
+      )));
   }
 
 function db_updateUser($userID, $user_infos) {
