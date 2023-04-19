@@ -14,22 +14,25 @@ function getfile(){
 function previewPicture(e){
     var boxmessages =  document.getElementsByClassName("box_message")[0];
     var textzone = document.getElementsByClassName("send_menu_message")[0];
+    if(!document.getElementById("new-post-images")){
+        var divImages = document.createElement("div");
+        divImages.id= "new-post-images";
+    } else {
+        var divImages = document.getElementById("new-post-images");
+        divImages.innerHTML ="";
+    }
     
         Array.from(e.files).forEach(element => {
 
             if (element) {
-                var divImages = document.createElement("div");
-                divImages.id= "new-post-images";
                 var oImg = document.createElement("img");
                 oImg.setAttribute('src', URL.createObjectURL(element));
                 oImg.setAttribute('accept', 'image/jpeg, image/jpg, image/png');
                 oImg.setAttribute('alt', 'na');
-                oImg.setAttribute('width', '500px');
                 oImg.setAttribute('class', 'post-input-images');
 
                 // Créer un bouton de suppression pour cette image
                 var deleteBtn = document.createElement("button");
-                //deleteBtn.setAttribute('width', '500px');
                 deleteBtn.innerHTML = "X";
                 deleteBtn.addEventListener("click", function() {
                     document.getElementById("hiddenfile").value = "";
