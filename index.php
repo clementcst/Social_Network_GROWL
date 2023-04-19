@@ -109,6 +109,6 @@
 
 </body>
 <script rel="stylesheet" src="js/index.js"></script>
-<script rel="stylesheet" src="js/script_ajaxRequest.js"></script>
+<script rel="stylesheet" src="js/ajaxRequest.js"></script>
 
 </html>
