@@ -27,7 +27,7 @@
         return 0;
     }
 
-    function changeConversation($username_friend) {
+   function changeConversation($username_friend) {
         $id_user_connected=$_SESSION['connected'];
         $id_friend = db_selectColumns(
             table_name:'user',
@@ -39,20 +39,43 @@
         $conversation = db_getConversation($id_user_connected, $id_friend[0][0]);
         $number_message=count($conversation);
         for($i=0;$i<$number_message;$i++){
-            echo $conversation[$i][1].";".$conversation[$i][2].";".$conversation[$i][3].";".$conversation[$i][4].";".$conversation[$i][5];
+            if($conversation[$i][4] != NULL){
+                $media = db_selectColumns(
+                table_name:'media',
+                columns:['Base64', 'Type'], 
+                filters:['MediaID' => ['LIKE', '"'.$conversation[$i][4].'"','0']]
+             );
+             $conversation[$i][4] = $media[0][0];
+             $conversation[$i][6] = $media [0][1];
+            //  str_replace(' ',"+", $conversation[$i][4]);
+            } else {
+                $conversation[$i][6] = NULL;
+            }
+            echo $conversation[$i][1].";".$conversation[$i][2].";".$conversation[$i][3].";".$conversation[$i][4].";".$conversation[$i][5].";".$conversation[$i][6];
             if($i<$number_message-1)echo";";
         }
         return 0;
     }
 
-    function sendMessageIntoDB($username_friend, $content) {
+    function sendMessageIntoDB($username_friend, $content, $type) {
+        echo($content);
+        echo(';');
+        // echo($type);
+        $media = NULL;
+        if($type != 'null') {// si le contenu est un média, on créé le média et le contenu devient
+            $id = db_generateId("media");
+            $content = str_replace(' ',"+", $content);
+            db_addMedia($content,$type);
+            $content = NULL;
+            $media = $id;
+        }
         $id_user_connected=$_SESSION['connected'];
         $id_friend = db_selectColumns(
             table_name:'user',
             columns:['UserID'], 
             filters:['Username' => ['LIKE', '"'.$username_friend.'"','0']]
          );
-        db_newMessage($id_user_connected, $id_friend[0][0], $content);        
+        db_newMessage($id_user_connected, $id_friend[0][0], $content, $media);        
         echo $username_friend;
         return 0;
     }
@@ -125,7 +148,7 @@
             case 'sendMIDB ' :
                 if($_POST['usernameFriend']!== null && $_POST['content']!== null)
                 {
-                    sendMessageIntoDB($_POST['usernameFriend'], $_POST['content']);
+                    sendMessageIntoDB($_POST['usernameFriend'], $_POST['content'], $_POST['type']);
                 }
                 else
                     echo "error, not enough POST in ajax request";
