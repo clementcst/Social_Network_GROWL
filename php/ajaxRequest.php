@@ -22,7 +22,7 @@
         }
         $id_user = $_SESSION['connected'];
         $id_receiver = db_selectColumns('user', ['UserID'], ['Username' => ['=', "'".$receiver."'", "0"]]);  
-        db_newMessage($id_user, $id_receiver, $message);                                                                           
+        //db_newMessage($id_user, $id_receiver, $message);                                                                           
         // renvoyer les valeurs sous cette forme : echo $tmptab[0].";".$tmptab[1].";".$ret_ses.";".$tmptab[2].";".$tmptab[3].";".$tmptab[4];    
         return 0;
     }
