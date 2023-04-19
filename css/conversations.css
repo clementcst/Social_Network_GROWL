@@ -221,3 +221,8 @@ input:focus {
 .friends_list:hover{
     cursor: pointer;
 }
+
+#image_message{
+    max-width: 250px;
+    max-height: 250px;
+}
