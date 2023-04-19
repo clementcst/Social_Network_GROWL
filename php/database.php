@@ -378,7 +378,7 @@ function db_deleteRows(string $table_name, ?array $filters) {
   function db_newFriend($id_user1, $id_user2) {
       db_newRow('friends', ['UserID_1' => $id_user1,
                             'UserID_2' => $id_user2,
-                            'Level' => '0']); 
+                            'Accepted' => '0']); 
   }
   
   function db_order_lastConversation($user_id){
@@ -490,7 +490,7 @@ function db_updateUser($userID, $user_infos) {
       db_updateColumns('user',  $user_infos, filters:['userID' => ['LIKE', '"'.$userID.'"','0']]);
    }
 
-   function db_addMedia($base, $type){
+function db_addMedia($base, $type){
       $id = db_generateId("media");
       $media = array('MediaID' => $id, 'Base64' =>$base, 'Type' =>$type);
       db_newRow('media', $media);

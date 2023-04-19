@@ -28,18 +28,22 @@ function getfile(){
 
 // La fonction previewPicture
 function previewPicture(e){
-        
+    countImg = document.getElementsByClassName('post-input-images').length;
+    if(countImg >= 4){
+        return;
+    }
     var divImages = document.getElementById("new-post-images");
+    var cmpImg = countImg;
         Array.from(e.files).forEach(element => {
 
-            if (element) {
+            if (element && cmpImg < 4) {
                 var oImg = document.createElement("img");
                 oImg.setAttribute('src', URL.createObjectURL(element));
                 oImg.setAttribute('accept', 'image/jpeg, image/jpg, image/png');
                 oImg.setAttribute('alt', 'na');
                 oImg.setAttribute('width', '500px');
                 oImg.setAttribute('class', 'post-input-images');
-
+            
                 // Créer un bouton de suppression pour cette image
                 var deleteBtn = document.createElement("button");
                 //deleteBtn.setAttribute('width', '500px');
@@ -61,6 +65,7 @@ function previewPicture(e){
                 
                 divImages.appendChild(oImg);
                 divImages.appendChild(deleteBtn);
+                cmpImg++;
             }
         })
 } 
