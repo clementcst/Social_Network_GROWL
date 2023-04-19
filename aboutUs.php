@@ -44,7 +44,7 @@ Notre objectif est de donner à nos utilisateurs une plate-forme de réseaux soc
 	
 	<h3>Contactez-nous</h3>
 	
-	<p>Vous pouvez nous contacter à tout moment à l'adresse suivante : <a href="mailto:contact@growl.com">contact@growl.com</a>.</p>
+	<p>Vous pouvez nous contacter à tout moment à l'adresse suivante : <a href="mailto:contact@growl.com">contact@growl.com</a></p>
 	</div>
 
 	
