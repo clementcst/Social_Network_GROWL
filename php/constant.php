@@ -14,8 +14,8 @@
         define('SESSION','session.php');
         define('MISC','miscellanous.php');
         define('AJAX_R','ajaxRequest.php');
-        define('M_FORMS','manage_form.php');
-        define('ACCOUNT_PRO','processCreateAccount.php');
+        define('M_FORMS','manageForm.php');
+        define('ACCOUNT_PRO','accountProcess.php');
         define('LOGIN_PRO','loginProcess.php');
         define('SETTINGS_PRO','settingsProcess.php');
         define('FRIEND_PRO','friendProcess.php');
