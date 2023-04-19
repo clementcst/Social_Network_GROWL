@@ -25,7 +25,7 @@
             $friends_id = db_order_lastConversation($_SESSION['connected']);
             if(isset($user_selected)){ // il y a un ami en get, on le sélectionne
                 $last_communicate_friend = db_getUserData($user_selected);
-                $conversation = db_getConversation($last_communicate_friend[0],$_SESSION['connected']);
+                $conversation = db_getConversation($user_selected,$_SESSION['connected']);
             } else {
                 $last_communicate_friend = db_getUserData($friends_id[0]);
                 $conversation = db_getConversation($friends_id[0],$_SESSION['connected']);
@@ -71,23 +71,32 @@
                                 if($conversation[$i][1]==$_SESSION['connected']){echo "message_info";}
                                 else{echo "message_info friend_name_message";}?>">
                                 <?php 
-                                if($conversation[$i][1]==$_SESSION['connected']){echo "Moi";}
+                                if($conversation[$i][1]==$_SESSION['connected']){echo "Me";}
                                 else{echo $last_communicate_friend[0];}?>
                             </span>
+                            <?php if($conversation[$i][4] != NULL){
+                                $media = db_selectColumns(
+                                    table_name:'media',
+                                    columns:['Base64', 'Type'], 
+                                    filters:['MediaID' => ['LIKE', '"'.$conversation[$i][4].'"','0']]
+                                 );
+                                 $base = $media[0][0];
+                                 $type = $media [0][1]; ?>
+                                 <img src="data:<?=$type ?>;base64,<?=$base ?>" alt="marche po" id ="image_message" class="text_message">
+                                 <?php
+                                 } else {?>
                             <span class="text_message"><?=$conversation[$i][3]?></span>
+                            <?php
+                                 }?>
                             <span id="<?=$i;?>" class="message_info date_message" ><script>changeFormatDate('<?=$conversation[$i][5]?>', '<?=$i?>', '1')</script></span>  
                         </div>
                     </div>
                     <?php } ?>     
                     </div>
 
-                            <div id="new-post-images">
-                            </div>  
-         
-
                     <div class="send_menu_message">
                         <div class="message_image_file">
-                        <input type="file" name="picture" id="hiddenfile" onchange="previewPicture(this)"style="display:none" multiple>
+                        <input type="file" name="picture" id="hiddenfile" onchange="previewPicture(this)"    style="display:none">
                             <ion-icon name='images' onclick="getfile()" ></ion-icon>
                         </div>
 
