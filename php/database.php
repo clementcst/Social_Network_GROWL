@@ -328,11 +328,12 @@ function db_deleteRows(string $table_name, ?array $filters) {
    }
 
    function db_newPost(array $post) {
+      date_default_timezone_set('Europe/Paris');
       $post = array_merge(
                $post, 
                array(
                'PostID' => db_generateId("post"),
-               'Posted_DateTime' => date("Y-m-d"),
+               'Posted_DateTime' => date("Y-m-d H:i:s"),
                'NumberOfLikes' => '0',
                'NumberOfShares' => '0'));
       db_newRow('post', $post); 
