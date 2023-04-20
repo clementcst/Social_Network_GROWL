@@ -30,6 +30,10 @@
     margin-bottom: 50%;
 }
 
+.nav-open {
+    transition:all 0.3s ease;
+}
+
 a {
     color:black;
     text-decoration:none;
