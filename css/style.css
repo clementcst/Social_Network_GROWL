@@ -23,7 +23,9 @@ main{
 }
 
 .middle-content {
-    flex-basis:50%;
+    flex-basis:60%;
+    margin-right: -10%;
+    transition: 0.3s ease;
 }
 
 
