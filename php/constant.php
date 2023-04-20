@@ -19,6 +19,7 @@
         define('LOGIN_PRO','loginProcess.php');
         define('SETTINGS_PRO','settingsProcess.php');
         define('FRIEND_PRO','friendProcess.php');
+        define('POST_PRO','postProcess.php');
 
     /** in ROOT */
         define('INDEX','index.php');
