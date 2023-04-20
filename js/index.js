@@ -43,6 +43,12 @@ function previewPicture(e){
                 oImg.setAttribute('alt', 'na');
                 oImg.setAttribute('width', '500px');
                 oImg.setAttribute('class', 'post-input-images');
+                var base = document.createElement("input");
+                base.type = "hidden";
+                base.name = "base"+ cmpImg;
+                var type = document.createElement("input");
+                type.type = "hidden";
+                type.name = "type"+ cmpImg;
             
                 // Créer un bouton de suppression pour cette image
                 var deleteBtn = document.createElement("button");
@@ -58,13 +64,16 @@ function previewPicture(e){
                     const reader = new FileReader();
                     reader.onloadend = () => {
                         oImg.src = reader.result;
-                       
+                        base.value = (reader.result).split("base64,")[1];
+                        type.value =(reader.result).split(";")[0].split("data:")[1];
                     };
                     reader.readAsDataURL(blob);
                 });
                 
                 divImages.appendChild(oImg);
                 divImages.appendChild(deleteBtn);
+                divImages.appendChild(base);
+                divImages.appendChild(type);
                 cmpImg++;
             }
         })
