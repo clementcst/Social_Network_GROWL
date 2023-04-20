@@ -31,11 +31,11 @@
                         <small><?php echo date('Y-m-d')." , ".$userData[5] ?></small>
                     </div>
                 </div>
-                <form method="post" name="new-post-form">
+                <form method="post" name="new-post-form" action="<?= PHP.POST_PRO ?>">
 
                     <div class="post-input">
                         <div class="content-input">
-                            <input class="text-area" type="textarea"
+                            <input class="text-area" type="textarea" name="text_input"
                                 placeholder="What do you want to tell about today ?" />
 
                             <div class="add-post">
@@ -61,6 +61,21 @@
                 $postUserData = db_getUserData($postData[7]);
                 $postData[6] = urldecode($postData[6]);
                 $postData[5] = urldecode($postData[5]);
+                if($postData[4] > 0 && $postData[4] < 4){
+                    $own_media = db_selectColumns(
+                        table_name:'own_media',
+                        columns:['MediaID'], 
+                        filters:['PostID' => ['LIKE', '"'.$postData[0].'"','0']]
+                    );
+                    
+                    for($j = 0; $j < count($own_media); $j++){
+                        $media = db_selectColumns(
+                            table_name:'media',
+                            columns:['Base64', 'Type'], 
+                            filters:['MediaID' => ['LIKE', '"'.$own_media[$j][0].'"','0']]
+                        );
+                    }
+                }                
         ?>
         <div class="post-container">
             <div class="user-profil">
@@ -72,7 +87,13 @@
             </div>
             <p class="post-text"><?= $postData[6] ?></p>
             <div class="post-media">
-                <img src="images/feed-image-1.png" class="post-img">
+            <?php if($postData[4] > 0 && $postData[4] < 4) {
+                    for($k = 0; $k < count($media); $k++){ ?>
+                    
+                        <img src="data:<?=$media[$k][1] ?>;base64,<?=$media[$k][0] ?>" alt="marche po" class="post-img">
+                <?php }} 
+                ?>
+                <!-- <img src="images/feed-image-1.png" class="post-img"> -->
 
                 <div class="post-reactions">
                     <div>
