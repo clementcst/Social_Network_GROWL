@@ -19,12 +19,60 @@ function settingMenuOpen(){
     settingMenu.classList.toggle("setting-menu-height");
 }
 
-var darkBtn = document.getElementById("dark-mode-btn")
 
-function toggleDarkMode() {
-    darkBtn.classList.toggle("dark-mode-on");
-    document.body.classList.toggle("dark-theme");
+const searchInput = document.getElementById('search-input');
+const suggestionsList = document.querySelector('.suggestion');
+
+
+searchInput.addEventListener('input', function() {
+  suggestionsList.style.display = 'block';
+  suggestionsList.innerHTML = "";
+  if(searchInput.value != "") {
+    searchProfil(searchInput.value);
+  }
+});
+
+
+function displayResult(nbrUser, tabUser){
+
+   for(var i = 0 ; i < nbrUser;i++){
+    
+        var div = document.createElement("div");
+        div.setAttribute('class','divSuggestion')
+        div.setAttribute('onclick','submitFormProfilSerarch('+i+')');
+
+        var form = document.createElement("form");
+        form.setAttribute('id','profilSearch'+i);
+        form.setAttribute('method','GET');
+        form.setAttribute('action','./profil.php');
+
+        var input = document.createElement("input");
+        input.setAttribute('type','hidden');
+        input.setAttribute('name','user');
+        input.setAttribute('id','userSearch'+i);
+        input.value = tabUser[i][1];
+
+        form.appendChild(input);
+
+        var img = document.createElement("img");
+        img.setAttribute('src',tabUser[i][2]);
+
+        var op = document.createElement("p");
+        op.innerHTML = tabUser[i][1];
+        div.appendChild(form);
+        div.appendChild(img);
+        div.appendChild(op);
+        suggestionsList.appendChild(div);
+   }
+
 }
 
-  
-darkBtn.onclick = toggleDarkMode;
+function submitFormProfilSerarch(form_no){
+    document.getElementById("profilSearch" + form_no).submit();
+}
+
+document.addEventListener('click', function(event) {
+    if ((event.target !== searchInput && event.target !== suggestionsList) || searchInput.value == "") {
+      suggestionsList.style.display = 'none';
+    }
+  });
