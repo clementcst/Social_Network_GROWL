@@ -95,6 +95,22 @@
         return 0;
     }
 
+    function searchProfil($inputValue){
+        $userTab = db_selectColumns(
+            table_name:'user',
+            columns:['UserID'], 
+            filters:['Username' => ['LIKE', '"'.$inputValue.'%"','0']]
+        );
+
+        $numberUsers =count($userTab);
+        for($i=0;$i<$numberUsers;$i++){
+            $user = db_getUserData($userTab[$i][0]);
+            echo $userTab[$i][0]."***".$user[0]."***".$user[9];
+            if($i<$numberUsers-1)echo";;;";
+        }
+        return 0;
+    }
+
     function getAnswers($comment_id){
         $answers = db_selectColumns(
             table_name:'answer',
@@ -161,6 +177,14 @@
                 else
                     echo "error, not enough POST in ajax request";
                 break;
+            case 'SP ' :
+                    if($_POST['inputValue']!== null)
+                    {
+                        searchProfil($_POST['inputValue']);
+                    }
+                    else
+                        echo "errorRRRRRR, not enough POST in ajax request";
+                    break;
             case 'gA ' :
                 if($_POST['commentID']!== null)
                 {

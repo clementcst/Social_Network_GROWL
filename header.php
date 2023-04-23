@@ -17,12 +17,18 @@
         </div>
 
         <div class="right">
-            <div class="search-bar">
-                <ion-icon name="search-outline"></ion-icon>
-                <input type="text" placeholder="Search">
+
+            <div class="bar">
+                <div class="search-bar">
+                    <ion-icon name="search-outline"></ion-icon>
+                    <input type="text" id="search-input" placeholder="Rechercher...">
+                </div>
+                <div class="suggestion" style="display: none;"></div>
             </div>
+
             <div class="nav-user online">
                 <img src="<?= $userData[9] ?>" onclick="settingMenuOpen()">
+                </div>
             </div>
         </div>
 
@@ -84,7 +90,8 @@
 
         </div> 
     </nav>
-    <script rel="stylesheet" src="js/header.js"></script>
+    <script rel="stylesheet" src="js/darkMode.js"></script>
+    <script rel="stylesheet" src="js/header.js" defer></script>
     <?php 
         if($userData[12] == "1") {
                 ?><script type="text/javascript"> toggleDarkMode();</script><?php
