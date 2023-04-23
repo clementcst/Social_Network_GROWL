@@ -131,6 +131,29 @@ function createComments(post_id){
     requestCCM.send('fct=CCM '+ '&postID=' + post_id);
 }
 
+function searchProfil(inputValue){
+    var requestSP= getXhr();
+    requestSP.open("POST","./php/ajaxRequest.php",true);
+    requestSP.onreadystatechange = function(){
+        if(requestSP.readyState == 4 && requestSP.status == 200){
+            var reponse=requestSP.responseText;
+            if(reponse==0){
+                return 0;
+            }
+            var res=reponse.split(";;;");
+            res[0] = res[0].replace(' \r\n\r\n\r\n\r\n\r\n','');
+            var tmp=[];
+            for(var i = 0 ; i< res.length; i++){
+                tmp[i] = [];
+                tmp[i]=res[i].split("***");
+            }
+            displayResult(tmp.length, tmp)
+        }
+    }
+    requestSP.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8');
+    requestSP.send('fct=SP '+ '&inputValue=' + inputValue);
+}
+
 //Fonction qui crée la bulle comments selon la database chargé en ajax lors du clique sur l'icone commentaire
 function createBulleComments(comments, post_id) {
     for(i=0; i<comments.length; i++) {
