@@ -245,9 +245,6 @@ function createBulleComments(comments, post_id) {
     div_send_comment.append(div_comment_send_icon);
     div_comments.append(div_send_comment);
     comment_icon.after(div_comments);
-
-    //On scroll l'espace commentaire vers le bas
-    div_comments.scrollTop = div_comments.scrollHeight;
 }
 
 //Fonction qui crée un champ input texte pour la réponse à un commentaire
@@ -255,6 +252,7 @@ function CreateInputTexte(commentID) {
 
     let trash_icon = document.createElement("ion-icon");
     trash_icon.name = "trash";
+    console.log(commentID)
 
     let div_trash_icon = document.createElement("div");
     div_trash_icon.className = "send_icon_message";
@@ -293,7 +291,6 @@ function CreateInputTexte(commentID) {
     answer_sender.append(div_send_icon);
 
     answer_section_id = commentID + "_answer_section";
-    console.log(answer_section_id);
     let answer_section = document.getElementById(answer_section_id);
     answer_section.append(answer_sender);
     //object.parentNode.parentNode.parentNode.parentNode.append(answer_sender); a sup après
