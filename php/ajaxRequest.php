@@ -90,7 +90,7 @@
         for($i=0;$i<$numberComments;$i++){
             $user = db_getUserData($comments[$i][3]);
             echo $comments[$i][0]."***".$comments[$i][1]."***".$comments[$i][2]."***".$comments[$i][3]."***".$user[0]."***".$user[9];
-            if($i<$numberComments-1)echo";";
+            if($i<$numberComments-1)echo"***";
         }
         return 0;
     }
@@ -111,17 +111,57 @@
         return 0;
     }
 
-    function getAnswers($comment_id){
-        $answers = db_selectColumns(
-            table_name:'answer',
-            columns:['AnswerID', 'Answer_DateTime', 'Content', 'PostedBy_UserID'], 
-            filters:['ReplyTo_CommentID' => ['LIKE', '"'.$comment_id.'"','0']]
-         );
-        $numberAnswer =count($answers);
-        for($i=0;$i<$numberAnswer;$i++){
-            echo $answers[$i][0].";".$answers[$i][1].";".$answers[$i][2].";".$answers[$i][3];
-            if($i<$numberAnswer-1)echo";";
+   
+    //Ecrit le commentaire dans la db, puis recupere les infos du commentaire créé et les echo vers le js
+    function createCommentsFromWeb($post_id, $content){
+        $id_user_connected=$_SESSION['connected'];
+        $id_comment = db_generateId("comment");
+        //La fonction php me renvoie le commentaire qu'elle a mit dans la db
+        $comment = db_newComment($id_comment, $content, $id_user_connected, $post_id);
+        $UserInfo = db_selectColumns(
+            table_name:'user',
+            columns:['Username', 'ProfilPic'], 
+            filters:['UserID' => ['LIKE', '"'.$id_user_connected.'"','0']]
+        );
+        $profpic = db_selectColumns('media', ['Base64','Type'], ['MediaID' => ['=',"'".$UserInfo[0][1]."'", '0']])[0];
+        $UserInfo[0][1] = 'data:'.$profpic[1].';base64,'.$profpic[0];
+        echo "***".$comment['CommentID']."***".$comment['Content']."***".$comment['PostedBy_UserID']."***".$comment['ReplyTo_PostID']."***".$UserInfo[0][0]."***".$UserInfo[0][1];
+        return 0;
+    }
+
+    //Fonction qui prend en parametres la liste des ID de tous les commentaires d'un post pour en generer les réponses.
+    function createAnswers($comment_id_list){
+        $id_user_connected=$_SESSION['connected'];
+        $comment_id_list = explode(",", $comment_id_list);
+        for($i=0;$i<count($comment_id_list);$i++){
+            $answers[$comment_id_list[$i]] = db_selectColumns(
+                table_name:'answer',
+                columns:['Answer_DateTime', 'Content'], 
+                filters:['ReplyTo_CommentID' => ['LIKE', '"'.$comment_id_list[$i].'"','0']]
+            );
+            $number_answers = count($answers[$comment_id_list[$i]]);
+            for($j=0; $j<$number_answers; $j++){
+                $user = db_getUserData($id_user_connected);
+                echo $answers[$comment_id_list[$i]][$j][0]."***".$answers[$comment_id_list[$i]][$j][1]."***".$comment_id_list[$i]."***".$user[0]."***".$user[9]."***";
+                //Ajout d'un *** car on ne sait pas quand on atteindra la derniere réponse du dernier commentaire
+            }
         }
+        return 0;
+    }
+
+    function createAnswerFromWeb($comment_id, $content){
+        $id_user_connected=$_SESSION['connected'];
+        $id_answer = db_generateId("answer");
+        //La fonction php me renvoie le commentaire qu'elle a mit dans la db
+        $answer = db_newAnswer($id_answer, $content, $id_user_connected, $comment_id);
+        $UserInfo = db_selectColumns(
+            table_name:'user',
+            columns:['Username', 'ProfilPic'], 
+            filters:['UserID' => ['LIKE', '"'.$id_user_connected.'"','0']]
+        );
+        $profpic = db_selectColumns('media', ['Base64','Type'], ['MediaID' => ['=',"'".$UserInfo[0][1]."'", '0']])[0];
+        $UserInfo[0][1] = 'data:'.$profpic[1].';base64,'.$profpic[0];
+        echo "***".$answer['AnswerID']."***".$answer['Answer_DateTime']."***".$answer['Content']."***".$answer['PostedBy_UserID']."***".$answer['ReplyTo_CommentID']."***".$UserInfo[0][0]."***".$UserInfo[0][1];
         return 0;
     }
     
@@ -185,10 +225,10 @@
                     else
                         echo "errorRRRRRR, not enough POST in ajax request";
                     break;
-            case 'gA ' :
-                if($_POST['commentID']!== null)
+            case 'cA ' :
+                if($_POST['commentIDlist']!== null)
                 {
-                    getAnswers($_POST['commentID']);
+                    createAnswers($_POST['commentIDlist']);
                 }
                 else
                     echo "error, not enough POST in ajax request";
@@ -201,6 +241,23 @@
                 else
                     echo "error, not enough POST in ajax request";
                 break;  
+            case 'newCMFW ' :
+                if($_POST['postID'] != null && $_POST['content'] != null)
+                {
+                    createCommentsFromWeb($_POST['postID'], $_POST['content']);
+                }
+                else{
+                    php_err("error, not enough POST in ajax request");
+                }
+                break;
+            case 'newAFW ' :
+                if($_POST['commentID'] != null && $_POST['content'])
+                {
+                    createAnswerFromWeb($_POST['commentID'], $_POST['content']);
+                }
+                else{
+                    php_err("error, not enough POST in ajax request");
+                }
             default :
                 echo "error POST fct invalid in ajax request";            
         }

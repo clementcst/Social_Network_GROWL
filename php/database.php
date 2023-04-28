@@ -74,7 +74,7 @@
       $tables = array(         
          "user" => array("UserID", "U"),
          "post" => array("PostID", "P"),
-         "comment" => array("CommentID", "CM"),
+         "comment" => array("CommentID", "C"),
          "answer" => array("AnswerID", "A"),
          "media" => array("MediaID", "M"),
          "conversation" => array("ConversationID", "CV")
@@ -374,6 +374,30 @@ function db_deleteRows(string $table_name, ?array $filters) {
                            'Posted_DateTime' => date("Y-m-d H:i:s"));
       }
       db_newRow('conversation', $conversation); 
+  }
+
+  function db_newComment($id_comment, $content, $id_user_sender, $post_id_to_reply) {
+    date_default_timezone_set('Europe/Paris');
+    $comment = array(
+                    'CommentID' => $id_comment,
+                    'Comment_DateTime' => date("Y-m-d H:i:s"),
+                    'Content' => $content,
+                    'PostedBy_UserID' => $id_user_sender,
+                    'ReplyTo_PostID' => $post_id_to_reply);
+    db_newRow('comment', $comment);
+    return $comment; //Toutes les infos du com + le username du sender + sa pp
+  }
+
+  function db_newAnswer($id_answer, $content, $id_user_sender, $comment_id_to_reply) {
+     date_default_timezone_set('Europe/Paris');
+     $answer = array(
+                    'AnswerID' => $id_answer,
+                    'Answer_DateTime' => date("Y-m-d H:i:s"),
+                    'Content' => $content,
+                    'PostedBy_UserID' => $id_user_sender,
+                    'ReplyTo_CommentID' => $comment_id_to_reply);
+     db_newRow('answer', $answer);
+     return $answer; //Toutes les infos du com + le username du sender + sa pp
   }
 
   function db_newFriend($id_user1, $id_user2) {
