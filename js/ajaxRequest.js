@@ -141,6 +141,7 @@ function createComments(post_id){
             let comments_id_list = [];
             for(var i=0; i<number_comments;i++){ 
                 comments[i]=[];
+                if(i==0) res[0] = res[0].trim(); //Bug apparu sur la branche dev qui n'etait pas la su ma branche perso
                 comments[i][0] = res[i*6];
                 comments_id_list[i] = res[i*6];
                 comments[i][1] = res[i*6+1];
@@ -150,7 +151,7 @@ function createComments(post_id){
                 comments[i][5] = res[i*6+5];
             }
             createBulleComments(comments, post_id);
-            createAnswers(comments_id_list);
+            createAnswers(comments_id_list, post_id);
         }
     }
     requestCCM.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8');
@@ -176,7 +177,7 @@ function createCommentsFromWeb(post_id, comment){
     requestCMFW.send('fct=newCMFW '+ '&postID=' + post_id + '&content=' + comment);
 }
 
-function createAnswers(comment_id_list){
+function createAnswers(comment_id_list, post_id){
     var requestgA= getXhr();
     requestgA.open("POST","./php/ajaxRequest.php",true);
     requestgA.onreadystatechange = function(){
@@ -191,14 +192,12 @@ function createAnswers(comment_id_list){
             //Enleve le dernier element qui est nul a cause du separateur ajax ***
             res.pop()
             var number_answers = res.length/5;
-            console.log(res.length)
-            console.log(number_answers)
-            console.log(res)
-            console.log(reponse)
             for(var i=0; i<number_answers;i++){
                 createBulleAnswer(res[i*5], res[i*5+1], res[i*5+2], res[i*5+3], res[i*5+4]);
             }
-            //écris les fonction ici Adam
+            //On scroll l'espace commentaire vers le bas
+            let comment_section = document.getElementById("close" + post_id);
+            comment_section.scrollTop = comment_section.scrollHeight;
         }
     }
     requestgA.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8');
