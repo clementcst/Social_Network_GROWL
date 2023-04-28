@@ -56,7 +56,7 @@
         <!-- Posts -->
         <?php 
             $posts = db_selectColumns('post', ['*']);
-            for ($i=0; $i < count($posts) ; $i++) {
+            for ($i=count($posts)-1 ; $i >=0  ; $i--) {
                 $postData = $posts[$i]; 
                 $postUserData = db_getUserData($postData[7]);
                 $postData[6] = urldecode($postData[6]);
