@@ -252,7 +252,6 @@ function CreateInputTexte(commentID) {
 
     let trash_icon = document.createElement("ion-icon");
     trash_icon.name = "trash";
-    console.log(commentID)
 
     let div_trash_icon = document.createElement("div");
     div_trash_icon.className = "send_icon_message";
