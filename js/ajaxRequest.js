@@ -101,36 +101,6 @@ function sendMessageIntoDB(content, type){
     return 0;   
 }
 
-function createComments(post_id){
-    var requestCCM= getXhr();
-    requestCCM.open("POST","./php/ajaxRequest.php",true);
-    requestCCM.onreadystatechange = function(){
-        if(requestCCM.readyState == 4 && requestCCM.status == 200){
-            var reponse=requestCCM.responseText;
-            if(reponse==0){
-                return 0;
-            }
-            var res=reponse.split("***");
-            res[0] = res[0].replace(' \r\n\r\n\r\n\r\n\r\n','');
-            var number_comments = res.length/6;
-            let comments = [];
-            for(var i=0; i<number_comments;i++){ 
-                comments[i]=[];
-                comments[i][0] = res[i*4];
-                comments[i][1] = res[i*4+1];
-                comments[i][2] = res[i*4+2];
-                comments[i][3] = res[i*4+3];
-                comments[i][4] = res[i*4+4];
-                comments[i][5] = res[i*4+5];
-            }
-            console.log(comments);
-            createBulleComments(comments, post_id);
-        }
-    }
-    requestCCM.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8');
-    requestCCM.send('fct=CCM '+ '&postID=' + post_id);
-}
-
 function searchProfil(inputValue){
     var requestSP= getXhr();
     requestSP.open("POST","./php/ajaxRequest.php",true);
@@ -154,96 +124,59 @@ function searchProfil(inputValue){
     requestSP.send('fct=SP '+ '&inputValue=' + inputValue);
 }
 
-//Fonction qui crée la bulle comments selon la database chargé en ajax lors du clique sur l'icone commentaire
-function createBulleComments(comments, post_id) {
-    for(i=0; i<comments.length; i++) {
-        let comment_icon = document.getElementById("CommentSection" + post_id).parentNode;
-        let div_comments = document.createElement("div");
-        div_comments.className = "comment-menu comment-menu-height";
-        div_comments.id = "close" + post_id;
-
-        let comments_list = document.createElement("div");
-        comments_list.className = "comments-list";
-
-        let comment_box = document.createElement("div");
-        comment_box.className = "user-profil comment-box"
-
-        let user_image_comments = document.createElement("img");
-        user_image_comments.src = comments[i][5];
-
-        let shadow_comment_div = document.createElement("div"); //Necessaire pour la mise en forme
-
-        let comment_pseudo_text_div = document.createElement("div");
-        comment_pseudo_text_div.className = "comment-pseudo-text";
-
-        let pseudo = document.createElement("a");
-        pseudo.className = "comment-pseudo";
-        pseudo.innerHTML = comments[i][4];
-
-        let text = document.createElement("p");
-        text.className = "comment-text";
-        text.innerHTML = comments[i][2];
-        
-        let reactions_div = document.createElement("div");
-        reactions_div.className = "comment-reaction";
-
-        let repondre_btn = document.createElement("p");
-        repondre_btn.id = comments[i][0];
-        repondre_btn.className = "comment-react comment-info";
-        repondre_btn.onclick = function () {
-            CreateInputTexte(this.id);
-        };
-        repondre_btn.innerHTML = "Répondre";
-
-        let comment_date = document.createElement("p");
-        comment_date.className = "comment-info";
-        comment_date.innerHTML = comments[i][1];
-
-        let answer_section = document.createElement("div");
-        answer_section.id = comments[i][0] + "_answer_section";
-        answer_section.className = "answers_div";
-
-        let div_send_comment = document.createElement("div");
-        div_send_comment.className = "send_menu_comment";
-
-        let input_comment_message = document.createElement("input");
-        input_comment_message.id = "actual_writen_message";
-        input_comment_message.type = "text";
-        input_comment_message.className = "form-control comment-input";
-        input_comment_message.placeholder = "Write your comment";
-        input_comment_message.onkeydown = function() {
-            if (event.keyCode == 13) sendComment() //Ce n'est pas pas deprecated, bug IDE*
-        };
-
-        let div_comment_send_icon = document.createElement("div");
-        div_comment_send_icon.className = "send_icon_message";
-        div_comment_send_icon.onclick = function () {
-            sendComment();
-        };
-
-        let comment_send_icon = document.createElement("ion-icon");
-        comment_send_icon.name = "send";
-
-        comment_pseudo_text_div.append(pseudo);
-        comment_pseudo_text_div.append(text);
-        reactions_div.append(repondre_btn);
-        reactions_div.append(comment_date);
-        shadow_comment_div.append(comment_pseudo_text_div);
-        shadow_comment_div.append(reactions_div);
-        comment_box.append(user_image_comments);
-        comment_box.append(shadow_comment_div);
-        comments_list.append(comment_box);
-        comments_list.append(answer_section);
-        div_comment_send_icon.append(comment_send_icon);
-        div_send_comment.append(input_comment_message);
-        div_send_comment.append(div_comment_send_icon);
-        div_comments.append(comments_list);
-        div_comments.append(div_send_comment);
-        comment_icon.after(div_comments);
+//Fonction qui crée le commentaire lorsque l'utilisateur clique sur l'icone commentaire du post
+function createComments(post_id){
+    var requestCCM= getXhr();
+    requestCCM.open("POST","./php/ajaxRequest.php",true);
+    requestCCM.onreadystatechange = function(){
+        if(requestCCM.readyState == 4 && requestCCM.status == 200){
+            var reponse=requestCCM.responseText;
+            if(reponse==0){
+                return 0;
+            }
+            var res=reponse.split("***");
+            res[0] = res[0].replace(' \r\n\r\n\r\n\r\n\r\n','');
+            var number_comments = res.length/6;
+            let comments = [];
+            let comments_id_list = [];
+            for(var i=0; i<number_comments;i++){ 
+                comments[i]=[];
+                comments[i][0] = res[i*6];
+                comments_id_list[i] = res[i*6];
+                comments[i][1] = res[i*6+1];
+                comments[i][2] = res[i*6+2];
+                comments[i][3] = res[i*6+3];
+                comments[i][4] = res[i*6+4];
+                comments[i][5] = res[i*6+5];
+            }
+            createBulleComments(comments, post_id);
+            createAnswers(comments_id_list);
+        }
     }
+    requestCCM.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8');
+    requestCCM.send('fct=CCM '+ '&postID=' + post_id);
 }
 
-function getAnswers(comment_id){
+//Fonction qui crée le commentaire lorsque l'utilisateur écrit un commentaire dans la bulle input de l'espace commentaire
+function createCommentsFromWeb(post_id, comment){
+    var requestCMFW= getXhr();
+    requestCMFW.open("POST","./php/ajaxRequest.php",true);
+    requestCMFW.onreadystatechange = function(){
+        if(requestCMFW.readyState == 4 && requestCMFW.status == 200){
+            var reponse=requestCMFW.responseText;
+            if(reponse==0){
+                return 0;
+            }
+            var res=reponse.split("***");
+            res[0] = res[0].replace(' \r\n\r\n\r\n\r\n\r\n','');
+            sendComment(res[1], res[2], res[3], res[4], res[5], res[6]); //respectivement : comment_id, content, user_id, post_id, username, pp
+        }
+    }
+    requestCMFW.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8');
+    requestCMFW.send('fct=newCMFW '+ '&postID=' + post_id + '&content=' + comment);
+}
+
+function createAnswers(comment_id_list){
     var requestgA= getXhr();
     requestgA.open("POST","./php/ajaxRequest.php",true);
     requestgA.onreadystatechange = function(){
@@ -252,26 +185,47 @@ function getAnswers(comment_id){
             if(reponse==0){
                 return 0;
             }
-            var res=reponse.split(";");
+            var res=reponse.split("***");
+            
             res[0] = res[0].replace(' \r\n\r\n\r\n\r\n\r\n','');
-            var number_answers = res.length/4;
-            let answers = [];
+            //Enleve le dernier element qui est nul a cause du separateur ajax ***
+            res.pop()
+            var number_answers = res.length/5;
+            console.log(res.length)
+            console.log(number_answers)
+            console.log(res)
+            console.log(reponse)
             for(var i=0; i<number_answers;i++){
-                answers[i]=[];
-                answers[i][0] = res[i*4];
-                answers[i][1] = res[i*4+1];
-                answers[i][2] = res[i*4+2];
-                answers[i][3] = res[i*4+3];
+                createBulleAnswer(res[i*5], res[i*5+1], res[i*5+2], res[i*5+3], res[i*5+4]);
             }
-            console.log(answers);
             //écris les fonction ici Adam
         }
     }
     requestgA.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8');
-    requestgA.send('fct=gA '+ '&commentID=' + comment_id);
+    requestgA.send('fct=cA '+ '&commentIDlist=' + comment_id_list);
     return 0;   
 }
 
+//Fonction qui crée le commentaire lorsque l'utilisateur écrit un commentaire dans la bulle input de l'espace commentaire
+function createAnswerFromWeb(comment_id, answerContent){
+    var requestCMFW= getXhr();
+    requestCMFW.open("POST","./php/ajaxRequest.php",true);
+    requestCMFW.onreadystatechange = function(){
+        if(requestCMFW.readyState == 4 && requestCMFW.status == 200){
+            var reponse=requestCMFW.responseText;
+            if(reponse==0){
+                return 0;
+            }
+            var res=reponse.split("***");
+            res[0] = res[0].replace(' \r\n\r\n\r\n\r\n\r\n','');
+            createBulleAnswer(res[2], res[3], res[5], res[6], res[7]);
+            input_answer = document.getElementById(res[5] + "_answer_input");
+            removeInput(input_answer.parentNode);
+        }
+    }
+    requestCMFW.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8');
+    requestCMFW.send('fct=newAFW '+ '&commentID=' + comment_id + '&content=' + answerContent);
+}
 
 function NewFilter(){
     var requestCartF= getXhr();
