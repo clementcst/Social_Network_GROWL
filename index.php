@@ -69,7 +69,7 @@
             <div class="user-profil">
                 <img src="<?= $postUserData[9] ?>">
                 <div>
-                    <p><?= $postUserData[0] ?></p>
+                    <p id = "userName_Post"><?= $postUserData[0] ?></p>
                     <span><?= $postData[1] ?></span>
                 </div>
             </div>
