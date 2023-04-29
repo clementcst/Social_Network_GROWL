@@ -296,7 +296,6 @@ function db_deleteRows(string $table_name, ?array $filters) {
       }
       $sql .= "'".$item_content[$table_struct[$i]]."')";
       $row = json_encode(array_values($item_content));
-      echo($sql);
       if(mysqli_query($link, $sql)) {
          java_log("Row succesfully added in table ".$table_name."\\nRow :\\n".$row);
       } else {
@@ -511,13 +510,23 @@ function db_deleteRows(string $table_name, ?array $filters) {
       ));
   }
 
-function db_updateUser($userID, $user_infos) {
+   function db_updateUser($userID, $user_infos) {
       db_updateColumns('user',  $user_infos, filters:['userID' => ['LIKE', '"'.$userID.'"','0']]);
    }
 
-function db_addMedia($base, $type){
+   function db_addMedia($base, $type){
       $id = db_generateId("media");
       $media = array('MediaID' => $id, 'Base64' =>$base, 'Type' =>$type);
       db_newRow('media', $media);
+   }
+
+   function db_getPostMedias(string $PostID) {
+      $postMediasID = db_selectColumns("own_media", ["MediaID"],["PostID" => ["LIKE", "'".$PostID."'", "0"]]);
+      $postMediasSrc = array();
+      foreach($postMediasID as $postMediaID) {
+         $postMediaData = db_selectColumns("media", ["*"], ["MediaID" => ["LIKE", "'".$postMediaID[0]."'","0"]])[0];
+         array_push($postMediasSrc, "data:".$postMediaData[2].";base64,".$postMediaData[1]);
+      }
+      return $postMediasSrc;
    }
 ?>
