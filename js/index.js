@@ -74,7 +74,7 @@ function previewPicture(e){
                     };
                     reader.readAsDataURL(blob);
                 });
-                
+                divImages.appendChild(isPost);
                 divImages.appendChild(oImg);
                 divImages.appendChild(deleteBtn);
                 divImages.appendChild(base);
