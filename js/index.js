@@ -49,6 +49,10 @@ function previewPicture(e){
                 var type = document.createElement("input");
                 type.type = "hidden";
                 type.name = "type"+ cmpImg;
+                var isPost = document.createElement("input");
+                isPost.name = "isPost";
+                isPost.value = "1";
+                isPost.type = "hidden";
             
                 // Créer un bouton de suppression pour cette image
                 var deleteBtn = document.createElement("button");
@@ -56,6 +60,7 @@ function previewPicture(e){
                 deleteBtn.innerHTML = "X";
                 deleteBtn.addEventListener("click", function() {
                     divImages.removeChild(oImg);
+                    divImages.removeChild(isPost);
                     divImages.removeChild(deleteBtn);
                 });
                 
@@ -70,6 +75,7 @@ function previewPicture(e){
                     reader.readAsDataURL(blob);
                 });
                 
+                divImages.appendChild(isPost);
                 divImages.appendChild(oImg);
                 divImages.appendChild(deleteBtn);
                 divImages.appendChild(base);
@@ -445,3 +451,56 @@ function sendAnswer(input_answer, comment_id) {
 function removeInput(input_answer) {
     input_answer.remove();
 }
+
+function shareSocial(e) {
+    // On récupère la div qui contient l'ensemble du post
+    var postToShare = e.parentNode.parentNode.parentNode.parentNode;
+    var userName = postToShare.querySelector("#userName_Post").innerHTML;
+  
+    // On utilise la bibliothèque html2canvas pour créer une capture d'écran de la div
+    html2canvas(postToShare).then(function(canvas) {
+      // On récupère l'image au format base64
+      var postBase64 = canvas.toDataURL();
+      var base = (postBase64).split("base64,")[1];
+      var type =(postBase64).split(";")[0].split("data:")[1];
+
+      var form = document.createElement("form");
+      form.method = "POST";
+      form.name = "sharePost";
+      form.action = "php/postProcess.php"
+
+      var baseShare = document.createElement("input")
+      baseShare.name = "baseShare";
+      baseShare.value = base;
+      baseShare.type = "hidden";
+
+      var typeShare = document.createElement("input")
+      typeShare.name = "typeShare";
+      typeShare.value = type;
+      typeShare.type = "hidden";
+
+      var isShare = document.createElement("input");
+      isShare.name = "isShare";
+      isShare.value = userName;
+      isShare.type = "hidden";
+
+      var submit = document.createElement("input")
+      submit.type = "submit";
+      submit.style.display = "none";
+
+      form.appendChild(baseShare);
+      form.appendChild(typeShare);
+      form.appendChild(isShare);
+      form.appendChild(submit);
+      postToShare.appendChild(form);
+
+      submit.click();
+    });    
+}
+  
+  
+
+
+
+  
+

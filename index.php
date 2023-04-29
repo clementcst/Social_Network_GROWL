@@ -81,7 +81,7 @@
             <div class="user-profil">
                 <img src="<?= $postUserData[9] ?>">
                 <div>
-                    <p><?= $postUserData[0] ?></p>
+                    <p id = "userName_Post"><?= $postUserData[0] ?></p>
                     <span><?= $postData[1] ?></span>
                 </div>
             </div>
@@ -111,7 +111,7 @@
                     <!-- Comments. Ils sont générés en ajax ici -->
                     
                     <div>
-                        <ion-icon name="share-social"></ion-icon>
+                        <ion-icon name="share-social" onclick="shareSocial(this)"></ion-icon>
                         <small><?= $postData[3] ?></small>
                     </div>
                 </div>
@@ -130,5 +130,6 @@
 </body>
 <script rel="stylesheet" src="js/index.js"></script>
 <script rel="stylesheet" src="js/ajaxRequest.js"></script>
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 
 </html>
