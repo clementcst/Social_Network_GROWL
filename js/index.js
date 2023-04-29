@@ -60,6 +60,7 @@ function previewPicture(e){
                 deleteBtn.innerHTML = "X";
                 deleteBtn.addEventListener("click", function() {
                     divImages.removeChild(oImg);
+		     divImages.removeChild(isPost);
                     divImages.removeChild(deleteBtn);
                 });
                 
