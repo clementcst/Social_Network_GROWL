@@ -7,6 +7,7 @@
     if(isset($_POST)) {
         $number_media = 0;
         $id_post=db_generateId("post");
+        $own_media = array();
         for($i = 0; $i<4; $i++){
             if(isset($_POST["base".$i]) && isset($_POST["type".$i])) {
                 java_log(json_encode($_POST["type".$i]));
@@ -14,7 +15,7 @@
                 $media = array("MediaID" => $NewID,"Base64" => $_POST["base".$i], "Type" => $_POST["type".$i]);
                 db_newRow('media', $media);
                 $number_media++;
-                $own_media=array('PostID' => $id_post, 'MediaID' => $NewID);
+                $own_media[$i]=array('PostID' => $id_post, 'MediaID' => $NewID);
             }
         }
         if(isset($_POST["text_input"])){
@@ -39,8 +40,11 @@
             }
             
             db_newPost($post);
-            if($number_media >0 )
-            db_newRow('own_media', $own_media);
+            if($number_media >0 ){
+                for($j=0;$j<$number_media;$j++){
+                    db_newRow('own_media', $own_media[$j]);
+                }
+            }
         }
         echo "<script> window.location.replace('".ROOT.INDEX."') </script>";
         redirect(ROOT.INDEX);
