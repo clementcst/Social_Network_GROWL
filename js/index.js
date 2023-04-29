@@ -49,18 +49,18 @@ function previewPicture(e){
                 var type = document.createElement("input");
                 type.type = "hidden";
                 type.name = "type"+ cmpImg;
-                var isPost = document.createElement("input");
+	    	var isPost = document.createElement("input");
                 isPost.name = "isPost";
                 isPost.value = "1";
                 isPost.type = "hidden";
-            
+	    
                 // Créer un bouton de suppression pour cette image
                 var deleteBtn = document.createElement("button");
                 //deleteBtn.setAttribute('width', '500px');
                 deleteBtn.innerHTML = "X";
                 deleteBtn.addEventListener("click", function() {
                     divImages.removeChild(oImg);
-                    divImages.removeChild(isPost);
+		     divImages.removeChild(isPost);
                     divImages.removeChild(deleteBtn);
                 });
                 
@@ -74,7 +74,6 @@ function previewPicture(e){
                     };
                     reader.readAsDataURL(blob);
                 });
-                
                 divImages.appendChild(isPost);
                 divImages.appendChild(oImg);
                 divImages.appendChild(deleteBtn);
@@ -452,11 +451,32 @@ function removeInput(input_answer) {
     input_answer.remove();
 }
 
+function LikePost(postId, elmtHeart, heartNo) {
+    elmtLikeCount = document.getElementById("likeCount"+heartNo);
+    if(elmtHeart.style.color == "red"){
+        elmtHeart.style.color = "gray";
+        LikePostRequest(postId, 0);
+    } else {
+        elmtHeart.style.color = "red";
+        LikePostRequest(postId, 1);
+    }
+}
+
+function updateLikeCount(res, mode) {
+    if(res == 1) {
+        if(mode == "LikeP") {
+            elmtLikeCount.innerHTML = parseInt(elmtLikeCount.innerHTML) + 1;
+        } else if(mode == "UnlikeP") {
+            elmtLikeCount.innerHTML = parseInt(elmtLikeCount.innerHTML) - 1;
+        }
+    }
+}
+
 function shareSocial(e) {
     // On récupère la div qui contient l'ensemble du post
     var postToShare = e.parentNode.parentNode.parentNode.parentNode;
     var userName = postToShare.querySelector("#userName_Post").innerHTML;
-  
+
     // On utilise la bibliothèque html2canvas pour créer une capture d'écran de la div
     html2canvas(postToShare).then(function(canvas) {
       // On récupère l'image au format base64
@@ -496,11 +516,3 @@ function shareSocial(e) {
 
       submit.click();
     });    
-}
-  
-  
-
-
-
-  
-

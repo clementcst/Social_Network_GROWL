@@ -61,20 +61,8 @@
                 $postUserData = db_getUserData($postData[7]);
                 $postData[6] = urldecode($postData[6]);
                 $postData[5] = urldecode($postData[5]);
-                if($postData[4] > 0 && $postData[4] < 4){
-                    $own_media = db_selectColumns(
-                        table_name:'own_media',
-                        columns:['MediaID'], 
-                        filters:['PostID' => ['LIKE', '"'.$postData[0].'"','0']]
-                    );
-                    $media = array();
-                    for($j = 0; $j < count($own_media); $j++){
-                        $media[$j] = db_selectColumns(
-                            table_name:'media',
-                            columns:['Base64', 'Type'], 
-                            filters:['MediaID' => ['LIKE', '"'.$own_media[$j][0].'"','0']]
-                        );
-                    }
+                if($postData[4] > 0 && $postData[4] < 5){
+                    $postMediasSrc = db_getPostMedias($postData[0]);
                 }                
         ?>
         <div class="post-container">
@@ -87,17 +75,26 @@
             </div>
             <p class="post-text"><?= $postData[6] ?></p>
             <div class="post-media">
-            <?php if($postData[4] > 0 && $postData[4] < 4) {
-                    for($k = 0; $k < count($media); $k++){ ?>                        
-                        <img src="data:<?=$media[$k][0][1] ?>;base64,<?=$media[$k][0][0] ?>" alt="marche po" class="post-img">
-                <?php }} 
-                ?>
-                <!-- <img src="images/feed-image-1.png" class="post-img"> -->
-
+                <div class="post-images">
+                    <?php if($postData[4] > 0 && $postData[4] < 5) {
+                        for($k = 0; $k < count($postMediasSrc); $k++){ ?>                        
+                            <img src="<?= $postMediasSrc[$k] ?>" alt="Img Media <?=$k?>" class="post-img">
+                        <?php }
+                    } 
+                    ?>
+                </div>
                 <div class="post-reactions">
                     <div>
-                        <ion-icon name="heart" onclick="AddHeart()"></ion-icon>
-                        <small><?= $postData[2] ?></small>
+                        <ion-icon name="heart" onclick="LikePost('<?= $postData[0] ?>', this, <?=$i?>)"
+                            <?php if(count(db_selectColumns("liked_post", ["*"], ["UserID" => ["LIKE", "'".$_SESSION["connected"]."'", "1"],
+                                                                                  "PostID" => ["LIKE", "'".$postData[0]."'", "0"]]))
+                                     > 0) {
+                                        ?> style = "color: red" <?php
+                                     }
+                            ?>
+                        >
+                        </ion-icon>
+                        <small id="likeCount<?=$i?>"><?= $postData[2] ?></small>
                     </div>
                     <?php 
                         $postComments = db_selectColumns('comment', ['*'], ['ReplyTo_PostID' => ['=', "'".$postData[0]."'", '0']]);
@@ -131,5 +128,4 @@
 <script rel="stylesheet" src="js/index.js"></script>
 <script rel="stylesheet" src="js/ajaxRequest.js"></script>
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
-
 </html>

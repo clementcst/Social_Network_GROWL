@@ -172,99 +172,118 @@
         return 0;
     }
 
+    function LikePost(string $postID) { //add a like to a post in the db
+        $userID = $_SESSION["connected"];
+        if(count(db_selectColumns("liked_post", ["*"],["UserID" => ["LIKE", "'".$userID."'", "1"],
+                                                                    "PostID" => ["LIKE", "'".$postID."'", "0"]])) 
+           != 0) //if the post is already liked by the user
+        {
+            echo "***0";
+        } else {
+            db_newRow("liked_post", ["UserID" => $userID, "PostID" => $postID]);
+            db_updateColumns("post", ["NumberOfLikes" => count(db_selectColumns("liked_post",["*"],["PostID" => ["LIKE", "'".$postID."'", "0"]]))], ["PostID" => ["LIKE", "'".$postID."'", "0"]]);
+            echo "***1";
+        }
+    }
+
+    function UnlikePost(string $postID) { //remove a like from a post in db
+        $userID = $_SESSION["connected"];
+        if(count(db_selectColumns("liked_post", ["*"],["UserID" => ["LIKE", "'".$userID."'", "1"],
+                                                       "PostID" => ["LIKE", "'".$postID."'", "0"]])) 
+           == 0) //if the post is not liked by the user
+        { 
+            echo "***0";
+        } else {
+            db_deleteRows("liked_post", ["UserID" => ["LIKE", "'".$userID."'", "1"],
+                                        "PostID" => ["LIKE", "'".$postID."'", "0"]]);
+            db_updateColumns("post", ["NumberOfLikes" => count(db_selectColumns("liked_post",["*"],["PostID" => ["LIKE", "'".$postID."'", "0"]]))], ["PostID" => ["LIKE", "'".$postID."'", "0"]]);
+            echo "***1";
+        }
+    }
+
     if($_POST['fct']!== null)
     {
         $fct=$_POST['fct'];
-        switch($fct) {
+        switch($fct) {  //switch the ajax request, call the right function
             case 'AddNP' :
                 if(1)//mettre des parametres si besoin
-                {
-                    //Fonction php avec des parametres si besoin
                     AddNewPost();
-                }
                 else
-                    echo "error, not enough POST in ajax request";
+                    php_err("error, not enough POST in ajax request");
                 break;
             case 'AddNM' :
                 if($_POST['content']!== null && $_POST['UsernameReceiver'])
-                {
                     AddNewMessage($_POST['Message'], $_POST['UsernameReceiver']);
-                }
                 else
-                    echo "error, not enough POST in ajax request";
+                    php_err("error, not enough POST in ajax request");
                 break;   
             case 'chngCV ' :
                 if($_POST['usernameFriend']!== null)
-                {
                     changeConversation($_POST['usernameFriend']);
-                }
                 else
-                    echo "error, not enough POST in ajax request";
+                    php_err("error, not enough POST in ajax request");
                 break;
             case 'sendMIDB ' :
                 if($_POST['usernameFriend']!== null && $_POST['content']!== null)
-                {
                     sendMessageIntoDB($_POST['usernameFriend'], $_POST['content'], $_POST['type']);
-                }
                 else
-                    echo "error, not enough POST in ajax request";
+                    php_err("error, not enough POST in ajax request");
                 break;
             case 'CCM ' :
                 if($_POST['postID']!== null)
-                {
                     createComment($_POST['postID']);
-                }
                 else
-                    echo "error, not enough POST in ajax request";
+                    php_err("error, not enough POST in ajax request");
                 break;
             case 'SP ' :
                     if($_POST['inputValue']!== null)
-                    {
                         searchProfil($_POST['inputValue']);
-                    }
                     else
-                        echo "errorRRRRRR, not enough POST in ajax request";
+                        php_err("error, not enough POST in ajax request");
                     break;
             case 'cA ' :
                 if($_POST['commentIDlist']!== null)
-                {
                     createAnswers($_POST['commentIDlist']);
-                }
                 else
-                    echo "error, not enough POST in ajax request";
+                    php_err("error, not enough POST in ajax request");
                 break;
-            case 'NewF ' :
-                if(1)
-                {   //Fonction php                
-                    NewFilter();
-                }
-                else
-                    echo "error, not enough POST in ajax request";
-                break;  
+            // case 'NewF ' :
+            //     if(1)               
+            //         NewFilter();            // 
+            //     else
+            //         php_err("error, not enough POST in ajax request");
+            //     break;  
             case 'newCMFW ' :
                 if($_POST['postID'] != null && $_POST['content'] != null)
-                {
                     createCommentsFromWeb($_POST['postID'], $_POST['content']);
-                }
-                else{
+                else
                     php_err("error, not enough POST in ajax request");
-                }
                 break;
             case 'newAFW ' :
                 if($_POST['commentID'] != null && $_POST['content'])
-                {
                     createAnswerFromWeb($_POST['commentID'], $_POST['content']);
-                }
-                else{
+                else
                     php_err("error, not enough POST in ajax request");
-                }
+                break;
+            case 'LikeP' :
+                if($_POST['postID'] != null)
+                    LikePost($_POST['postID']);
+                else
+                    php_err("error, not enough POST in ajax request");
+                break;
+            case 'UnlikeP' :
+                if($_POST['postID'] != null)
+                    UnlikePost($_POST['postID']);
+                else
+                    php_err("error, not enough POST in ajax request");
+                break;
             default :
-                echo "error POST fct invalid in ajax request";            
+                php_err("error POST fct invalid in ajax request");      
+                break;      
         }
     }
     else
     {
-        java_log('oskour');
-        echo "error POST fct not defined in ajax request";
+       php_err("error POST fct not defined in ajax request");
     }
 ?>

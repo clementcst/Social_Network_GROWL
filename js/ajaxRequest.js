@@ -103,7 +103,8 @@ function sendMessageIntoDB(content, type){
 
 function searchProfil(inputValue){
     var requestSP= getXhr();
-    requestSP.open("POST","./php/ajaxRequest.php",true);
+    requestSP.open("POST","./php/ajaxRequest.php",false); //j'ai passer la requete en synchrone pour evité les double réponse
+    
     requestSP.onreadystatechange = function(){
         if(requestSP.readyState == 4 && requestSP.status == 200){
             var reponse=requestSP.responseText;
@@ -226,22 +227,41 @@ function createAnswerFromWeb(comment_id, answerContent){
     requestCMFW.send('fct=newAFW '+ '&commentID=' + comment_id + '&content=' + answerContent);
 }
 
-function NewFilter(){
-    var requestCartF= getXhr();
-    requestCartF.open("POST","./php/ajaxRequest.php",true);
-    requestCartF.onreadystatechange = function(){
-        if(requestCartF.readyState == 4 && requestCartF.status == 200){
-            var reponse=requestCartF.responseText;
-            if(reponse==0){
-                return 0;
-            }
-            var res=reponse.split(";");
+function LikePostRequest(postId, action) {
+    var fct;
+    if(action == 1) //like post 
+        fct = "LikeP";
+    else            //Unlike post
+        fct = "UnlikeP";
+    var requestLP= getXhr();
+    requestLP.open("POST","./php/ajaxRequest.php",false);
+    requestLP.onreadystatechange = function(){
+        if(requestLP.readyState == 4 && requestLP.status == 200){
+            var reponse=requestLP.responseText;
+            updateLikeCount(reponse.split("***")[1], fct); // return 1 si le like / le unlike est successfull, 0 sinon
         }
     }
-    requestCartF.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8');
-    requestCartF.send('fct=NewF');
-    return 0;    
+    requestLP.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8');
+    requestLP.send('fct=' + fct + '&postID=' + postId); 
 }
+
+
+// function NewFilter(){
+//     var requestCartF= getXhr();
+//     requestCartF.open("POST","./php/ajaxRequest.php",true);
+//     requestCartF.onreadystatechange = function(){
+//         if(requestCartF.readyState == 4 && requestCartF.status == 200){
+//             var reponse=requestCartF.responseText;
+//             if(reponse==0){
+//                 return 0;
+//             }
+//             var res=reponse.split(";");
+//         }
+//     }
+//     requestCartF.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8');
+//     requestCartF.send('fct=NewF');
+//     return 0;    
+// }
 
 /*-------------*/
 function changeFormatDate(date_complete, id, have_to_whrite) {    
