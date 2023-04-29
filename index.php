@@ -127,5 +127,5 @@
 </body>
 <script rel="stylesheet" src="js/index.js"></script>
 <script rel="stylesheet" src="js/ajaxRequest.js"></script>
-
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 </html>
