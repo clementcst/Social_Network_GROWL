@@ -108,7 +108,7 @@
                     <!-- Comments. Ils sont générés en ajax ici -->
                     
                     <div>
-                        <ion-icon name="share-social"></ion-icon>
+                        <ion-icon name="share-social" onclick="shareSocial(this)"></ion-icon>
                         <small><?= $postData[3] ?></small>
                     </div>
                 </div>
