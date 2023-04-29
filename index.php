@@ -67,9 +67,9 @@
                         columns:['MediaID'], 
                         filters:['PostID' => ['LIKE', '"'.$postData[0].'"','0']]
                     );
-                    
+                    $media = array();
                     for($j = 0; $j < count($own_media); $j++){
-                        $media = db_selectColumns(
+                        $media[$j] = db_selectColumns(
                             table_name:'media',
                             columns:['Base64', 'Type'], 
                             filters:['MediaID' => ['LIKE', '"'.$own_media[$j][0].'"','0']]
@@ -88,9 +88,8 @@
             <p class="post-text"><?= $postData[6] ?></p>
             <div class="post-media">
             <?php if($postData[4] > 0 && $postData[4] < 4) {
-                    for($k = 0; $k < count($media); $k++){ ?>
-                    
-                        <img src="data:<?=$media[$k][1] ?>;base64,<?=$media[$k][0] ?>" alt="marche po" class="post-img">
+                    for($k = 0; $k < count($media); $k++){ ?>                        
+                        <img src="data:<?=$media[$k][0][1] ?>;base64,<?=$media[$k][0][0] ?>" alt="marche po" class="post-img">
                 <?php }} 
                 ?>
                 <!-- <img src="images/feed-image-1.png" class="post-img"> -->
