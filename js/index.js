@@ -159,6 +159,12 @@ function sendComment(comment_id, content, user_id, post_id, username, PP) {
 
     //On scroll vers le bas quand on ajoute un message
     comment_section.scrollTop = comment_section.scrollHeight;
+
+    //S'il y a deja un champ de réponse à un commentaire, alors on le supprime quand l'utilisateur envoie un commentaire
+    let inputs_text_area = document.getElementsByClassName("comment-input");
+    if(inputs_text_area.length == 2) {
+        inputs_text_area[0].parentNode.remove();
+    }
 }
 
 //Fonction qui crée la bulle comments selon la database chargé en ajax lors du clique sur l'icone commentaire
