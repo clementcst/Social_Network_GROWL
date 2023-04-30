@@ -92,6 +92,7 @@
             echo $comments[$i][0]."***".$comments[$i][1]."***".$comments[$i][2]."***".$comments[$i][3]."***".$user[0]."***".$user[9];
             if($i<$numberComments-1)echo"***";
         }
+        if($numberComments == 0) echo "empty";
         return 0;
     }
 
