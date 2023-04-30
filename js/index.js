@@ -176,57 +176,60 @@ function createBulleComments(comments, post_id) {
     let comments_list = document.createElement("div");
     comments_list.id = post_id + "_comments_list";
     comments_list.className = "comments-list";
-    for(i=0; i<comments.length; i++) {
+    
+    if(comments[0][0] != "empty"){
+        for(i=0; i<comments.length; i++) {
 
-        let comment_box = document.createElement("div");
-        comment_box.className = "user-profil comment-box"
+            let comment_box = document.createElement("div");
+            comment_box.className = "user-profil comment-box"
 
-        let user_image_comments = document.createElement("img");
-        user_image_comments.src = comments[i][5];
+            let user_image_comments = document.createElement("img");
+            user_image_comments.src = comments[i][5];
 
-        let shadow_comment_div = document.createElement("div"); //Necessaire pour la mise en forme
+            let shadow_comment_div = document.createElement("div"); //Necessaire pour la mise en forme
 
-        let comment_pseudo_text_div = document.createElement("div");
-        comment_pseudo_text_div.className = "comment-pseudo-text";
+            let comment_pseudo_text_div = document.createElement("div");
+            comment_pseudo_text_div.className = "comment-pseudo-text";
 
-        let pseudo = document.createElement("a");
-        pseudo.className = "comment-pseudo";
-        pseudo.innerHTML = comments[i][4];
+            let pseudo = document.createElement("a");
+            pseudo.className = "comment-pseudo";
+            pseudo.innerHTML = comments[i][4];
 
-        let text = document.createElement("p");
-        text.className = "comment-text";
-        text.innerHTML = comments[i][2];
-        
-        let reactions_div = document.createElement("div");
-        reactions_div.className = "comment-reaction";
+            let text = document.createElement("p");
+            text.className = "comment-text";
+            text.innerHTML = comments[i][2];
+            
+            let reactions_div = document.createElement("div");
+            reactions_div.className = "comment-reaction";
 
-        let repondre_btn = document.createElement("p");
-        repondre_btn.id = comments[i][0];
-        repondre_btn.className = "comment-react comment-info";
-        repondre_btn.onclick = function () {
-            CreateInputTexte(this.id);
-        };
-        repondre_btn.innerHTML = "Répondre";
+            let repondre_btn = document.createElement("p");
+            repondre_btn.id = comments[i][0];
+            repondre_btn.className = "comment-react comment-info";
+            repondre_btn.onclick = function () {
+                CreateInputTexte(this.id);
+            };
+            repondre_btn.innerHTML = "Répondre";
 
-        let comment_date = document.createElement("p");
-        comment_date.className = "comment-info";
-        comment_date.innerHTML = comments[i][1];
+            let comment_date = document.createElement("p");
+            comment_date.className = "comment-info";
+            comment_date.innerHTML = comments[i][1];
 
-        let answer_section = document.createElement("div");
-        answer_section.id = comments[i][0] + "_answer_section";
-        answer_section.className = "answers_div";
-        
+            let answer_section = document.createElement("div");
+            answer_section.id = comments[i][0] + "_answer_section";
+            answer_section.className = "answers_div";
+            
 
-        comment_pseudo_text_div.append(pseudo);
-        comment_pseudo_text_div.append(text);
-        reactions_div.append(repondre_btn);
-        reactions_div.append(comment_date);
-        shadow_comment_div.append(comment_pseudo_text_div);
-        shadow_comment_div.append(reactions_div);
-        comment_box.append(user_image_comments);
-        comment_box.append(shadow_comment_div);
-        comments_list.append(comment_box);
-        comments_list.append(answer_section);
+            comment_pseudo_text_div.append(pseudo);
+            comment_pseudo_text_div.append(text);
+            reactions_div.append(repondre_btn);
+            reactions_div.append(comment_date);
+            shadow_comment_div.append(comment_pseudo_text_div);
+            shadow_comment_div.append(reactions_div);
+            comment_box.append(user_image_comments);
+            comment_box.append(shadow_comment_div);
+            comments_list.append(comment_box);
+            comments_list.append(answer_section);
+        }
     }
 
     let input_comment_message = document.createElement("input");
