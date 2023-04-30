@@ -27,7 +27,6 @@
             isset($tabdataform["city"]) && isset($tabdataform["phoneNumber"])
         ){
             $User_id = db_selectColumns("user", ["UserID"], ["Username" => ["LIKE", "'".$tabdataform["src_username"]."'", "0"]])[0][0];
-            echo $User_id;
             switch ($tabdataform["sex"]) {
                 case 'Man':
                     $Sex = '1';
@@ -46,9 +45,24 @@
             "Mail" => $tabdataform["mail"], "Country" => $tabdataform["country"], "City" => $tabdataform["city"], 
             "BirthDate" => $tabdataform["birthDate"], "PhoneNumber" => $tabdataform["phoneNumber"], "Sex" => $Sex], ["UserID" => ["LIKE", "'".$User_id."'", "0"]]);
         }
-
-    } else {
-        redirect(ROOT.SETTINGS);
+        else if (isset($tabdataform["password"]) && isset($tabdataform["srcPass_username"])){
+            $passwordHash = password_hash($tabdataform["password"], PASSWORD_DEFAULT);
+            $User_id_pass = db_selectColumns("user", ["UserID"], ["Username" => ["LIKE", "'".$tabdataform["srcPass_username"]."'", "0"]])[0][0];
+            db_updateColumns("password", ["EncrPwd" => $passwordHash], ["UserID" => ["LIKE", "'".$User_id_pass."'", "0"]]);
+        }
+        else if (isset($tabdataform["themeSelect"]) && isset($tabdataform["srcTheme_username"])){
+            $User_id_theme = db_selectColumns("user", ["UserID"], ["Username" => ["LIKE", "'".$tabdataform["srcTheme_username"]."'", "0"]])[0][0];
+            db_updateColumns("user", ["Theme" => $tabdataform["themeSelect"]], ["UserID" => ["LIKE", "'".$User_id_theme."'", "0"]]);
+        }
+        else if ((isset($tabdataform["profilePrivacy"]) || isset($tabdataform["postPrivacy"])) && isset($tabdataform["srcPrivacy_username"])){
+            $User_id_privacy = db_selectColumns("user", ["UserID"], ["Username" => ["LIKE", "'".$tabdataform["srcPrivacy_username"]."'", "0"]])[0][0];
+            if (isset($tabdataform["profilePrivacy"])){
+                db_updateColumns("user", ["ProfilConfidentiality" => $tabdataform["profilePrivacy"]], ["UserID" => ["LIKE", "'".$User_id_privacy."'", "0"]]);
+            }
+            if (isset($tabdataform["postPrivacy"])){
+                db_updateColumns("user", ["PostConfidentiality" => $tabdataform["postPrivacy"]], ["UserID" => ["LIKE", "'".$User_id_privacy."'", "0"]]);
+            }
+        }
     }
     redirect(ROOT.SETTINGS);
 ?>
