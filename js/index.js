@@ -516,3 +516,4 @@ function shareSocial(e) {
 
       submit.click();
     });    
+}
