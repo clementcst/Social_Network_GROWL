@@ -255,6 +255,12 @@ function createBulleComments(comments, post_id) {
 //Fonction qui crée un champ input texte pour la réponse à un commentaire
 function CreateInputTexte(commentID) {
 
+    //S'il y a deja un champ de réponse à un commentaire, alors on le supprime
+    let inputs_text_area = document.getElementsByClassName("comment-input");
+    if(inputs_text_area.length == 2) {
+        inputs_text_area[0].parentNode.remove();
+    }
+
     let trash_icon = document.createElement("ion-icon");
     trash_icon.name = "trash";
 
