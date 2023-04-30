@@ -179,27 +179,25 @@
                     <ion-icon name="lock-open-outline"></ion-icon> Change Password<div class="menu-arrow"><ion-icon id="menu-arrow-password" name="chevron-forward-outline"></ion-icon></div>
                 </div>
                 <div class="password-disclosed">
-                    <?php 
-                        $user = db_getUserData($_SESSION['connected']);
-                    ?>
-                    <form  id="form-registration" onsubmit="return (checkingForm('registration'))" action="<?= PHP.ACCOUNT_PRO ?>" method="post">
+                    <form  id="form-registration" onsubmit="return (checkingForm('registration'))" action="<?= PHP.SETTINGS_PRO ?>" method="post">
                     <div id="formulaire">
+                        <input type="hidden" name="srcPass_username" id="srcPass_username" value="<?= $userData[0]?>">
                         <table>
                             <tr>
                                 <td>
                                     <div class="input_label">
-                                        <label for="password">Old Password</label>
-                                        <input type="password" name="password" id="password" placeholder="Old Password">
+                                        <label for="password">New Password</label>
+                                        <input type="password" name="password" id="password" placeholder="New Password">
                                         <p id="errorMessage-registration-password" class="errorMessage"><?php if(isset($tabErrorMessage["password"])){echo $tabErrorMessage["password"];}else{echo "";} ?></p>
                                     </div>
                                 </td>
-                                <td>
+                                <!-- <td>
                                     <div class="input_label">
-                                        <label for="confirmationPassword">New Password</label>
-                                        <input type="password" name="confirmationPassword" id="confirmationPassword" onpaste="return false;" placeholder="New Password">
-                                        <p id="errorMessage-registration-confirmationPassword" class="errorMessage"><?php if(isset($tabErrorMessage["confirmationPassword"])){echo $tabErrorMessage["confirmationPassword"];}else{echo "";} ?></p>
+                                        <label for="confirmationPassword">Confirm Password</label>
+                                        <input type="password" name="confirmationPassword" id="confirmationPassword" onpaste="return false;" placeholder="Confirm Password">
+                                        <p id="errorMessage-registration-confirmationPassword" class="errorMessage"></p>
                                     </div>
-                                </td>
+                                </td> -->
                             </tr>
                             <tr>
                                 <td>
@@ -218,12 +216,15 @@
                     <ion-icon name="color-palette-outline"></ion-icon> Theme Settings<div class="menu-arrow"><ion-icon id="menu-arrow-theme" name="chevron-forward-outline"></ion-icon></div>
                 </div>
                 <div class="theme-disclosed">
-                    <form action="">
-                        <label for="theme-select">Select your color theme</label>
-                        <select id="theme-select">
+                    <form id="form-registration" onsubmit="return (checkingForm('registration'))" action="<?= PHP.SETTINGS_PRO ?>" method="post">
+                        <input type="hidden" name="srcTheme_username" id="srcTheme_username" value="<?= $userData[0]?>">
+                        <label for="themeSelect">Select your color theme</label>
+                        <select id="themeSelect" name="themeSelect">
                             <option value="" disabled selected>Select your theme</option>
-                            <option value="theme1">Light</option>
+                            <option value="0">Light</option>
+                            <option value="1">Dark</option>
                         </select>
+                        <input type="submit" class="but_link" id="confirm" name="submitRegistration" value="Confirm changes">
                     </form>
                 </div>
                 <!--Niveau de confidentialité (profil/posts)-->
@@ -231,22 +232,24 @@
                     <ion-icon name="bug-outline"></ion-icon> Privacy Settings<div class="menu-arrow"><ion-icon id="menu-arrow-privacy" name="chevron-forward-outline"></ion-icon></div>
                 </div>
                 <div class="privacy-disclosed">
-                    <form action="">
-                        <label for="">Who can see your profile?</label>
-                        <select id="">
+                    <form id="form-registration" onsubmit="return (checkingForm('registration'))" action="<?= PHP.SETTINGS_PRO ?>" method="post">
+                        <input type="hidden" name="srcPrivacy_username" id="srcPrivacy_username" value="<?= $userData[0]?>">
+                        <label for="profilePrivacy">Who can see your profile?</label>
+                        <select name="profilePrivacy">
                             <option value="" disabled selected><?php if($user[10] == 0){echo "Everyone";}elseif($user[10] == 1){echo "Friends";}elseif($user[10] == 2){echo "Nobody";}?></option>
-                            <option value="">Everyone</option>
-                            <option value="">Friends</option>
-                            <option value="">Nobody</option>
+                            <option value="0">Everyone</option>
+                            <option value="1">Friends</option>
+                            <option value="2">Nobody</option>
                         </select>
                         <br>
-                        <label for="">Who can see your posts?</label>
-                        <select id="">
-                            <option value="" disabled selected><?php if($user[10] == 0){echo "Everyone";}elseif($user[10] == 1){echo "Friends";}elseif($user[10] == 2){echo "Nobody";}?></option>
-                            <option value="">Everyone</option>
-                            <option value="">Friends</option>
-                            <option value="">Nobody</option>
+                        <label for="postPrivacy">Who can see your posts?</label>
+                        <select name="postPrivacy">
+                            <option value="" disabled selected><?php if($user[11] == 0){echo "Everyone";}elseif($user[11] == 1){echo "Friends";}elseif($user[11] == 2){echo "Nobody";}?></option>
+                            <option value="0">Everyone</option>
+                            <option value="1">Friends</option>
+                            <option value="2">Nobody</option>
                         </select>
+                        <input type="submit" class="but_link" id="confirm" name="submitRegistration" value="Confirm changes">
                     </form>
                 </div>
                 <!--Supprimer le compte-->
