@@ -49,7 +49,8 @@
                                  <input type="hidden" name="user_conv" value="<?= $vieweduserData[0] ?>">
                             </form>
 
-                        <?php } else if(!in_array(array($vieweduser_id), db_getFriendRequest($_SESSION['connected']))){ ?>
+                        <?php } else if(!in_array(array($vieweduser_id), db_getFriendRequest($_SESSION['connected']))
+                                      && !in_array(array($_SESSION['connected']), db_getFriendRequest($vieweduser_id))){ ?>
 
                             <button id="send-f-request" class="button_profil" onclick="submitFormSendFriendReq()">
                                 Send Friend Request
