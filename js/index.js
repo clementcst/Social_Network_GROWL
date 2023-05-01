@@ -49,18 +49,18 @@ function previewPicture(e){
                 var type = document.createElement("input");
                 type.type = "hidden";
                 type.name = "type"+ cmpImg;
-	    	var isPost = document.createElement("input");
+                var isPost = document.createElement("input");
                 isPost.name = "isPost";
                 isPost.value = "1";
                 isPost.type = "hidden";
-	    
+            
                 // Créer un bouton de suppression pour cette image
                 var deleteBtn = document.createElement("button");
                 //deleteBtn.setAttribute('width', '500px');
                 deleteBtn.innerHTML = "X";
                 deleteBtn.addEventListener("click", function() {
                     divImages.removeChild(oImg);
-		     divImages.removeChild(isPost);
+                    divImages.removeChild(isPost);
                     divImages.removeChild(deleteBtn);
                 });
                 
@@ -74,6 +74,7 @@ function previewPicture(e){
                     };
                     reader.readAsDataURL(blob);
                 });
+                
                 divImages.appendChild(isPost);
                 divImages.appendChild(oImg);
                 divImages.appendChild(deleteBtn);
@@ -159,12 +160,6 @@ function sendComment(comment_id, content, user_id, post_id, username, PP) {
 
     //On scroll vers le bas quand on ajoute un message
     comment_section.scrollTop = comment_section.scrollHeight;
-
-    //S'il y a deja un champ de réponse à un commentaire, alors on le supprime quand l'utilisateur envoie un commentaire
-    let inputs_text_area = document.getElementsByClassName("comment-input");
-    if(inputs_text_area.length == 2) {
-        inputs_text_area[0].parentNode.remove();
-    }
 }
 
 //Fonction qui crée la bulle comments selon la database chargé en ajax lors du clique sur l'icone commentaire
@@ -176,60 +171,57 @@ function createBulleComments(comments, post_id) {
     let comments_list = document.createElement("div");
     comments_list.id = post_id + "_comments_list";
     comments_list.className = "comments-list";
-    
-    if(comments[0][0] != "empty"){
-        for(i=0; i<comments.length; i++) {
+    for(i=0; i<comments.length; i++) {
 
-            let comment_box = document.createElement("div");
-            comment_box.className = "user-profil comment-box"
+        let comment_box = document.createElement("div");
+        comment_box.className = "user-profil comment-box"
 
-            let user_image_comments = document.createElement("img");
-            user_image_comments.src = comments[i][5];
+        let user_image_comments = document.createElement("img");
+        user_image_comments.src = comments[i][5];
 
-            let shadow_comment_div = document.createElement("div"); //Necessaire pour la mise en forme
+        let shadow_comment_div = document.createElement("div"); //Necessaire pour la mise en forme
 
-            let comment_pseudo_text_div = document.createElement("div");
-            comment_pseudo_text_div.className = "comment-pseudo-text";
+        let comment_pseudo_text_div = document.createElement("div");
+        comment_pseudo_text_div.className = "comment-pseudo-text";
 
-            let pseudo = document.createElement("a");
-            pseudo.className = "comment-pseudo";
-            pseudo.innerHTML = comments[i][4];
+        let pseudo = document.createElement("a");
+        pseudo.className = "comment-pseudo";
+        pseudo.innerHTML = comments[i][4];
 
-            let text = document.createElement("p");
-            text.className = "comment-text";
-            text.innerHTML = comments[i][2];
-            
-            let reactions_div = document.createElement("div");
-            reactions_div.className = "comment-reaction";
+        let text = document.createElement("p");
+        text.className = "comment-text";
+        text.innerHTML = comments[i][2];
+        
+        let reactions_div = document.createElement("div");
+        reactions_div.className = "comment-reaction";
 
-            let repondre_btn = document.createElement("p");
-            repondre_btn.id = comments[i][0];
-            repondre_btn.className = "comment-react comment-info";
-            repondre_btn.onclick = function () {
-                CreateInputTexte(this.id);
-            };
-            repondre_btn.innerHTML = "Répondre";
+        let repondre_btn = document.createElement("p");
+        repondre_btn.id = comments[i][0];
+        repondre_btn.className = "comment-react comment-info";
+        repondre_btn.onclick = function () {
+            CreateInputTexte(this.id);
+        };
+        repondre_btn.innerHTML = "Répondre";
 
-            let comment_date = document.createElement("p");
-            comment_date.className = "comment-info";
-            comment_date.innerHTML = comments[i][1];
+        let comment_date = document.createElement("p");
+        comment_date.className = "comment-info";
+        comment_date.innerHTML = comments[i][1];
 
-            let answer_section = document.createElement("div");
-            answer_section.id = comments[i][0] + "_answer_section";
-            answer_section.className = "answers_div";
-            
+        let answer_section = document.createElement("div");
+        answer_section.id = comments[i][0] + "_answer_section";
+        answer_section.className = "answers_div";
+        
 
-            comment_pseudo_text_div.append(pseudo);
-            comment_pseudo_text_div.append(text);
-            reactions_div.append(repondre_btn);
-            reactions_div.append(comment_date);
-            shadow_comment_div.append(comment_pseudo_text_div);
-            shadow_comment_div.append(reactions_div);
-            comment_box.append(user_image_comments);
-            comment_box.append(shadow_comment_div);
-            comments_list.append(comment_box);
-            comments_list.append(answer_section);
-        }
+        comment_pseudo_text_div.append(pseudo);
+        comment_pseudo_text_div.append(text);
+        reactions_div.append(repondre_btn);
+        reactions_div.append(comment_date);
+        shadow_comment_div.append(comment_pseudo_text_div);
+        shadow_comment_div.append(reactions_div);
+        comment_box.append(user_image_comments);
+        comment_box.append(shadow_comment_div);
+        comments_list.append(comment_box);
+        comments_list.append(answer_section);
     }
 
     let input_comment_message = document.createElement("input");
@@ -263,12 +255,6 @@ function createBulleComments(comments, post_id) {
 
 //Fonction qui crée un champ input texte pour la réponse à un commentaire
 function CreateInputTexte(commentID) {
-
-    //S'il y a deja un champ de réponse à un commentaire, alors on le supprime
-    let inputs_text_area = document.getElementsByClassName("comment-input");
-    if(inputs_text_area.length == 2) {
-        inputs_text_area[0].parentNode.remove();
-    }
 
     let trash_icon = document.createElement("ion-icon");
     trash_icon.name = "trash";
@@ -466,69 +452,58 @@ function removeInput(input_answer) {
     input_answer.remove();
 }
 
-function LikePost(postId, elmtHeart, heartNo) {
-    elmtLikeCount = document.getElementById("likeCount"+heartNo);
-    if(elmtHeart.style.color == "red"){
-        elmtHeart.style.color = "gray";
-        LikePostRequest(postId, 0);
-    } else {
-        elmtHeart.style.color = "red";
-        LikePostRequest(postId, 1);
-    }
-}
-
-function updateLikeCount(res, mode) {
-    if(res == 1) {
-        if(mode == "LikeP") {
-            elmtLikeCount.innerHTML = parseInt(elmtLikeCount.innerHTML) + 1;
-        } else if(mode == "UnlikeP") {
-            elmtLikeCount.innerHTML = parseInt(elmtLikeCount.innerHTML) - 1;
-        }
-    }
-}
-
+//Fonction qui partage un post
 function shareSocial(e) {
     // On récupère la div qui contient l'ensemble du post
     var postToShare = e.parentNode.parentNode.parentNode.parentNode;
     var userName = postToShare.querySelector("#userName_Post").innerHTML;
-
+    postToShare.style.border = "1px solid black";
+  
     // On utilise la bibliothèque html2canvas pour créer une capture d'écran de la div
     html2canvas(postToShare).then(function(canvas) {
+      postToShare.style.border = "none";  
       // On récupère l'image au format base64
       var postBase64 = canvas.toDataURL();
       var base = (postBase64).split("base64,")[1];
-      var type =(postBase64).split(";")[0].split("data:")[1];
-
+      var type = (postBase64).split(";")[0].split("data:")[1];
+  
+      // On crée un formulaire pour envoyer l'image au serveur
       var form = document.createElement("form");
       form.method = "POST";
       form.name = "sharePost";
       form.action = "php/postProcess.php"
-
+  
+      // On crée des champs cachés pour envoyer les données de l'image
       var baseShare = document.createElement("input")
       baseShare.name = "baseShare";
       baseShare.value = base;
       baseShare.type = "hidden";
-
+  
       var typeShare = document.createElement("input")
       typeShare.name = "typeShare";
       typeShare.value = type;
       typeShare.type = "hidden";
-
+  
       var isShare = document.createElement("input");
       isShare.name = "isShare";
       isShare.value = userName;
       isShare.type = "hidden";
-
+  
       var submit = document.createElement("input")
       submit.type = "submit";
       submit.style.display = "none";
-
+  
+      // On ajoute les champs cachés au formulaire
       form.appendChild(baseShare);
       form.appendChild(typeShare);
       form.appendChild(isShare);
       form.appendChild(submit);
+  
+      // On ajoute le formulaire à la fin de la div
       postToShare.appendChild(form);
-
+  
+      // On soumet le formulaire pour envoyer l'image au serveur
       submit.click();
     });    
-}
+  }
+  

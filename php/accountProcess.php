@@ -50,19 +50,23 @@
                     unset($_SESSION["errorMessageRegistration"]);
                     $_SESSION['errorMessageRegistration'][$dbUser] = $err;
                    redirect(ROOT.ACCOUNT);
+                   echo "<script> window.location.replace('".ROOT.ACCOUNT."') </script>";
                 }
                 
                 s_connect(db_selectColumns('user', ['UserID'], ['Username' => ['=', "'".$tabDataForm["userName"]."'", "0"]])[0][0]);
                 redirect(ROOT.INDEX);
+                echo "<script> window.location.replace('".ROOT.ACCOUNT."') </script>";
         }
         else
         {
             redirect(ROOT.ACCOUNT);
+            echo "<script> window.location.replace('".ROOT.ACCOUNT."') </script>";
         }
     }
     else
     {
         $_SESSION['errorMessageRegistration']['submitRegistration'] = "Please fill out your registration form completely.";
         redirect(ROOT.ACCOUNT);
+        echo "<script> window.location.replace('".ROOT.ACCOUNT."') </script>";
     }
 ?>
