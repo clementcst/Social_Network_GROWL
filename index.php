@@ -55,7 +55,7 @@
               </div>
         <!-- Posts -->
         <?php 
-            $posts = db_selectColumns('post', ['*']);
+            $posts = db_selectColumns('post', ['*']); // changer ici pour la politique de confidentialité des posts
             for ($i=count($posts)-1 ; $i >=0  ; $i--) {
                 $postData = $posts[$i]; 
                 $postUserData = db_getUserData($postData[7]);
@@ -78,10 +78,13 @@
                 <div class="post-images">
                     <?php if($postData[4] > 0 && $postData[4] < 5) {
                         for($k = 0; $k < count($postMediasSrc); $k++){ ?>                        
-                            <img src="<?= $postMediasSrc[$k] ?>" alt="Img Media <?=$k?>" class="post-img">
-                        <?php }
-                    } 
-                    ?>
+                            <img src="<?= $postMediasSrc[$k] ?>" alt="Img Media <?=$k?>" class="post-img" 
+                            <?php if($postData[4] == 1) { ?>
+                                style="width: 200%; height:auto"
+                            <?php } ?>
+                            >
+                        <?php } 
+                    } ?>
                 </div>
                 <div class="post-reactions">
                     <div>
