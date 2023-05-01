@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3308
--- Generation Time: Mar 26, 2023 at 11:41 PM
+-- Generation Time: Apr 10, 2023 at 03:33 PM
 -- Server version: 5.7.24
 -- PHP Version: 8.1.0
 
@@ -95,34 +95,35 @@ INSERT INTO `conversation` (`ConversationID`, `SenderID`, `ReceiverID`, `Content
 CREATE TABLE `friends` (
   `UserID_1` varchar(50) NOT NULL,
   `UserID_2` varchar(50) NOT NULL,
-  `Accepted` tinyint(1) NOT NULL DEFAULT '0'
+  `Level` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Dumping data for table `friends`
 --
 
-INSERT INTO `friends` (`UserID_1`, `UserID_2`, `Accepted`) VALUES
-('U0', 'U1', 1),
-('U0', 'U2', 1),
-('U0', 'U3', 1),
-('U0', 'U4', 1),
+INSERT INTO `friends` (`UserID_1`, `UserID_2`, `Level`) VALUES
+('U0', 'U1', 0),
+('U0', 'U2', 0),
+('U0', 'U3', 0),
+('U0', 'U4', 0),
 ('U0', 'U5', 0),
 ('U0', 'U6', 0),
-('U1', 'U2', 1),
-('U1', 'U3', 1),
-('U1', 'U4', 1),
+('U1', 'U2', 0),
+('U1', 'U3', 0),
+('U1', 'U4', 0),
 ('U1', 'U5', 0),
-('U1', 'U6', 1),
+('U1', 'U6', 0),
 ('U2', 'U3', 0),
-('U2', 'U4', 1),
+('U2', 'U4', 0),
 ('U2', 'U5', 0),
-('U2', 'U6', 1),
-('U3', 'U4', 1),
-('U3', 'U5', 1),
+('U2', 'U6', 0),
+('U3', 'U4', 0),
+('U3', 'U5', 0),
 ('U3', 'U6', 0),
-('U4', 'U5', 1),
+('U4', 'U5', 0),
 ('U4', 'U6', 0),
-('U5', 'U6', 1);
+('U5', 'U6', 0);
 
 -- --------------------------------------------------------
 
@@ -151,7 +152,7 @@ INSERT INTO `liked_post` (`UserID`, `PostID`, `Liked_DateTime`) VALUES
 
 CREATE TABLE `media` (
   `MediaID` varchar(50) NOT NULL DEFAULT 'NaM',
-  `Base64` longtext NOT NULL,
+  `Base64` mediumtext NOT NULL,
   `Type` varchar(50) NOT NULL DEFAULT 'image/jpeg'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -227,7 +228,7 @@ CREATE TABLE `post` (
   `NumberOfLikes` int(11) NOT NULL DEFAULT '0',
   `NumberOfShares` int(11) NOT NULL DEFAULT '0',
   `NumberOfMedia` int(11) NOT NULL DEFAULT '0',
-  `KeyWords` mediumtext,
+  `Title` tinytext,
   `Content` text,
   `PostedBy_UserID` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -236,7 +237,7 @@ CREATE TABLE `post` (
 -- Dumping data for table `post`
 --
 
-INSERT INTO `post` (`PostID`, `Posted_DateTime`, `NumberOfLikes`, `NumberOfShares`, `NumberOfMedia`, `KeyWords`, `Content`, `PostedBy_UserID`) VALUES
+INSERT INTO `post` (`PostID`, `Posted_DateTime`, `NumberOfLikes`, `NumberOfShares`, `NumberOfMedia`, `Title`, `Content`, `PostedBy_UserID`) VALUES
 ('P1', '2023-03-15 17:11:13', 0, 0, 1, 'Yoda LUL', 'Look, he\'s green LOL', 'U1');
 
 -- --------------------------------------------------------
@@ -391,63 +392,63 @@ ALTER TABLE `user`
 -- Constraints for table `answer`
 --
 ALTER TABLE `answer`
-  ADD CONSTRAINT `answer_ibfk_1` FOREIGN KEY (`PostedBy_UserID`) REFERENCES `user` (`UserID`),
-  ADD CONSTRAINT `answer_ibfk_2` FOREIGN KEY (`ReplyTo_CommentID`) REFERENCES `comment` (`CommentID`);
+  ADD CONSTRAINT `answer_ibfk_1` FOREIGN KEY (`PostedBy_UserID`) REFERENCES `user` (`UserID`) ON DELETE CASCADE,
+  ADD CONSTRAINT `answer_ibfk_2` FOREIGN KEY (`ReplyTo_CommentID`) REFERENCES `comment` (`CommentID`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `comment`
 --
 ALTER TABLE `comment`
-  ADD CONSTRAINT `comment_ibfk_1` FOREIGN KEY (`PostedBy_UserID`) REFERENCES `user` (`UserID`),
-  ADD CONSTRAINT `comment_ibfk_2` FOREIGN KEY (`ReplyTo_PostID`) REFERENCES `post` (`PostID`);
+  ADD CONSTRAINT `comment_ibfk_1` FOREIGN KEY (`PostedBy_UserID`) REFERENCES `user` (`UserID`) ON DELETE CASCADE,
+  ADD CONSTRAINT `comment_ibfk_2` FOREIGN KEY (`ReplyTo_PostID`) REFERENCES `post` (`PostID`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `conversation`
 --
 ALTER TABLE `conversation`
-  ADD CONSTRAINT `conversation_ibfk_1` FOREIGN KEY (`SenderID`) REFERENCES `user` (`UserID`),
-  ADD CONSTRAINT `conversation_ibfk_2` FOREIGN KEY (`ReceiverID`) REFERENCES `user` (`UserID`),
-  ADD CONSTRAINT `conversation_ibfk_3` FOREIGN KEY (`MediaID`) REFERENCES `media` (`MediaID`);
+  ADD CONSTRAINT `conversation_ibfk_1` FOREIGN KEY (`SenderID`) REFERENCES `user` (`UserID`) ON DELETE CASCADE,
+  ADD CONSTRAINT `conversation_ibfk_2` FOREIGN KEY (`ReceiverID`) REFERENCES `user` (`UserID`) ON DELETE CASCADE,
+  ADD CONSTRAINT `conversation_ibfk_3` FOREIGN KEY (`MediaID`) REFERENCES `media` (`MediaID`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `friends`
 --
 ALTER TABLE `friends`
-  ADD CONSTRAINT `friends_ibfk_1` FOREIGN KEY (`UserID_1`) REFERENCES `user` (`UserID`),
-  ADD CONSTRAINT `friends_ibfk_2` FOREIGN KEY (`UserID_2`) REFERENCES `user` (`UserID`);
+  ADD CONSTRAINT `friends_ibfk_1` FOREIGN KEY (`UserID_1`) REFERENCES `user` (`UserID`) ON DELETE CASCADE,
+  ADD CONSTRAINT `friends_ibfk_2` FOREIGN KEY (`UserID_2`) REFERENCES `user` (`UserID`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `liked_post`
 --
 ALTER TABLE `liked_post`
-  ADD CONSTRAINT `liked_post_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `user` (`UserID`),
-  ADD CONSTRAINT `liked_post_ibfk_2` FOREIGN KEY (`PostID`) REFERENCES `post` (`PostID`);
+  ADD CONSTRAINT `liked_post_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `user` (`UserID`) ON DELETE CASCADE,
+  ADD CONSTRAINT `liked_post_ibfk_2` FOREIGN KEY (`PostID`) REFERENCES `post` (`PostID`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `own_media`
 --
 ALTER TABLE `own_media`
-  ADD CONSTRAINT `own_media_ibfk_1` FOREIGN KEY (`PostID`) REFERENCES `post` (`PostID`),
-  ADD CONSTRAINT `own_media_ibfk_2` FOREIGN KEY (`MediaID`) REFERENCES `media` (`MediaID`);
+  ADD CONSTRAINT `own_media_ibfk_1` FOREIGN KEY (`PostID`) REFERENCES `post` (`PostID`) ON DELETE CASCADE,
+  ADD CONSTRAINT `own_media_ibfk_2` FOREIGN KEY (`MediaID`) REFERENCES `media` (`MediaID`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `password`
 --
 ALTER TABLE `password`
-  ADD CONSTRAINT `password_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `user` (`UserID`);
+  ADD CONSTRAINT `password_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `user` (`UserID`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `post`
 --
 ALTER TABLE `post`
-  ADD CONSTRAINT `post_ibfk_1` FOREIGN KEY (`PostedBy_UserID`) REFERENCES `user` (`UserID`);
+  ADD CONSTRAINT `post_ibfk_1` FOREIGN KEY (`PostedBy_UserID`) REFERENCES `user` (`UserID`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `shared_post`
 --
 ALTER TABLE `shared_post`
-  ADD CONSTRAINT `shared_post_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `user` (`UserID`),
-  ADD CONSTRAINT `shared_post_ibfk_2` FOREIGN KEY (`PostID`) REFERENCES `post` (`PostID`);
+  ADD CONSTRAINT `shared_post_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `user` (`UserID`) ON DELETE CASCADE,
+  ADD CONSTRAINT `shared_post_ibfk_2` FOREIGN KEY (`PostID`) REFERENCES `post` (`PostID`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

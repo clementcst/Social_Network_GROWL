@@ -27,10 +27,10 @@
                 $connection_state = true;
                 s_connect($result_id[0][0]);// Le mot de passe est le bon par rapport à l'identifiant
             } else {
-                $_SESSION['errorMessageLogin']['passwordLog'] = "Le mot de passe ne correspond pas.";
+                $_SESSION['errorMessageLogin']['passwordLog'] = "The password does not match.";
             }
         } else {
-            $_SESSION['errorMessageLogin']['log'] = "Cet identifiant n'existe pas.";
+            $_SESSION['errorMessageLogin']['log'] = "This identifier does not exist.";
         }
         return $connection_state;        
     }
@@ -48,7 +48,7 @@
 
                 if($dataValueValid !== $dataValue)
                 {
-                    $_SESSION['errorMessageLogin'] = "Les données envoyées par le formulaire ne sont pas conforment.";
+                    $_SESSION['errorMessageLogin'] = "The data sent through the form is not compliant.";
                     $errorTrueInput = true;
                 }
                 else
@@ -71,7 +71,7 @@
         } else
             redirect(ROOT.ACCOUNT);
     } else {
-        $_SESSION['errorMessageLogin'] = "Veuillez envoyer le formulaire de connection.";
+        $_SESSION['errorMessageLogin'] = "Please submit the login form.";
         redirect(ROOT.ACCOUNT);
     }
 

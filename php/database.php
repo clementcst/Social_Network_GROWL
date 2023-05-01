@@ -8,7 +8,7 @@
    
 /**
    ┌──────────────────────────────────────────────────────────────────────────┐
-   │                     Functions for mysql Database                         │
+   │                     Functions for mysql Database  (made by Joan.Legrand) │
    └──────────────────────────────────────────────────────────────────────────┘
 **/   
 /** 
@@ -74,7 +74,7 @@
       $tables = array(         
          "user" => array("UserID", "U"),
          "post" => array("PostID", "P"),
-         "comment" => array("CommentID", "CM"),
+         "comment" => array("CommentID", "C"),
          "answer" => array("AnswerID", "A"),
          "media" => array("MediaID", "M"),
          "conversation" => array("ConversationID", "CV")
@@ -192,6 +192,7 @@
       if($suffix <> null) 
          $sql .= $suffix." ";
       $result = mysqli_query($link, $sql.';');
+      // echo $sql."\n";
       mysqli_close($link);
       if(!$result)
          php_err("error while trying select statement :\\n".$sql);
@@ -220,15 +221,38 @@
       }
       if($filters <> null)
          $sql .= db_filterStmt($link, $table_name, $filters);
-      java_log($sql);
+      //java_log($sql);
       $result = mysqli_query($link, $sql.';');
-      java_log(json_encode($result));
+      //java_log(json_encode($result));
       if(!$result)
          php_err("error while trying update statement :\\n".$sql);
       else
-         java_log("Row succesfully updated in table ".$table_name);
+         java_log("Row succesfully updated in table ".$table_name." : ".$sql);
       return $result;      
    }
+
+   /**
+   @param array[][] $filters > check db_filterStmnt dox 
+   | CANNOT BE NULL | SHOULD/MUST BE ON the ID of the TABLE
+   @summary > DELETE specified columns of a table in the db
+   @return > true/false depend on success
+**/
+function db_deleteRows(string $table_name, ?array $filters) {
+   $link = mysqli_open();
+   db_tableExist($table_name, $link);
+   
+   $sql = "DELETE FROM $table_name ";   
+   if($filters <> null)
+      $sql .= db_filterStmt($link, $table_name, $filters);
+   //java_log($sql);
+   $result = mysqli_query($link, $sql.';');
+   //java_log(json_encode($result));
+   if(!$result)
+      php_err("error while trying update statement :\\n".$sql);
+   else
+      java_log("Row succesfully delete in table ".$table_name);
+   return $result;      
+}
  /**
    @summary > allows you to know if a value belongs to a table, on a specific column
    @return > bool
@@ -272,7 +296,6 @@
       }
       $sql .= "'".$item_content[$table_struct[$i]]."')";
       $row = json_encode(array_values($item_content));
-      java_log($sql);
       if(mysqli_query($link, $sql)) {
          java_log("Row succesfully added in table ".$table_name."\\nRow :\\n".$row);
       } else {
@@ -304,11 +327,12 @@
    }
 
    function db_newPost(array $post) {
+      date_default_timezone_set('Europe/Paris');
       $post = array_merge(
                $post, 
                array(
                'PostID' => db_generateId("post"),
-               'Posted_DateTime' => date("Y-m-d"),
+               'Posted_DateTime' => date("Y-m-d H:i:s"),
                'NumberOfLikes' => '0',
                'NumberOfShares' => '0'));
       db_newRow('post', $post); 
@@ -317,20 +341,192 @@
    function db_getUserData(string $user_id) {
       if(!db_alreadyExist('user','UserID',"'".$user_id."'"))
          php_err("User with ID: ".$user_id." doesn't exist in database");
-      return (
-      db_selectColumns(
+      $userData = db_selectColumns(
          table_name:'user',
          columns:['Username','Name','Firstname','Mail',
                   'Country','City','BirthDate','PhoneNumber',
-                  'Sex','ProfilConfidentiality','PostConfidentiality','Theme'], 
+                  'Sex','ProfilPic','ProfilConfidentiality','PostConfidentiality','Theme'], 
          filters:['UserID' => ['LIKE', '"'.$user_id.'"','0']], 
-         suffix:"LIMIT 1")[0]);
+         suffix:"LIMIT 1")[0];
+      $profpic = db_selectColumns('media', ['Base64','Type'], ['MediaID' => ['=',"'".$userData[9]."'", '0']])[0];
+      $userData[9] = 'data:'.$profpic[1].';base64,'.$profpic[0];
+      return $userData;
    }
 
-   java_log(json_encode(db_selectColumns('user',['Username','Name'])));
+   // java_log(json_encode(db_selectColumns('user',['Username','Name'])));
+
+   function db_newMessage($id_sender, $id_receiver, $content, $media) {
+      date_default_timezone_set('Europe/Paris');
+      if($content == NULL){
+      $conversation = array(
+                          'ConversationID' => db_generateId("conversation"),
+                          'SenderID' => $id_sender,
+                          'ReceiverID' => $id_receiver,
+                          'MediaID' => $media,
+                          'Posted_DateTime' => date("Y-m-d H:i:s"));
+      } elseif($media == NULL){
+      $conversation = array(
+                           'ConversationID' => db_generateId("conversation"),
+                           'SenderID' => $id_sender,
+                           'ReceiverID' => $id_receiver,
+                           'Content' => $content,
+                           'Posted_DateTime' => date("Y-m-d H:i:s"));
+      }
+      db_newRow('conversation', $conversation); 
+  }
+
+  function db_newComment($id_comment, $content, $id_user_sender, $post_id_to_reply) {
+    date_default_timezone_set('Europe/Paris');
+    $comment = array(
+                    'CommentID' => $id_comment,
+                    'Comment_DateTime' => date("Y-m-d H:i:s"),
+                    'Content' => $content,
+                    'PostedBy_UserID' => $id_user_sender,
+                    'ReplyTo_PostID' => $post_id_to_reply);
+    db_newRow('comment', $comment);
+    return $comment; //Toutes les infos du com + le username du sender + sa pp
+  }
+
+  function db_newAnswer($id_answer, $content, $id_user_sender, $comment_id_to_reply) {
+     date_default_timezone_set('Europe/Paris');
+     $answer = array(
+                    'AnswerID' => $id_answer,
+                    'Answer_DateTime' => date("Y-m-d H:i:s"),
+                    'Content' => $content,
+                    'PostedBy_UserID' => $id_user_sender,
+                    'ReplyTo_CommentID' => $comment_id_to_reply);
+     db_newRow('answer', $answer);
+     return $answer; //Toutes les infos du com + le username du sender + sa pp
+  }
+
+  function db_newFriend($id_user1, $id_user2) {
+      db_newRow('friends', ['UserID_1' => $id_user1,
+                            'UserID_2' => $id_user2,
+                            'Accepted' => '0']); 
+  }
+  
+  function db_order_lastConversation($user_id){
+   $order_friends = 
+   array_merge(db_selectColumns(
+      table_name:'conversation',
+      columns:['ConversationID','ReceiverID'], 
+      filters:['SenderID' => ['LIKE', '"'.$user_id.'"','0']]
+      ),
+      db_selectColumns(
+         table_name:'conversation',
+         columns:['ConversationID','SenderID'], 
+         filters:['ReceiverID' => ['LIKE', '"'.$user_id.'"','0']]
+      ));
+      if($order_friends[0]==null){
+         $friends_id = db_getFriends($user_id);
+         for($j = 0; $j <count($friends_id); $j++) {
+            $friends_id[$j] = $friends_id[$j][0];
+         } 
+         return $friends_id;
+      }
+
+      for ($i=0; $i<count($order_friends); $i++) {
+         $order = intval(str_replace("CV","",$order_friends[$i][0]));
+         $order_tab["$order"]= $i;
+      }    
+      krsort($order_tab, SORT_NUMERIC);
+      $cmp = 0;
+      foreach($order_tab as $value) {
+         $final_order[$cmp] = $order_friends[$value][1];
+         $cmp++;
+      }
+      $final_order = array_values(array_unique($final_order));
+      $friends_id = db_getFriends($user_id);
+      for($j = 0; $j <count($friends_id); $j++) {
+         $friends_id[$j] = $friends_id[$j][0];
+      } 
+      $friends_id = array_merge($final_order, $friends_id);
+     
+      $unique_friends = array();
+      for ($i = 0; $i < count($friends_id); $i++) {
+         if (!in_array($friends_id[$i], $unique_friends)) {
+             $unique_friends[] = $friends_id[$i];
+         }
+      }    
+      return $unique_friends;
+  }
+
+
+  
+  function db_getConversation($user_id1, $user_id2) {
+   $conversations = array_merge(
+      db_selectColumns(
+      table_name:'conversation',
+      columns:['ConversationID','SenderID','ReceiverID','Content','MediaID','Posted_DateTime'], 
+      filters:['SenderID' => ['LIKE', '"'.$user_id1.'"','1'],
+               'ReceiverID' => ['LIKE', '"'.$user_id2.'"','0']]
+      ),
+      db_selectColumns(
+         table_name:'conversation',
+         columns:['ConversationID','SenderID','ReceiverID','Content','MediaID','Posted_DateTime'], 
+         filters:['SenderID' => ['LIKE', '"'.$user_id2.'"','1'],
+                  'ReceiverID' => ['LIKE', '"'.$user_id1.'"','0']]
+      ));
+      if($conversations[0]==null){
+         return 0;
+      }
+   for ($i=0; $i<count($conversations); $i++) {
+      $order = intval(str_replace("CV","",$conversations[$i][0]));
+      $order_tab["$order"]= $i;
+   }    
+   ksort($order_tab, SORT_NUMERIC);
+   $cmp = 0;
+   foreach($order_tab as $value) {
+      $final_conv[$cmp] =$conversations[$value];
+      $cmp++;
+   }
+   return $final_conv;
+  }
+
+
+  function db_getFriends(string $user_id) {
+   return (array_merge(
+      db_selectColumns(
+         table_name:'friends',
+         columns:['UserID_1'], 
+         filters:['UserID_2' => ['LIKE', '"'.$user_id.'"','1'],
+                  'Accepted' => ['=', '1', '0']]
+      ),
+      db_selectColumns(
+         table_name:'friends',
+         columns:['UserID_2'], 
+         filters:['UserID_1' => ['LIKE', '"'.$user_id.'"','1'],
+                  'Accepted' => ['=', '1', '0']]
+      )));
+  }
+
+  function db_getFriendRequest(string $user_id) {
+   return (
+      db_selectColumns(
+         table_name:'friends',
+         columns:['UserID_1'], 
+         filters:['UserID_2' => ['LIKE', '"'.$user_id.'"','1'],
+                  'Accepted' => ['=', '0', '0']]
+      ));
+  }
+
+   function db_updateUser($userID, $user_infos) {
+      db_updateColumns('user',  $user_infos, filters:['userID' => ['LIKE', '"'.$userID.'"','0']]);
+   }
+
+   function db_addMedia($base, $type){
+      $id = db_generateId("media");
+      $media = array('MediaID' => $id, 'Base64' =>$base, 'Type' =>$type);
+      db_newRow('media', $media);
+   }
+
+   function db_getPostMedias(string $PostID) {
+      $postMediasID = db_selectColumns("own_media", ["MediaID"],["PostID" => ["LIKE", "'".$PostID."'", "0"]]);
+      $postMediasSrc = array();
+      foreach($postMediasID as $postMediaID) {
+         $postMediaData = db_selectColumns("media", ["*"], ["MediaID" => ["LIKE", "'".$postMediaID[0]."'","0"]])[0];
+         array_push($postMediasSrc, "data:".$postMediaData[2].";base64,".$postMediaData[1]);
+      }
+      return $postMediasSrc;
+   }
 ?>
-
-
-
-
-

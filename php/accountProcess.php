@@ -42,9 +42,9 @@
                 if($dbUser != 1) {
                     switch ($dbUser) {
                         case 'mail':
-                            $err = "Cette adresse mail existe déjà."; break;
+                            $err = "This email address is already taken."; break;
                         case 'userName':
-                            $err = "Ce nom d'utilisateur est déjà pris."; break;
+                            $err = "This username is already taken."; break;
                         default : $err = "erreur"; break;
                     }                    
                     unset($_SESSION["errorMessageRegistration"]);
@@ -57,14 +57,12 @@
         }
         else
         {
-            java_log("ici"); 
             redirect(ROOT.ACCOUNT);
         }
     }
     else
     {
-        java_log("là");
-        $_SESSION['errorMessageRegistration']['submitRegistration'] = "Veuillez envoyer le formulaire d'inscription.";
+        $_SESSION['errorMessageRegistration']['submitRegistration'] = "Please fill out your registration form completely.";
         redirect(ROOT.ACCOUNT);
     }
 ?>

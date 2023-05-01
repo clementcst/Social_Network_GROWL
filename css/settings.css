@@ -1,0 +1,98 @@
+@import url("./style.css");
+
+.main{
+    display: flex;
+    justify-content: space-between;
+    padding: 13px 52px 13px 5%;
+}
+
+.settings-list{
+    font-size:xx-large;
+    background-color: white;
+    border-radius: 7px;
+    margin-bottom: 20px;
+    cursor:pointer;
+}
+
+.profile-disclosed{
+    border-radius: 7px;
+    margin-bottom: 20px;
+    display:none;
+    transition: 0.5s ease;
+}
+
+.theme-disclosed{
+    border-radius: 7px;
+    margin-bottom: 20px;
+    display:none;
+    transition: 0.5s ease;
+}
+
+.privacy-disclosed{
+    border-radius: 7px;
+    margin-bottom: 20px;
+    display:none;
+    transition: 0.5s ease;
+}
+
+.delete-disclosed{
+    border-radius: 7px;
+    margin-bottom: 20px;
+    display:none;
+    transition: 0.5s ease;
+}
+
+.password-disclosed{
+    border-radius: 7px;
+    margin-bottom: 20px;
+    display:none;
+    transition: 0.5s ease;
+}
+
+.menu-arrow{
+    display: inline-block;
+}
+
+.settings-list ion-icon{
+    transition: 0.3s ease;
+}
+
+.but_link{
+    border-radius: 4px;
+    margin: 2px;
+}
+
+#confirm{
+    background-color:springgreen;
+}
+
+#cancel{
+    background-color: crimson;
+}
+
+.profile-param{
+    background-color:whitesmoke;
+    border-radius: 7px;
+    margin-top: 20px;
+}
+
+#formulaire{
+    color:black;
+}
+
+#formulaire input{
+    border-radius: 6px;
+    border-color:dimgrey;
+    width:200px;
+}
+
+#sexChoice input{
+    width:auto;
+}
+
+#profilePicture{
+    width:150px;
+    height:150px;
+    border-radius: 50%;
+    cursor:pointer;
+}
