@@ -75,13 +75,19 @@
                             <img src='<?= $friendReqData[9]?>'></img>
                             <span id='friend_req<?= $friendReqData[0]?>'><?= $friendReqData[0]?></span>
                         </div>
-                        <ion-icon name="checkmark" onclick="submitFormAcceptFReq(<?=$compteurform?>)"></ion-icon>
-                        <form id="form-profil-link<?=$compteurform?>" method="GET" action="<?= PROFIL ?>">
-                            <input type="hidden" name="user" id="user<?=$i?>" value="<?= $friendReqData[0] ?>">
-                        </form>
-                        <form id="form-f-req<?=$compteurform?>" method="POST" action="<?= PHP.FRIEND_PRO ?>">
-                            <input type="hidden" name="UsernameFuturFriend" id="user<?=$compteurform?>" value="<?= $friendReqData[0] ?>">
-                        </form>
+                        <div class="friend-req-buttons">
+                            <ion-icon name="checkmark" onclick="submitFormAcceptFReq(<?=$compteurform?>)"></ion-icon>
+                            <ion-icon name="close-outline" onclick="submitFormCancelFReq(<?=$compteurform?>)"></ion-icon>
+                            <form id="form-profil-link<?=$compteurform?>" method="GET" action="<?= PROFIL ?>">
+                                <input type="hidden" name="user" id="user<?=$i?>" value="<?= $friendReqData[0] ?>">
+                            </form>
+                            <form id="form-f-req-accept<?=$compteurform?>" method="POST" action="<?= PHP.FRIEND_PRO ?>">
+                                <input type="hidden" name="UsernameFuturFriend" id="user<?=$compteurform?>" value="<?= $friendReqData[0] ?>">
+                            </form>
+                            <form id="form-f-req-cancel<?=$compteurform?>" method="POST" action="<?= PHP.FRIEND_PRO ?>">
+                                <input type="hidden" name="UsernameCancelRequest" id="user<?=$compteurform?>" value="<?= $friendReqData[0] ?>">
+                            </form>
+                        </div>
                     </div>
                     <?php
                 }
