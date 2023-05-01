@@ -71,9 +71,14 @@
     flex-basis: 80%;
 }
 
-#new-post-images img, .post-images img{
-    max-width: 250px;
-   height:auto;
+#new-post-images img {
+   max-width: 250px;
+   height: auto;
+}
+
+.post-images img {
+    max-width: 500PX;
+    max-height: auto;
 }
 
 #submit-post {
