@@ -57,16 +57,15 @@
             $media = array("MediaID" => $NewID,"Base64" => $_POST["baseShare"], "Type" => $_POST["typeShare"]);
             db_newRow('media', $media);
             $own_media=array('PostID' => $id_post, 'MediaID' => $NewID);
-
-            //Phrase qui montre un partage
-            $shareSentence = "Regardez ce post de ".$_POST["isShare"];
             
             //On envoie le post dans la db
-            $post = array('NumberOfMedia' => 1, 'Content' =>$shareSentence, 'PostedBy_UserID' =>$_SESSION['connected']);
+            $post = array('NumberOfMedia' => 1, 'Content' =>$_POST["isShare"], 'PostedBy_UserID' =>$_SESSION['connected']);
             db_newPost($post);
 
-            //On envoie le lien post image dans la db
+            //On envoie les liens dans la db
             db_newRow('own_media', $own_media);
+            db_addSharePost($_SESSION['connected'], $_POST["idPost"]);
+            db_update_shared($_POST["idPost"]);
 
             echo "<script> window.location.replace('".ROOT.INDEX."') </script>";
             redirect(ROOT.INDEX);

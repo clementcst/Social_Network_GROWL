@@ -529,4 +529,21 @@ function db_deleteRows(string $table_name, ?array $filters) {
       }
       return $postMediasSrc;
    }
+
+   function db_addSharePost($idUser, $idPost) {
+      date_default_timezone_set('Europe/Paris');
+      $shared = array(
+                      'UserID' => $idUser,
+                      'PostID' => $idPost,
+                      'Shared_DateTime' => date("Y-m-d H:i:s"));
+      db_newRow('shared_post', $shared);
+    }
+
+    function db_update_shared($id_post){
+      $update = db_selectColumns("post", ["NumberOfShares"],["PostID" => ["LIKE", "'".$id_post."'", "0"]]);
+      $update = array(
+               'NumberOfShares' => $update[0][0] +1);
+      db_updateColumns('post', $update, filters:['PostID' => ['LIKE', '"'.$id_post.'"','0']]);
+      return;
+    }
 ?>
