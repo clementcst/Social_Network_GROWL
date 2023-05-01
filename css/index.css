@@ -81,7 +81,7 @@
     max-height: auto;
 }
 
-#submit-post {
+.submit-post {
     background-color:var(--bg-main-color); /* couleur de fond bleue */
     color: #fff; /* couleur du texte en blanc */
     padding: 6px 12px; /* ajout de marge intérieure */

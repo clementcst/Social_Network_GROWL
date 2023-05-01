@@ -46,7 +46,7 @@
                             <div class="bottom-input">
                                 <div> <input type="file" name="picture" id="hiddenfile" onchange="previewPicture(this)"style="display:none" multiple>
                                 <ion-icon name='camera' onclick="getfile()"></ion-icon>Add Photos/Videos</div>
-                                <input id="submit-post" type="submit" value="Submit" />
+                                <input id="submit-post" type="submit" value="Submit" class="submit-post"/>
                                 </div>
                             </div>
                             
@@ -104,14 +104,20 @@
                         $nbComments = count($postComments);                            
                     ?>
                    <div>
-                        <ion-icon id="CommentSection<?=$postData[0]?>" name="chatbox-ellipses" onclick="CommentSectionCall(this.id)">
-                        </ion-icon>
+                        <ion-icon id="CommentSection<?=$postData[0]?>" name="chatbox-ellipses" onclick="CommentSectionCall(this.id)"></ion-icon>
                         <small><?= $nbComments ?></small>
                     </div>
                     <!-- Comments. Ils sont générés en ajax ici -->
                     
                     <div>
-                        <ion-icon name="share-social" onclick="shareSocial(this)"></ion-icon>
+                        <ion-icon name="share-social" onclick="shareSocial(this)"
+                        <?php if(count(db_selectColumns("shared_post", ["*"], ["UserID" => ["LIKE", "'".$_SESSION["connected"]."'", "1"],
+                                                                                  "PostID" => ["LIKE", "'".$postData[0]."'", "0"]]))
+                                > 0) {
+                                    ?> style = "color: blue" <?php
+                                }
+                        ?>>
+                        </ion-icon>
                         <small><?= $postData[3] ?></small>
                     </div>
                 </div>

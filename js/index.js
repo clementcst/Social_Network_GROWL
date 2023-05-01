@@ -487,48 +487,96 @@ function updateLikeCount(res, mode) {
     }
 }
 
+//Fonction qui partage un post
 function shareSocial(e) {
+    if(e.style.color == "blue")
+    return;
     // On récupère la div qui contient l'ensemble du post
     var postToShare = e.parentNode.parentNode.parentNode.parentNode;
     var userName = postToShare.querySelector("#userName_Post").innerHTML;
-
+    postToShare.style.border = "1.5px solid black";
+    var id = postToShare.children[2].children[1].children[1].children[0].id;
+    id = "P" + id.split("P")[1];
+      
     // On utilise la bibliothèque html2canvas pour créer une capture d'écran de la div
     html2canvas(postToShare).then(function(canvas) {
-      // On récupère l'image au format base64
-      var postBase64 = canvas.toDataURL();
-      var base = (postBase64).split("base64,")[1];
-      var type =(postBase64).split(";")[0].split("data:")[1];
+        postToShare.style.border = "none";
+      
+        // On récupère l'image au format base64
+        var postBase64 = canvas.toDataURL();
+        var base = (postBase64).split("base64,")[1];
+        var type = (postBase64).split(";")[0].split("data:")[1];
 
-      var form = document.createElement("form");
-      form.method = "POST";
-      form.name = "sharePost";
-      form.action = "php/postProcess.php"
+        // On crée une div pour contenir le formulaire de partage
+        var shareDiv = document.createElement("div");
+        shareDiv.className = "share-div";
+        shareDiv.style = "position : absolute; margin-left: 400px; margin-top: 100px; border-radius: 8px; width : 300px; background-color : #fff; transition: 0.4s ease; text-align : center;";
+      
+        // On crée un formulaire pour envoyer l'image au serveur
+        var form = document.createElement("form");
+        form.method = "POST";
+        form.name = "sharePost";
+        form.action = "php/postProcess.php"
+  
+        // On crée des champs cachés pour envoyer les données de l'image
+        var baseShare = document.createElement("input")
+        baseShare.name = "baseShare";
+        baseShare.value = base;
+        baseShare.type = "hidden";
+  
+        var typeShare = document.createElement("input")
+        typeShare.name = "typeShare";
+        typeShare.value = type;
+        typeShare.type = "hidden";
+  
+        var idPost = document.createElement("input")
+        idPost.name = "idPost";
+        idPost.value = id;
+        idPost.type = "hidden";
 
-      var baseShare = document.createElement("input")
-      baseShare.name = "baseShare";
-      baseShare.value = base;
-      baseShare.type = "hidden";
-
-      var typeShare = document.createElement("input")
-      typeShare.name = "typeShare";
-      typeShare.value = type;
-      typeShare.type = "hidden";
-
-      var isShare = document.createElement("input");
-      isShare.name = "isShare";
-      isShare.value = userName;
-      isShare.type = "hidden";
-
-      var submit = document.createElement("input")
-      submit.type = "submit";
-      submit.style.display = "none";
-
-      form.appendChild(baseShare);
-      form.appendChild(typeShare);
-      form.appendChild(isShare);
-      form.appendChild(submit);
-      postToShare.appendChild(form);
-
-      submit.click();
-    });    
+        var isShare = document.createElement("input");
+        isShare.name = "isShare";
+        isShare.value = "Regardez ce post de "+userName;
+        isShare.type = "text";
+        isShare.className = "form-control comment-input";
+  
+        var submit = document.createElement("input")
+        submit.type = "submit";
+        submit.className = "submit-post"
+        submit.style ="margin-bottom : 8px;";
+        submit.value = "Share";
+  
+        var cancel = document.createElement("button");
+        cancel.type = "button";
+        cancel.className = "cancel-post";
+        cancel.innerHTML = "Cancel";
+        cancel.className = "submit-post"
+        cancel.style = " margin-left: 30px; margin-bottom: 8px";
+        cancel.addEventListener("click", function() {
+            shareDiv.remove();
+        });
+  
+        // On ajoute les champs cachés et les boutons au formulaire
+        form.appendChild(baseShare);
+        form.appendChild(typeShare);
+        form.appendChild(isShare);
+        form.appendChild(idPost);
+        form.appendChild(submit);
+        form.appendChild(cancel);
+        shareDiv.appendChild(form);
+  
+        e.parentNode.parentNode.appendChild(shareDiv);
+        // On ajoute un écouteur d'événement pour détecter les clics en dehors de la div "shareDiv"
+        document.addEventListener("click", function(event) {
+            if (!event.target.closest(".share-div")) {
+                // Si l'élément cliqué ne se trouve pas dans la div "shareDiv" ou dans cette div elle-même, on supprime la div "shareDiv"
+                var shareDiv = document.querySelector(".share-div");
+                if (shareDiv) {
+                    shareDiv.remove();
+                }
+            }
+        });
+  
+        isShare.focus();
+    });
 }
