@@ -49,6 +49,7 @@ openPassword[0].addEventListener('click', function(){openSettings(openPassword[0
     Confirm function
 */
 function delete_account(){
+    console.log("Test1");
     swal({
         title: "Are you sure?",
         text: "Once deleted, you will not be able to recover your account!",
@@ -61,9 +62,12 @@ function delete_account(){
     })
     .then((willDelete) => {
         if (willDelete) {
-            swal("Your account was succesfully deleted!", {
+            swal({
+                title: "Your account was succesfully deleted!",
+                text: "You will be redirected to the login page...",
                 icon: "success",
             });
+            document.getElementById("form-delete-account").submit();
         } else {
             swal("Your account was not deleted!", {
                 icon: "error",
@@ -72,7 +76,7 @@ function delete_account(){
     });
 }
 
-function delete_friend(){
+function delete_friend(friend_no){
     swal({
         title: "Are you sure?",
         text: "Once deleted, your friend will have to add you again!",
@@ -88,6 +92,7 @@ function delete_friend(){
             swal("Your friend was succesfully removed!", {
                 icon: "success",
             });
+            document.getElementById("form-delete-friend" + friend_no).submit();
         } else {
             swal("Your friend was not removed!", {
                 icon: "error",
