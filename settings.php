@@ -165,7 +165,7 @@
                     <div class="profile-param">
                         <form method="post" name="profile_picture_update" id="profile_picture_update" action="<?= PHP.SETTINGS_PRO ?>">
                             <img id="profilePicture" src="<?= $userData[9]?>">
-                            <input type="file" accept=".png,.jpg" name="picture" id="hiddenfile" onchange="previewPicture(this)">
+                            <input type="file" accept=".png,.jpg" name="picture" id="hiddenfile" required onchange="previewPicture(this)">
                             <input type="hidden" name="srcPP_base64" id="srcPP_base64">
                             <input type="hidden" name="srcPP_type" id="srcPP_type">
                             <input type="hidden" name="srcPP_username" id="srcPP_username" value="<?= $userData[0]?>">
