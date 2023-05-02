@@ -49,10 +49,6 @@ function previewPicture(e){
                 var type = document.createElement("input");
                 type.type = "hidden";
                 type.name = "type"+ cmpImg;
-	    	var isPost = document.createElement("input");
-                isPost.name = "isPost";
-                isPost.value = "1";
-                isPost.type = "hidden";
 	    
                 // Créer un bouton de suppression pour cette image
                 var deleteBtn = document.createElement("button");
@@ -60,7 +56,6 @@ function previewPicture(e){
                 deleteBtn.innerHTML = "X";
                 deleteBtn.addEventListener("click", function() {
                     divImages.removeChild(oImg);
-		     divImages.removeChild(isPost);
                     divImages.removeChild(deleteBtn);
                 });
                 
@@ -74,7 +69,6 @@ function previewPicture(e){
                     };
                     reader.readAsDataURL(blob);
                 });
-                divImages.appendChild(isPost);
                 divImages.appendChild(oImg);
                 divImages.appendChild(deleteBtn);
                 divImages.appendChild(base);
