@@ -52,7 +52,12 @@
                 </ion-icon>
                 <?php } ?>
                 <?php  if(defined('TRASHABLE')) { ?>
-                <ion-icon name="trash" onclick="delete_friend()"></ion-icon>
+                <ion-icon name="trash" onclick="delete_friend(<?=$i?>)"></ion-icon>
+                <!-- Supprimer un ami -->
+                <form id="form-delete-friend<?=$i?>" action="<?= PHP.SETTINGS_PRO ?>" method="post">
+                    <input type="hidden" name="friendDelete_username" id="friendDelete_username" value="<?= $friendData[0]?>">
+                    <input type="hidden" name="userDelete_username" id="userDelete_username" value="<?= $userData[0]?>">
+                </form>
                 <?php }  ?>
             </div>
         </div>

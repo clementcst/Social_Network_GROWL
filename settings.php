@@ -257,9 +257,10 @@
                     <ion-icon name="trash-outline"></ion-icon> Delete Account<div class="menu-arrow"><ion-icon id="menu-arrow-delete" name="chevron-forward-outline"></ion-icon></div>
                 </div>
                 <div class="delete-disclosed">
-                    <form action="">
+                    <form id="form-delete-account" action="<?= PHP.SETTINGS_PRO ?>" method="post">
                         <label for="delete-account">Do you want to delete your account?</label>
                         <input type="button" name="delete-account" value="Delete" id="delete-account" onclick="delete_account()">
+                        <input type="hidden" name="srcDelete_username" id="srcDelete_username" value="<?= $userData[0]?>">
                     </form>
                 </div>
             </div>
