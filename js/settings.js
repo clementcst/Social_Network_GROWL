@@ -107,18 +107,29 @@ function previewPicture(e){
         element = Array.from(e.files)[0]
 
         if (element) {
-            var oImg = document.createElement("img");
-            oImg.setAttribute('src', URL.createObjectURL(element));            
-            fetch(oImg.src) .then((res) => res.blob()) .then((blob) => {
-                // Read the Blob as DataURL using the FileReader API
-                const reader = new FileReader();
-                reader.onloadend = () => {
-                    divImages.src = reader.result;
-                    document.getElementById("srcPP_base64").setAttribute('value', (reader.result).split("base64,")[1]);
-                    document.getElementById("srcPP_type").setAttribute('value', (reader.result).split(";")[0].split("data:")[1]); 
-                };
-                reader.readAsDataURL(blob);
-            });
+            const input = document.getElementById("hiddenfile");
+            const file = input.files[0];
+            const maxSize = 500000;
+
+            if(file.size > maxSize){
+                swal('Le fichier est trop volumineux. Taille maximale : 500ko');
+                input.value = '';
+            }
+            
+            else{
+                var oImg = document.createElement("img");
+                oImg.setAttribute('src', URL.createObjectURL(element));
+                fetch(oImg.src) .then((res) => res.blob()) .then((blob) => {
+                    // Read the Blob as DataURL using the FileReader API
+                    const reader = new FileReader();
+                    reader.onloadend = () => {
+                        divImages.src = reader.result;
+                        document.getElementById("srcPP_base64").setAttribute('value', (reader.result).split("base64,")[1]);
+                        document.getElementById("srcPP_type").setAttribute('value', (reader.result).split(";")[0].split("data:")[1]);
+                    };
+                    reader.readAsDataURL(blob);
+                });
+            }
             
             divImages.appendChild(oImg);
         }
