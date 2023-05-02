@@ -46,7 +46,7 @@
                             <div class="bottom-input">
                                 <div> <input type="file" name="picture" id="hiddenfile" onchange="previewPicture(this)"style="display:none" multiple>
                                 <ion-icon name='camera' onclick="getfile()"></ion-icon>Add Photos/Videos</div>
-                                <input id="submit-post" type="submit" value="Submit" class="submit-post"/>
+                                <input id="submit-post" type="submit" value="Submit" class="submit-post" name ="isPost"/>
                                 </div>
                             </div>
                             

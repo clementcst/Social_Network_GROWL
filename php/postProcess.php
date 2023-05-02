@@ -5,13 +5,12 @@
     else
         require_once("./php/required.php");
     if(isset($_POST)) {
-        if(isset($_POST["isPost"]) && $_POST["isPost"] == 1){
+        if(isset($_POST["isPost"])){
             $number_media = 0;
             $id_post=db_generateId("post");
             $own_media = array();
             for($i = 0; $i<4; $i++){
                 if(isset($_POST["base".$i]) && isset($_POST["type".$i])) {
-                    // java_log(json_encode($_POST["type".$i]));
                     $NewID = db_generateID("media");
                     $media = array("MediaID" => $NewID,"Base64" => $_POST["base".$i], "Type" => $_POST["type".$i]);
                     db_newRow('media', $media);
