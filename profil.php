@@ -210,5 +210,6 @@
 </body>
 <?php include_once(FOOTER); ?>
 <script type="text/javascript" src="./js/profil.js"></script>
+<script type="text/javascript" src="./js/ajaxRequest.js"></script>
 
 </html>
