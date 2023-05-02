@@ -74,12 +74,12 @@
             $int_friend = preg_replace('/[^0-9]/', '', $User_id_friend);
             $int_user = preg_replace('/[^0-9]/', '', $User_id_user);
             if(intval($int_user) < intval($int_friend)){
-                db_deleteRows("friends", ["UserID_1" => ["LIKE", "'".$User_id_user."'", "0"], "UserID_2" => ["LIKE", "'".$User_id_friend."'", "0"]]);
+                db_deleteRows("friends", ["UserID_1" => ["LIKE", "'".$User_id_user."'", "1"], "UserID_2" => ["LIKE", "'".$User_id_friend."'", "0"]]);
             }
             else{
-                db_deleteRows("friends", ["UserID_1" => ["LIKE", "'".$User_id_friend."'", "0"], "UserID_2" => ["LIKE", "'".$User_id_user."'", "0"]]);
+                db_deleteRows("friends", ["UserID_1" => ["LIKE", "'".$User_id_friend."'", "1"], "UserID_2" => ["LIKE", "'".$User_id_user."'", "0"]]);
             }
         }
     }
-    //redirect(ROOT.SETTINGS);
+    redirect(ROOT.SETTINGS);
 ?>
