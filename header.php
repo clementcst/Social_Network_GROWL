@@ -21,7 +21,14 @@
             <div class="bar">
                 <div class="search-bar">
                     <ion-icon name="search-outline"></ion-icon>
-                    <input type="text" id="search-input" placeholder="Rechercher...">
+                    
+                    <?php  
+                        if (isset($_GET['searchBar'])){     ?>
+                            <input type="text" id="search-input" placeholder="Rechercher..." value=<?=$_GET['searchBar']?>>
+                         <?php } else{ ?>
+                             <input type="text" id="search-input" placeholder="Rechercher...">
+                        <?php }
+                    ?>
                 </div>
                 <div class="suggestion" style="display: none;"></div>
             </div>
