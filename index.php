@@ -55,7 +55,11 @@
               </div>
         <!-- Posts -->
         <?php 
+            if (isset($_GET['searchBar'])){
+            $posts = db_selectColumns("post", ["*"], ["KeyWords" => ["LIKE", "'%".$_GET['searchBar']."%'", "0"]],); // changer ici pour la politique de confidentialité des posts
+        }else{
             $posts = db_selectColumns('post', ['*']); // changer ici pour la politique de confidentialité des posts
+        }
             for ($i=count($posts)-1 ; $i >=0  ; $i--) {
                 $postData = $posts[$i]; 
                 $postUserData = db_getUserData($postData[7]);
