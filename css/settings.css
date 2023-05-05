@@ -7,8 +7,13 @@
 }
 
 .settings-list{
+    position: relative;
+    margin-left: 10%;
+    width: 60%;
     font-size:xx-large;
-    background-color: white;
+    background-color: var(--bg-settings-color);
+    color: var(--settings-content-color);
+    padding: 7px;
     border-radius: 7px;
     margin-bottom: 20px;
     cursor:pointer;
@@ -50,38 +55,38 @@
 }
 
 .menu-arrow{
-    display: inline-block;
+    display: inline;
+    position:absolute;
+    right:5%;
 }
 
 .settings-list ion-icon{
     transition: 0.3s ease;
 }
 
-.but_link{
-    border-radius: 4px;
-    margin: 2px;
-}
-
-#confirm{
-    background-color:springgreen;
-}
-
-#cancel{
-    background-color: crimson;
-}
-
-.profile-param{
-    background-color:whitesmoke;
+.settings-styles{
+    color:var(--settings-content-color);
+    background-color: var(--bg-settings-color);
     border-radius: 7px;
     margin-top: 20px;
+    padding: 4px;
+    width: fit-content;
+    margin-left: 10%;
 }
 
-#formulaire{
-    color:black;
+.formulaire{
+    width:fit-content;
 }
 
-#formulaire input{
+.formulaire td{
+    padding: 5px;
+}
+
+.formulaire input:not(.confirm), select{
+    margin: 7px;
     border-radius: 6px;
+    color:var(--settings-content-color);
+    background-color: var(--bg-settings-color);
     border-color:dimgrey;
     width:200px;
 }
@@ -91,8 +96,41 @@
 }
 
 #profilePicture{
+    padding:5px;
     width:150px;
     height:150px;
     border-radius: 50%;
     cursor:pointer;
+}
+
+.confirm{
+    border-radius: 6px;
+    background-color:var(--bg-main-color);
+    color: #fff;
+    width:200px;
+}
+
+.confirm:hover{
+    border-radius: 6px;
+    background-color: #b7b6b6;
+    color: var(--bg-main-color);
+    width:200px;
+    transition: all 0.3s ease;
+}
+
+#delete-account{
+    background-color: var(--settings-delete-bg-color);
+    color: var(--settings-delete-color);
+    border-radius: 6px;
+    width: 100px;
+    text-align: center;
+}
+
+#delete-account:hover{
+    background-color: var(--settings-hover-bg-color);
+    color: var(--settings-hover-color);
+    border-radius: 6px;
+    width: 100px;
+    text-align: center;
+    transition : all 0.3s ease;
 }
