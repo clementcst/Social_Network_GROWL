@@ -55,12 +55,15 @@
               </div>
         <!-- Posts -->
         <?php 
-            if (isset($_GET['searchBar'])){
+        if (isset($_GET['searchBar'])){
             $posts = db_selectColumns("post", ["*"], ["KeyWords" => ["LIKE", "'%".$_GET['searchBar']."%'", "0"]],); // changer ici pour la politique de confidentialité des posts
+            $toLoad = $_GET['searchBar'];
         }else{
             $posts = db_selectColumns('post', ['*']); // changer ici pour la politique de confidentialité des posts
+            $toLoad = null;
         }
-            for ($i=count($posts)-1 ; $i >=0  ; $i--) {
+            $number_print_posts = min(count($posts), POSTS_DISPLAYED);
+            for ($i=$number_print_posts-1 ; $i >=0  ; $i--) {
                 $postData = $posts[$i]; 
                 $postUserData = db_getUserData($postData[7]);
                 $postData[6] = urldecode($postData[6]);
@@ -127,7 +130,11 @@
                 </div>
             </div>
         </div>
-        <?php } ?>
+        <?php }
+        if(count($posts) > POSTS_DISPLAYED){ ?>
+            <input id="addMorePost" type="button" onclick="displayMorePosts(<?= POSTS_DISPLAYED ?>, <?= POSTS_TO_PRINT ?>, <?= $toLoad ?>)" value="Load more">
+        <?php }  ?>
+
         </div>
         <!-- Right Content -->
         <?php define('CONVERSIONABLE','1'); 

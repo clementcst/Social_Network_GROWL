@@ -522,6 +522,7 @@ function shareSocial(e) {
         typeShare.name = "typeShare";
         typeShare.value = type;
         typeShare.type = "hidden";
+        shareDiv.style.zIndex = "9";
   
         var idPost = document.createElement("input")
         idPost.name = "idPost";
@@ -558,6 +559,7 @@ function shareSocial(e) {
         form.appendChild(submit);
         form.appendChild(cancel);
         shareDiv.appendChild(form);
+        
   
         e.parentNode.parentNode.appendChild(shareDiv);
         // On ajoute un écouteur d'événement pour détecter les clics en dehors de la div "shareDiv"
@@ -574,3 +576,122 @@ function shareSocial(e) {
         isShare.focus();
     });
 }
+
+function createPostContainer(profilPic, userName, postTime, textContent, tabPicturesContent, numberOfLike, placePost, isLikedPost, postID, nbComments, isShared, nbShare) {
+    // création de la div post-container
+    var postContainerDiv = document.createElement("div");
+    postContainerDiv.className = "post-container";
+  
+    // création de la div user-profil
+    var userProfilDiv = document.createElement("div");
+    userProfilDiv.className ="user-profil";
+    postContainerDiv.appendChild(userProfilDiv);
+  
+    // ajout de l'image de profil
+    var profilImg = document.createElement("img");
+    profilImg.src = profilPic;
+    userProfilDiv.appendChild(profilImg);
+  
+    // création de la div avec le nom d'utilisateur et le timestamp
+    var userNameAndTimeDiv = document.createElement("div");
+    userProfilDiv.appendChild(userNameAndTimeDiv);
+  
+    // ajout du nom d'utilisateur
+    var userNamePost = document.createElement("p");
+    userNamePost.id = "userName_Post";
+    userNamePost.innerText = userName;
+    userNameAndTimeDiv.appendChild(userNamePost);
+  
+    // ajout de la date de publication
+    var timestampSpan = document.createElement("span");
+    timestampSpan.innerText = postTime;
+    userNameAndTimeDiv.appendChild(timestampSpan);
+  
+    // ajout du texte du post
+    var postTextP = document.createElement("p");
+    postTextP.className ="post-text";
+    postTextP.innerText = textContent;
+    postContainerDiv.appendChild(postTextP);
+  
+    // création de la div post-media
+    var postMediaDiv = document.createElement("div");
+    postMediaDiv.className ="post-media";
+    postContainerDiv.appendChild(postMediaDiv);
+  
+    // création de la div post-images
+    var postImagesDiv = document.createElement("div");
+    postImagesDiv.className = "post-images";
+    postMediaDiv.appendChild(postImagesDiv);
+  
+    // ajout des images du post
+    if(Array.isArray(tabPicturesContent)){
+        if (tabPicturesContent.length > 0 && tabPicturesContent.length < 5) {
+            for (let k = 0; k < tabPicturesContent.length; k++) {
+                var postImg = document.createElement("img");
+                postImg.src = tabPicturesContent[k];
+                postImg.alt = 'Img Media' + k;
+                postImg.className ="post-img";
+        
+                // vérification si le post a une seule image pour modifier la taille
+                if (tabPicturesContent.length == 1) {
+                postImg.style.width = "200%";
+                postImg.style.height = "auto";
+                }
+        
+                postImagesDiv.appendChild(postImg);
+            }
+        }
+    }
+  
+    // création de la div post-reactions
+    var postReactionsDiv = document.createElement("div");
+    postReactionsDiv.className ="post-reactions";
+    postMediaDiv.appendChild(postReactionsDiv);
+
+    // Création du bouton like
+    var likeButtonDiv = document.createElement("div");
+    var likeButton = document.createElement("ion-icon");
+    likeButton.setAttribute("name", "heart");
+    likeButton.setAttribute("onclick", "LikePost('"+ postID + "', this, '"+ placePost+"')");
+    if (isLikedPost > 0) {
+        likeButton.style.color = "red";
+    }
+    var likeCount = document.createElement("small");
+    likeCount.setAttribute("id", `likeCount` + placePost);
+    likeCount.innerHTML = numberOfLike;
+    likeButtonDiv.appendChild(likeButton);
+    likeButtonDiv.appendChild(likeCount);
+    postReactionsDiv.appendChild(likeButtonDiv);
+
+    // Création du bouton commentaire
+    var commentButtonDiv = document.createElement("div");
+    var commentButton = document.createElement("ion-icon");
+    commentButton.setAttribute("name", "chatbox-ellipses");
+    commentButton.id = 'CommentSection'+postID;
+    commentButton.setAttribute("onclick", 'CommentSectionCall(this.id)');
+    var commentCount = document.createElement("small");
+    commentCount.innerHTML = nbComments;
+    commentButtonDiv.appendChild(commentButton);
+    commentButtonDiv.appendChild(commentCount);
+    postReactionsDiv.appendChild(commentButtonDiv);
+
+    // Création du bouton de partage
+    var shareButtonDiv = document.createElement("div");
+    var shareButton = document.createElement("ion-icon");
+    shareButton.setAttribute("name", "share-social");
+    shareButton.setAttribute("onclick", `shareSocial(this)`);
+    if (isShared > 0) {
+        shareButton.style.color = "blue";
+    }
+    var shareCount = document.createElement("small");
+    shareCount.innerHTML = nbShare;
+    shareButtonDiv.appendChild(shareButton);
+    shareButtonDiv.appendChild(shareCount);
+    postReactionsDiv.appendChild(shareButtonDiv);
+
+    //On ajoute le post a la page
+    var middle = document.getElementsByClassName('middle-content')[0];
+    middle.appendChild(postContainerDiv);
+}
+    
+    

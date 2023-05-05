@@ -71,7 +71,6 @@ function changeConversation(username_friend){
                     all_messages[j][k] = res[6*j+4+k]// dans le tableau on y met un tableau contenant toutes les infos du message
                 }
             }
-            // console.log(all_messages[0][2]);
             updateConvMessage(data,all_messages);
         }
     }
@@ -245,6 +244,61 @@ function LikePostRequest(postId, action) {
     requestLP.send('fct=' + fct + '&postID=' + postId); 
 }
 
+function displayMorePosts(postsDisplayed, postToPrint, keyWord){
+    if (keyWord == null)
+    keyWord = '***';
+    var nbInfosForPosts = 11;
+    var requestDMP= getXhr();
+    requestDMP.open("POST","./php/ajaxRequest.php",true);
+    requestDMP.onreadystatechange = function(){
+        if(requestDMP.readyState == 4 && requestDMP.status == 200){
+            var reponse=requestDMP.responseText;
+            if(reponse==0){
+                return 0;
+            }            
+            var res=reponse.split("***");
+            document.getElementById('addMorePost').remove();
+            var totalPostNotDisplayed = res[0].split('**;**')[0].replace(' ', '');
+            var postAdd = parseInt(res[0].split('**;**')[1]) - postsDisplayed;
+            var post = [];
+            var décalageImage = 0;
+            for (var i=0; i<postAdd; i++){
+                post[i] = [];
+                post[i][0] = res[i* nbInfosForPosts +1 + décalageImage]; //id du post
+                post[i][1] = res[i* nbInfosForPosts +2+ décalageImage]; //date du post
+                post[i][2] = res[i* nbInfosForPosts +3+ décalageImage]; // le nombre de like
+                post[i][3] = res[i* nbInfosForPosts +4+ décalageImage]; // le nombre de partage
+                if(parseInt(res[i* nbInfosForPosts +5+ décalageImage]) > 0){
+                    post[i][4] = [];
+                    for(var j = 0; j<res[i* nbInfosForPosts +5+ décalageImage]; j++){
+                        post[i][4][j] = res[i* nbInfosForPosts +5+ décalageImage + j+1];
+                    }
+                    décalageImage = décalageImage + parseInt(res[i* nbInfosForPosts +5 + décalageImage]);
+                } else {
+                    post[i][4] = res[i* nbInfosForPosts +5+ décalageImage];
+                }
+                post[i][5] = res[i* nbInfosForPosts +6+ décalageImage]; //le contenu text
+                post[i][6] = res[i* nbInfosForPosts +7+ décalageImage]; // la pp de l'envoyeur
+                post[i][7] = res[i* nbInfosForPosts +8+ décalageImage]; // le nom de l'envoyeur
+                post[i][8] = res[i* nbInfosForPosts +9+ décalageImage]; // le nombre de commentaire 
+                post[i][9] = res[i* nbInfosForPosts +10+ décalageImage]; // savoir si le post est liké par le user connecté
+                post[i][10] = res[i* nbInfosForPosts +11+ décalageImage]; // savoir si le post est partagé par le user connecté
+            }       
+            printPost(post, postsDisplayed);
+            if(parseInt(totalPostNotDisplayed) > 0){
+                var middle = document.getElementsByClassName('middle-content')[0];
+                var inputMore = document.createElement('input');
+                inputMore.id = 'addMorePost';
+                inputMore.type = 'button';
+                inputMore.value = 'Load more';
+                inputMore.setAttribute("onclick", "displayMorePosts("+ parseInt(res[0].split('**;**')[1])+", "+ postToPrint +", '"+keyWord+"')");       
+                middle.appendChild(inputMore); 
+            }
+        }
+    }
+    requestDMP.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8');
+    requestDMP.send('fct=DMP '+ '&PDisplayed=' + postsDisplayed + '&postToPrint=' + postToPrint + '&keyWord=' + keyWord);
+}
 
 // function NewFilter(){
 //     var requestCartF= getXhr();
@@ -362,4 +416,10 @@ function updateFriendsOrder(friend_name) {
     var parent = document.getElementsByClassName('close-friends');
     console.log(parent[0].firstChild);
     parent.insertBefore(test,parent.firstChild);
+}
+
+function printPost(tabPosts, nbpost){
+    for(var i=0; i<tabPosts.length; i++){
+        createPostContainer(tabPosts[i][6],tabPosts[i][7], tabPosts[i][1], tabPosts[i][5], tabPosts[i][4], tabPosts[i][2], nbpost + i, tabPosts[i][9], tabPosts[i][0], tabPosts[i][8], tabPosts[i][10], tabPosts[i][3])
+    }
 }
