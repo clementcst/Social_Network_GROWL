@@ -75,7 +75,7 @@
             columns:['UserID'], 
             filters:['Username' => ['LIKE', '"'.$username_friend.'"','0']]
          );
-        db_newMessage($id_user_connected, $id_friend[0][0], $content, $media);        
+        db_newMessage($id_user_connected, $id_friend[0][0], urlencode($content), $media);        
         echo $username_friend;
         return 0;
     }
@@ -202,7 +202,56 @@
         }
     }
 
-    if($_POST['fct']!== null)
+    function displayMorePosts($postsDisplayed, $postToPrint, $keyWord) {
+        if($keyWord != '***'){
+            $posts = db_selectColumns("post", ["*"], ["KeyWords" => ["LIKE", "'%".$_GET['searchBar']."%'", "0"]],); 
+        } else {
+            $posts = db_selectColumns('post', ['*']);
+        }        
+        $nbPostWanted = $postsDisplayed + $postToPrint;
+        $nbPostsNotDisplayed = count($posts) - $nbPostWanted;
+        if($nbPostsNotDisplayed < 0){
+            $nbPostWanted = count($posts) - $postsDisplayed + $postsDisplayed;
+            $nbPostsNotDisplayed  = 0;
+        }
+        $postsWanted = array();
+        $stringReturn = $nbPostsNotDisplayed.'**;**'.$nbPostWanted ;
+        $j = 0;
+        for($i=$postsDisplayed ; $i< $nbPostWanted ; $i++){
+            $postsWanted[$j] = array();
+            $postsWanted[$j] = $posts[$i];
+            $j++;
+        }
+        for($k= 0; $k<count($postsWanted); $k++){
+            $stringReturn = $stringReturn.'***'.$postsWanted[$k][0].'***'; //l'id du post
+            $stringReturn = $stringReturn.$postsWanted[$k][1].'***'; // la date du post
+            $stringReturn = $stringReturn.$postsWanted[$k][2].'***'; // le nombre de like
+            $stringReturn = $stringReturn.$postsWanted[$k][3].'***'; // le nombre de partage
+            if($postsWanted[$k][4]>0){
+                $stringReturn = $stringReturn.$postsWanted[$k][4].'***';
+                $pictures = db_getPostMedias($postsWanted[$k][0]);
+                for($i = 0; $i<$postsWanted[$k][4]; $i++){
+                    $stringReturn = $stringReturn.$pictures[$i].'***'; // s'il y a des images, on les mets 1 par 1
+                }
+            } else{
+                $stringReturn = $stringReturn.'0'.'***';            
+            }            
+            $stringReturn = $stringReturn.urldecode($postsWanted[$k][6]).'***'; //le contenu text
+            $sender = db_getUserData($postsWanted[$k][7]);
+            $stringReturn = $stringReturn.$sender[9].'***'; // la pp de l'envoyeur
+            $stringReturn = $stringReturn.$sender[0].'***'; // le nom de l'envoyeur
+            // le nombre de commentaire 
+            $stringReturn = $stringReturn.count(db_selectColumns("comment", ["*"], ["ReplyTo_PostID" => ["LIKE", "'".$postsWanted[$k][0]."'", "0"]])).'***';
+            // savoir si le post est liké par le user connecté
+            $stringReturn = $stringReturn.count(db_selectColumns("liked_post", ["*"], ["UserID" => ["LIKE", "'".$_SESSION["connected"]."'", "1"],"PostID" => ["LIKE", "'".$postsWanted[$k][0]."'", "0"]])).'***';
+            // savoir si le post est partagé par le user connecté
+            $stringReturn = $stringReturn.count(db_selectColumns("shared_post", ["*"], ["UserID" => ["LIKE", "'".$_SESSION["connected"]."'", "1"],"PostID" => ["LIKE", "'".$postsWanted[$k][0]."'", "0"]]));
+        }
+        echo $stringReturn;
+        return 0;
+    }
+
+    if($_POST['fct'] !== null)
     {
         $fct=$_POST['fct'];
         switch($fct) {  //switch the ajax request, call the right function
@@ -275,6 +324,12 @@
             case 'UnlikeP' :
                 if($_POST['postID'] != null)
                     UnlikePost($_POST['postID']);
+                else
+                    php_err("error, not enough POST in ajax request");
+                break;
+            case 'DMP ' :
+                if($_POST['PDisplayed'] != null && $_POST['postToPrint'] != null)
+                    displayMorePosts($_POST['PDisplayed'], $_POST['postToPrint'], $_POST['keyWord']);
                 else
                     php_err("error, not enough POST in ajax request");
                 break;

@@ -32,4 +32,8 @@
         define('PROFIL','profil.php');
         define('SETTINGS','settings.php');
         define('ABOUTUS','aboutUs.php');
+
+    /* in index */
+    define('POSTS_DISPLAYED','5');
+    define('POSTS_TO_PRINT','5');
 ?>
