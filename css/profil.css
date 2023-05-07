@@ -149,11 +149,9 @@ hr {
 .container-btn-post btn {
     width: 30%;
     height: 30px;
-    border: 2px solid var(--bg-main-color);
+    border: 1px solid var(--bg-main-color);
     border-radius: 10px;
     margin-bottom: 30px;
-    background-color: var(--bg-main-color);
-    color: #fff;
     font-size: 16px;
     font-weight: bold;
     text-align: center;
@@ -170,6 +168,18 @@ hr {
     transition: all 0.3s ease;
   }
 
+  .btn-active-profil {
+    background-color: #b7b6b6;
+    color:var(--bg-main-color);
+    transition: all 0.3s ease;
+  }
+
+  .btn-unactive-profil {
+    background-color: var(--bg-main-color);
+    color:white;
+    transition: all 0.3s ease;
+  }
+
   .container-btn-post btn:focus {
     outline: none;
   }
@@ -178,26 +188,35 @@ hr {
 .content-posts{
     width:100%;
     height:80%;
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.post-container{
+    width: 92%;
+    height: 100%;
 }
 
 .content1{
-    border:solid red 2px;
     height:120px;
+    width:fit-content;
 }
 
 .content-posts::-webkit-scrollbar {
-    width: 6px;
+    width: 10px;
+    margin-right:20px;
   }
 
   .content-posts::-webkit-scrollbar-thumb {
     background-color:var(--bg-main-color);
     border-radius: 3px;
+    margin-left: 10px;
   }
 
   .content-posts::-webkit-scrollbar-track {
     background-color: #f2f2f2;
     border-radius: 3px;
+    margin-top:20px;
   }
 
 

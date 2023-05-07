@@ -312,6 +312,7 @@ function displayMorePosts(postsDisplayed, postToPrint, maxDatetime, mode, userna
             if(parseInt(totalPostNotDisplayed) > 0){
                 var middle = (mode == 'index') ? document.getElementsByClassName(namediv)[0] : document.getElementById(namediv) ;
                 var inputMore = document.createElement('input');
+                inputMore.className = "btn-loadMore";
                 inputMore.id = namebtn;
                 inputMore.type = 'button';
                 inputMore.value = 'Load more';

@@ -91,9 +91,9 @@
                 <div class="bottom-profil">
                     
                     <div class="container-btn-post">
-                        <btn id="box1" >My Posts</btn>
-                        <btn id="box2" >Liked Posts</btn>
-                        <btn id="box3" >Shared Posts</btn>
+                        <btn id="box1" class="btn-active-profil" >My Posts</btn>
+                        <btn id="box2"  class="btn-unactive-profil" >Liked Posts</btn>
+                        <btn id="box3"  class="btn-unactive-profil" >Shared Posts</btn>
                     </div>
 
                     <div class="content-posts">
@@ -179,7 +179,7 @@
                                     </div>
                                 <?php }
                                 if(count($AllPosts) > POSTS_DISPLAYED){ ?>
-                                    <input id="addMorePostAllPost" type="button" onclick="displayMorePosts(<?= POSTS_DISPLAYED ?>, <?= POSTS_TO_PRINT ?>, '<?= $AllPosts[0][1] ?>'  ,'prof_all', '<?= $vieweduserData[0] ?>', <?= 3*POSTS_DISPLAYED+1 ?>, <?= $toLoad ?>)" value="Load more">
+                                    <input class="btn-loadMore" id="addMorePostAllPost" type="button" onclick="displayMorePosts(<?= POSTS_DISPLAYED ?>, <?= POSTS_TO_PRINT ?>, '<?= $AllPosts[0][1] ?>'  ,'prof_all', '<?= $vieweduserData[0] ?>', <?= 3*POSTS_DISPLAYED+1 ?>, <?= $toLoad ?>)" value="Load more">
                                 <?php }  
                             ?>
                         </div>
@@ -259,7 +259,7 @@
                                         </div>
                                     <?php }
                                 if(count($LikedPostsId) > POSTS_DISPLAYED){ ?>
-                                    <input id="addMorePostLikedPost" type="button" onclick="displayMorePosts(<?= POSTS_DISPLAYED ?>, <?= POSTS_TO_PRINT ?>,'<?= $likedFirstDateTime ?>' ,'prof_liked', '<?= $vieweduserData[0] ?>', <?= 3*POSTS_DISPLAYED+1 ?>, <?= $toLoad ?>)" value="Load more">
+                                    <input class="btn-loadMore" id="addMorePostLikedPost" type="button" onclick="displayMorePosts(<?= POSTS_DISPLAYED ?>, <?= POSTS_TO_PRINT ?>,'<?= $likedFirstDateTime ?>' ,'prof_liked', '<?= $vieweduserData[0] ?>', <?= 3*POSTS_DISPLAYED+1 ?>, <?= $toLoad ?>)" value="Load more">
                                 <?php }
                             } ?>
                         </div>
@@ -339,7 +339,7 @@
                                         </div>
                                     <?php }
                                 if(count($SharedPostsId) > POSTS_DISPLAYED){ ?>
-                                    <input id="addMorePostSharedPost" type="button" onclick="displayMorePosts(<?= POSTS_DISPLAYED ?>, <?= POSTS_TO_PRINT ?>,'<?= $sharedFirstDateTime ?>', 'prof_shared', '<?= $vieweduserData[0] ?>', <?= 3*POSTS_DISPLAYED+1 ?>, <?= $toLoad ?>)" value="Load more">
+                                    <input class="btn-loadMore" id="addMorePostSharedPost" type="button" onclick="displayMorePosts(<?= POSTS_DISPLAYED ?>, <?= POSTS_TO_PRINT ?>,'<?= $sharedFirstDateTime ?>', 'prof_shared', '<?= $vieweduserData[0] ?>', <?= 3*POSTS_DISPLAYED+1 ?>, <?= $toLoad ?>)" value="Load more">
                                 <?php }  
                                 } 
                             ?>
