@@ -73,7 +73,7 @@
                         $postMediasSrc = db_getPostMedias($postData[0]);
                     }                
             ?>
-            <div class="post-container">
+            <div class="post-container <?php if(isset($_SESSION['postCreated']) && $_SESSION['postCreated'] == $postData[0]) { echo 'just-created-post'; unset($_SESSION['postCreated']);} ?>">
                 <div class="user-profil">
                     <img src="<?= $postUserData[9] ?>">
                     <div>

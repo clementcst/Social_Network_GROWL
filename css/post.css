@@ -233,3 +233,7 @@
     font-size:15px;
 
 }
+
+.just-created-post {
+    border: solid 1px blue;
+}
