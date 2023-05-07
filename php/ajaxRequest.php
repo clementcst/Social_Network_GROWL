@@ -202,12 +202,38 @@
         }
     }
 
-    function displayMorePosts($postsDisplayed, $postToPrint, $keyWord) {
-        if($keyWord != '***'){
-            $posts = db_selectColumns("post", ["*"], ["KeyWords" => ["LIKE", "'%".$_GET['searchBar']."%'", "0"]],); 
-        } else {
-            $posts = db_selectColumns('post', ['*']);
-        }        
+    function displayMorePosts($postsDisplayed, $postToPrint, $keyWord, $mdt, $mode, $userid) {
+        switch ($mode) {
+            case 'index':
+                if($keyWord != '***'){
+                    $posts = db_selectColumns("post", ["*"], ["KeyWords" => ["LIKE", "'%".$_GET['searchBar']."%'", "1"], ["Posted_DateTime" => ["<=" , "'".$mdt."'", "0"]]], order_by:["Posted_DateTime"], suffix:" DESC"); 
+                } else {
+                    $posts = db_selectColumns('post', ['*'], ["Posted_DateTime" => ["<=" , "'".$mdt."'", "0"]], order_by:["Posted_DateTime"], suffix:" DESC");
+                } 
+                
+            break;
+            case 'prof_liked':
+                $LikedPostsId = db_selectColumns("liked_post", ["PostID"], ["UserID" => ["LIKE", "'".$userid."'","0"]], order_by:["Liked_DateTime"], suffix:" DESC");
+                $posts = array();
+                for ($i=0; $i < count($LikedPostsId) ; $i++) { 
+                    array_push($posts, db_selectColumns("post", ["*"], ["PostID"=> ["LIKE", "'".$LikedPostsId[$i][0]."'", "0"]])[0]);
+                } 
+                break;
+            case 'prof_shared':
+                $SharedPostsId = db_selectColumns("shared_post", ["PostID"], ["UserID" => ["LIKE", "'".$userid."'","0"]], order_by:["Shared_DateTime"], suffix:" DESC");
+                $posts = array();
+                for ($i=0; $i < count($SharedPostsId) ; $i++) { 
+                    array_push($posts, db_selectColumns("post", ["*"], ["PostID"=> ["LIKE", "'".$SharedPostsId[$i][0]."'", "0"]])[0]);
+                }
+                break;
+            case 'prof_all':
+                $posts = db_selectColumns('post', ['*'], ["Posted_DateTime" => ["<=" , "'".$mdt."'", "1"], "PostedBy_UserID" => ["LIKE", "'".$userid."'", "0"]], order_by:["Posted_DateTime"], suffix:" DESC");
+            break;
+            default:
+                php_err("impossible que tu vois ça ! si c'est le cas la vie de moi que c'est bizarre");
+                break;
+        }
+              
         $nbPostWanted = $postsDisplayed + $postToPrint;
         $nbPostsNotDisplayed = count($posts) - $nbPostWanted;
         if($nbPostsNotDisplayed < 0){
@@ -296,13 +322,7 @@
                     createAnswers($_POST['commentIDlist']);
                 else
                     php_err("error, not enough POST in ajax request");
-                break;
-            // case 'NewF ' :
-            //     if(1)               
-            //         NewFilter();            // 
-            //     else
-            //         php_err("error, not enough POST in ajax request");
-            //     break;  
+                break; 
             case 'newCMFW ' :
                 if($_POST['postID'] != null && $_POST['content'] != null)
                     createCommentsFromWeb($_POST['postID'], $_POST['content']);
@@ -310,7 +330,7 @@
                     php_err("error, not enough POST in ajax request");
                 break;
             case 'newAFW ' :
-                if($_POST['commentID'] != null && $_POST['content'])
+                if($_POST['commentID'] != null && $_POST['content'] != null)
                     createAnswerFromWeb($_POST['commentID'], $_POST['content']);
                 else
                     php_err("error, not enough POST in ajax request");
@@ -328,8 +348,8 @@
                     php_err("error, not enough POST in ajax request");
                 break;
             case 'DMP ' :
-                if($_POST['PDisplayed'] != null && $_POST['postToPrint'] != null)
-                    displayMorePosts($_POST['PDisplayed'], $_POST['postToPrint'], $_POST['keyWord']);
+                if($_POST['PDisplayed'] != null && $_POST['postToPrint'] != null && $_POST['mdt'] != null && $_POST['mode'] != null && $_POST['username'] != null)
+                    displayMorePosts($_POST['PDisplayed'], $_POST['postToPrint'], $_POST['keyWord'], $_POST['mdt'], $_POST['mode'], db_selectColumns("user", ["UserID"], ["Username" => ["LIKE", "'". $_POST['username']."'","0"]])[0][0]);
                 else
                     php_err("error, not enough POST in ajax request");
                 break;

@@ -52,100 +52,100 @@
                             
                     </div>
                 </form>
-              </div>
-        <!-- Posts -->
-        <?php 
-        if (isset($_GET['searchBar'])){
-            $posts = db_selectColumns("post", ["*"], ["KeyWords" => ["LIKE", "'%".$_GET['searchBar']."%'", "0"]],); // changer ici pour la politique de confidentialité des posts
-            $toLoad = $_GET['searchBar'];
-        }else{
-            $posts = db_selectColumns('post', ['*']); // changer ici pour la politique de confidentialité des posts
-            $toLoad = null;
-        }
-            $number_print_posts = min(count($posts), POSTS_DISPLAYED);
-            for ($i=$number_print_posts-1 ; $i >=0  ; $i--) {
-                $postData = $posts[$i]; 
-                $postUserData = db_getUserData($postData[7]);
-                $postData[6] = urldecode($postData[6]);
-                $postData[5] = urldecode($postData[5]);
-                if($postData[4] > 0 && $postData[4] < 5){
-                    $postMediasSrc = db_getPostMedias($postData[0]);
-                }                
-        ?>
-        <div class="post-container">
-            <div class="user-profil">
-                <img src="<?= $postUserData[9] ?>">
-                <div>
-                    <p id = "userName_Post"><?= $postUserData[0] ?></p>
-                    <span><?= $postData[1] ?></span>
-                </div>
             </div>
-            <p class="post-text"><?= $postData[6] ?></p>
-            <div class="post-media">
-                <div class="post-images">
-                    <?php if($postData[4] > 0 && $postData[4] < 5) {
-                        for($k = 0; $k < count($postMediasSrc); $k++){ ?>                        
-                            <img src="<?= $postMediasSrc[$k] ?>" alt="Img Media <?=$k?>" class="post-img" 
-                            <?php if($postData[4] == 1) { ?>
-                                style="width: 200%; height:auto"
-                            <?php } ?>
+            <!-- Posts -->
+            <?php 
+            if (isset($_GET['searchBar'])){
+                $posts = db_selectColumns("post", ["*"], ["KeyWords" => ["LIKE", "'%".$_GET['searchBar']."%'", "0"]], order_by:["Posted_DateTime"], suffix:" DESC"); // changer ici pour la politique de confidentialité des posts
+                $toLoad = $_GET['searchBar'];
+            }else{
+                $posts = db_selectColumns('post', ['*'], order_by:["Posted_DateTime"], suffix:" DESC"); // changer ici pour la politique de confidentialité des posts
+                $toLoad = null;
+            }
+                $maxDateTime = $posts[0][1];
+                $number_print_posts = min(count($posts), POSTS_DISPLAYED);
+                for ($i= 0 ; $i < $number_print_posts ; $i++) {
+                    $postData = $posts[$i]; 
+                    $postUserData = db_getUserData($postData[7]);
+                    $postData[6] = urldecode($postData[6]);
+                    $postData[5] = urldecode($postData[5]);
+                    if($postData[4] > 0 && $postData[4] < 5){
+                        $postMediasSrc = db_getPostMedias($postData[0]);
+                    }                
+            ?>
+            <div class="post-container">
+                <div class="user-profil">
+                    <img src="<?= $postUserData[9] ?>">
+                    <div>
+                        <p id = "userName_Post"><?= $postUserData[0] ?></p>
+                        <span><?= $postData[1] ?></span>
+                    </div>
+                </div>
+                <p class="post-text"><?= $postData[6] ?></p>
+                <div class="post-media">
+                    <div class="post-images">
+                        <?php if($postData[4] > 0 && $postData[4] < 5) {
+                            for($k = 0; $k < count($postMediasSrc); $k++){ ?>                        
+                                <img src="<?= $postMediasSrc[$k] ?>" alt="Img Media <?=$k?>" class="post-img" 
+                                <?php if($postData[4] == 1) { ?>
+                                    style="width: 200%; height:auto"
+                                <?php } ?>
+                                >
+                            <?php } 
+                        } ?>
+                    </div>
+                    <div class="post-reactions">
+                        <div>
+                            <ion-icon name="heart" onclick="LikePost('<?= $postData[0] ?>', this, <?=$i?>)"
+                                <?php if(count(db_selectColumns("liked_post", ["*"], ["UserID" => ["LIKE", "'".$_SESSION["connected"]."'", "1"],
+                                                                                    "PostID" => ["LIKE", "'".$postData[0]."'", "0"]]))
+                                        > 0) {
+                                            ?> style = "color: red" <?php
+                                        }
+                                ?>
                             >
-                        <?php } 
-                    } ?>
-                </div>
-                <div class="post-reactions">
+                            </ion-icon>
+                            <small id="likeCount<?=$i?>"><?= $postData[2] ?></small>
+                        </div>
+                        <?php 
+                            $postComments = db_selectColumns('comment', ['*'], ['ReplyTo_PostID' => ['=', "'".$postData[0]."'", '0']]);
+                            $nbComments = count($postComments);                            
+                        ?>
                     <div>
-                        <ion-icon name="heart" onclick="LikePost('<?= $postData[0] ?>', this, <?=$i?>)"
-                            <?php if(count(db_selectColumns("liked_post", ["*"], ["UserID" => ["LIKE", "'".$_SESSION["connected"]."'", "1"],
-                                                                                  "PostID" => ["LIKE", "'".$postData[0]."'", "0"]]))
-                                     > 0) {
-                                        ?> style = "color: red" <?php
-                                     }
-                            ?>
-                        >
-                        </ion-icon>
-                        <small id="likeCount<?=$i?>"><?= $postData[2] ?></small>
-                    </div>
-                    <?php 
-                        $postComments = db_selectColumns('comment', ['*'], ['ReplyTo_PostID' => ['=', "'".$postData[0]."'", '0']]);
-                        $nbComments = count($postComments);                            
-                    ?>
-                   <div>
-                        <ion-icon id="CommentSection<?=$postData[0]?>" name="chatbox-ellipses" onclick="CommentSectionCall(this.id)"></ion-icon>
-                        <small><?= $nbComments ?></small>
-                    </div>
-                    <!-- Comments. Ils sont générés en ajax ici -->
-                    
-                    <div>
-                        <ion-icon name="share-social" onclick="shareSocial(this)"
-                        <?php if(count(db_selectColumns("shared_post", ["*"], ["UserID" => ["LIKE", "'".$_SESSION["connected"]."'", "1"],
-                                                                                  "PostID" => ["LIKE", "'".$postData[0]."'", "0"]]))
-                                > 0) {
-                                    ?> style = "color: blue" <?php
-                                }
-                        ?>>
-                        </ion-icon>
-                        <small><?= $postData[3] ?></small>
+                            <ion-icon id="CommentSection<?=$postData[0]?>" name="chatbox-ellipses" onclick="CommentSectionCall(this.id)"></ion-icon>
+                            <small><?= $nbComments ?></small>
+                        </div>
+                        <!-- Comments. Ils sont générés en ajax ici -->
+                        
+                        <div>
+                            <ion-icon name="share-social" onclick="shareSocial(this)"
+                            <?php if(count(db_selectColumns("shared_post", ["*"], ["UserID" => ["LIKE", "'".$_SESSION["connected"]."'", "1"],
+                                                                                    "PostID" => ["LIKE", "'".$postData[0]."'", "0"]]))
+                                    > 0) {
+                                        ?> style = "color: blue" <?php
+                                    }
+                            ?>>
+                            </ion-icon>
+                            <small><?= $postData[3] ?></small>
+                        </div>
                     </div>
                 </div>
             </div>
+            <?php }
+            if(count($posts) > POSTS_DISPLAYED){ ?>
+                <input id="addMorePost" type="button" onclick="displayMorePosts(<?= POSTS_DISPLAYED ?>, <?= POSTS_TO_PRINT ?>,'<?= $maxDateTime ?>', 'index', '<?= $userData[0] ?>' , <?= $number_print_posts ?>, <?= $toLoad ?>)" value="Load more">
+            <?php }  ?>
         </div>
-        <?php }
-        if(count($posts) > POSTS_DISPLAYED){ ?>
-            <input id="addMorePost" type="button" onclick="displayMorePosts(<?= POSTS_DISPLAYED ?>, <?= POSTS_TO_PRINT ?>, <?= $toLoad ?>)" value="Load more">
-        <?php }  ?>
-
-        </div>
+        
         <!-- Right Content -->
         <?php define('CONVERSIONABLE','1'); 
         include_once(LISTFRIEND); ?>
-
+        
     </main>
-
     <?php include_once(FOOTER); ?>
-
 </body>
 <script rel="stylesheet" src="js/index.js"></script>
+<script rel="stylesheet" src="js/post.js"></script>
 <script rel="stylesheet" src="js/ajaxRequest.js"></script>
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 </html>

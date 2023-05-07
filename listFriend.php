@@ -44,6 +44,7 @@
                 </form>
             </div>
             <div class="close-message">
+                <!-- Converser avec un ami -->
                 <?php  if(defined('CONVERSIONABLE')) { ?>
                 <ion-icon name="paper-plane" onclick = 'submitFormConvLink(<?=$i?>)'>
                     <form id="form-conversation-link<?=$i?>" method="GET" action="<?= CONVERSATION ?>">
