@@ -46,6 +46,7 @@
                     }
                 }
             }
+            $_SESSION['postCreated'] = $id_post;
             echo "<script> window.location.replace('".ROOT.INDEX."') </script>";
             redirect(ROOT.INDEX);
         }
@@ -66,6 +67,7 @@
             db_addSharePost($_SESSION['connected'], $_POST["idPost"]);
             db_update_shared($_POST["idPost"]);
 
+            $_SESSION['postCreated'] = $id_post;
             echo "<script> window.location.replace('".ROOT.INDEX."') </script>";
             redirect(ROOT.INDEX);
         }
