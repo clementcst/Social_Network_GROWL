@@ -133,7 +133,7 @@
             </div>
             <?php }
             if(count($posts) > POSTS_DISPLAYED){ ?>
-                <input id="addMorePost" type="button" onclick="displayMorePosts(<?= POSTS_DISPLAYED ?>, <?= POSTS_TO_PRINT ?>,'<?= $maxDateTime ?>', 'index', '<?= $userData[0] ?>' , <?= $number_print_posts ?>, <?= $toLoad ?>)" value="Load more">
+                <input class="btn-loadMore" id="addMorePost" type="button" onclick="displayMorePosts(<?= POSTS_DISPLAYED ?>, <?= POSTS_TO_PRINT ?>,'<?= $maxDateTime ?>', 'index', '<?= $userData[0] ?>' , <?= $number_print_posts ?>, <?= $toLoad ?>)" value="Load more">
             <?php }  ?>
         </div>
         
