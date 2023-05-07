@@ -8,6 +8,7 @@ var content3 = document.getElementById("content3");
 
 box1.addEventListener("click", function() {
     content1.style.display = "block";
+    content1.style.backgroundColor = "";
     content2.style.display = "none";
     content3.style.display = "none";
   });

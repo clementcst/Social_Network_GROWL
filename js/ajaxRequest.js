@@ -244,9 +244,32 @@ function LikePostRequest(postId, action) {
     requestLP.send('fct=' + fct + '&postID=' + postId); 
 }
 
-function displayMorePosts(postsDisplayed, postToPrint, keyWord){
+function displayMorePosts(postsDisplayed, postToPrint, maxDatetime, mode, username, formCount, keyWord){
+    var namebtn;
+    var namediv;
+    switch (mode) {
+        case 'index':
+            namebtn = 'addMorePost';
+            namediv = 'middle-content';
+        break;
+        case 'prof_liked':
+            namebtn = 'addMorePostLikedPost';
+            namediv = 'content2';
+        break;
+        case 'prof_shared':
+            namebtn = 'addMorePostSharedPost';
+            namediv = 'content3';
+        break;
+        case 'prof_all':
+            namebtn = 'addMorePostAllPost';
+            namediv = 'content1';
+        break;
+        default:
+            console.log("pas bon : " + mode);
+            break;
+    }
     if (keyWord == null)
-    keyWord = '***';
+        keyWord = '***';
     var nbInfosForPosts = 11;
     var requestDMP= getXhr();
     requestDMP.open("POST","./php/ajaxRequest.php",true);
@@ -257,67 +280,69 @@ function displayMorePosts(postsDisplayed, postToPrint, keyWord){
                 return 0;
             }            
             var res=reponse.split("***");
-            document.getElementById('addMorePost').remove();
+            document.getElementById(namebtn).remove();
             var totalPostNotDisplayed = res[0].split('**;**')[0].replace(' ', '');
             var postAdd = parseInt(res[0].split('**;**')[1]) - postsDisplayed;
             var post = [];
-            var décalageImage = 0;
+            var decalageImage = 0;
             for (var i=0; i<postAdd; i++){
                 post[i] = [];
-                post[i][0] = res[i* nbInfosForPosts +1 + décalageImage]; //id du post
-                post[i][1] = res[i* nbInfosForPosts +2+ décalageImage]; //date du post
-                post[i][2] = res[i* nbInfosForPosts +3+ décalageImage]; // le nombre de like
-                post[i][3] = res[i* nbInfosForPosts +4+ décalageImage]; // le nombre de partage
-                if(parseInt(res[i* nbInfosForPosts +5+ décalageImage]) > 0){
+                post[i][0] = res[i* nbInfosForPosts +1 + decalageImage]; //id du post
+                post[i][1] = res[i* nbInfosForPosts +2+ decalageImage]; //date du post
+                post[i][2] = res[i* nbInfosForPosts +3+ decalageImage]; // le nombre de like
+                post[i][3] = res[i* nbInfosForPosts +4+ decalageImage]; // le nombre de partage
+                if(parseInt(res[i* nbInfosForPosts +5+ decalageImage]) > 0){
                     post[i][4] = [];
-                    for(var j = 0; j<res[i* nbInfosForPosts +5+ décalageImage]; j++){
-                        post[i][4][j] = res[i* nbInfosForPosts +5+ décalageImage + j+1];
+                    for(var j = 0; j<res[i* nbInfosForPosts +5+ decalageImage]; j++){
+                        post[i][4][j] = res[i* nbInfosForPosts +5+ decalageImage + j+1];
                     }
-                    décalageImage = décalageImage + parseInt(res[i* nbInfosForPosts +5 + décalageImage]);
+                    decalageImage = decalageImage + parseInt(res[i* nbInfosForPosts +5 + decalageImage]);
                 } else {
-                    post[i][4] = res[i* nbInfosForPosts +5+ décalageImage];
+                    post[i][4] = res[i* nbInfosForPosts +5+ decalageImage];
                 }
-                post[i][5] = res[i* nbInfosForPosts +6+ décalageImage]; //le contenu text
-                post[i][6] = res[i* nbInfosForPosts +7+ décalageImage]; // la pp de l'envoyeur
-                post[i][7] = res[i* nbInfosForPosts +8+ décalageImage]; // le nom de l'envoyeur
-                post[i][8] = res[i* nbInfosForPosts +9+ décalageImage]; // le nombre de commentaire 
-                post[i][9] = res[i* nbInfosForPosts +10+ décalageImage]; // savoir si le post est liké par le user connecté
-                post[i][10] = res[i* nbInfosForPosts +11+ décalageImage]; // savoir si le post est partagé par le user connecté
+                post[i][5] = res[i* nbInfosForPosts +6+ decalageImage]; //le contenu text
+                post[i][6] = res[i* nbInfosForPosts +7+ decalageImage]; // la pp de l'envoyeur
+                post[i][7] = res[i* nbInfosForPosts +8+ decalageImage]; // le nom de l'envoyeur
+                post[i][8] = res[i* nbInfosForPosts +9+ decalageImage]; // le nombre de commentaire 
+                post[i][9] = res[i* nbInfosForPosts +10+ decalageImage]; // savoir si le post est like par le user connecte
+                post[i][10] = res[i* nbInfosForPosts +11+ decalageImage]; // savoir si le post est partage par le user connecte
             }       
-            printPost(post, postsDisplayed);
+            printPost(post, namediv, formCount);
+            formCount += post.length;
             if(parseInt(totalPostNotDisplayed) > 0){
-                var middle = document.getElementsByClassName('middle-content')[0];
+                var middle = (mode == 'index') ? document.getElementsByClassName(namediv)[0] : document.getElementById(namediv) ;
                 var inputMore = document.createElement('input');
-                inputMore.id = 'addMorePost';
+                inputMore.id = namebtn;
                 inputMore.type = 'button';
                 inputMore.value = 'Load more';
-                inputMore.setAttribute("onclick", "displayMorePosts("+ parseInt(res[0].split('**;**')[1])+", "+ postToPrint +", '"+keyWord+"')");       
+                inputMore.setAttribute("onclick", "displayMorePosts("+ parseInt(res[0].split('**;**')[1])+", "+ postToPrint +", '" + maxDatetime +"', '" + mode + "', '" + username + "'," + formCount + ", '" + keyWord + "')");   
                 middle.appendChild(inputMore); 
+
+                if(mode == 'prof_liked' || mode == 'prof_shared' || mode == 'prof_all') {
+                    var addMorePostAllPost = document.getElementById('addMorePostAllPost');
+                    if (addMorePostAllPost) {
+                        addMorePostAllPost.setAttribute("onclick", "displayMorePosts("+ parseInt(res[0].split('**;**')[1])+", "+ postToPrint +", '" + maxDatetime +"', '" + "prof_all" + "', '" + username + "'," + formCount + ", '" + keyWord + "')");
+                    }
+
+                    var addMorePostLikedPost = document.getElementById('addMorePostLikedPost');
+                    if (addMorePostLikedPost) {
+                        addMorePostLikedPost.setAttribute("onclick", "displayMorePosts("+ parseInt(res[0].split('**;**')[1])+", "+ postToPrint +", '" + maxDatetime +"', '" + "prof_liked" + "', '" + username + "'," + formCount + ", '" + keyWord + "')");
+                    }
+
+                    var addMorePostSharedPost = document.getElementById('addMorePostSharedPost');
+                    if (addMorePostSharedPost) {
+                        addMorePostSharedPost.setAttribute("onclick", "displayMorePosts("+ parseInt(res[0].split('**;**')[1])+", "+ postToPrint +", '" + maxDatetime +"', '" + "prof_shared" + "', '" + username + "'," + formCount + ", '" + keyWord + "')");
+                    }
+
+                } 
             }
         }
     }
     requestDMP.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8');
-    requestDMP.send('fct=DMP '+ '&PDisplayed=' + postsDisplayed + '&postToPrint=' + postToPrint + '&keyWord=' + keyWord);
+    requestDMP.send('fct=DMP '+ '&PDisplayed=' + postsDisplayed + '&postToPrint=' + postToPrint + '&keyWord=' + keyWord + '&mdt=' + maxDatetime + '&mode=' + mode + '&username=' + username );
 }
 
-// function NewFilter(){
-//     var requestCartF= getXhr();
-//     requestCartF.open("POST","./php/ajaxRequest.php",true);
-//     requestCartF.onreadystatechange = function(){
-//         if(requestCartF.readyState == 4 && requestCartF.status == 200){
-//             var reponse=requestCartF.responseText;
-//             if(reponse==0){
-//                 return 0;
-//             }
-//             var res=reponse.split(";");
-//         }
-//     }
-//     requestCartF.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8');
-//     requestCartF.send('fct=NewF');
-//     return 0;    
-// }
 
-/*-------------*/
 function changeFormatDate(date_complete, id, have_to_whrite) {    
     var tableauMois = new Array('janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre');
     var date_split = date_complete.split('\u0020');
@@ -418,8 +443,8 @@ function updateFriendsOrder(friend_name) {
     parent.insertBefore(test,parent.firstChild);
 }
 
-function printPost(tabPosts, nbpost){
+function printPost(tabPosts, namediv, formCount){
     for(var i=0; i<tabPosts.length; i++){
-        createPostContainer(tabPosts[i][6],tabPosts[i][7], tabPosts[i][1], tabPosts[i][5], tabPosts[i][4], tabPosts[i][2], nbpost + i, tabPosts[i][9], tabPosts[i][0], tabPosts[i][8], tabPosts[i][10], tabPosts[i][3])
+        createPostContainer(tabPosts[i][6],tabPosts[i][7], tabPosts[i][1], tabPosts[i][5], tabPosts[i][4], tabPosts[i][2], formCount + i, tabPosts[i][9], tabPosts[i][0], tabPosts[i][8], tabPosts[i][10], tabPosts[i][3], namediv)
     }
 }
