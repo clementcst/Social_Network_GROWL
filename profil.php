@@ -26,7 +26,7 @@
             if($vieweduser_id != $_SESSION['connected']) {
                 switch ($vieweduserData[10]) {
                     case 1: //profils confidentialité only friends
-                        if(in_array(array($_SESSION['connected']), db_getFriends($vieweduser_id))) {
+                        if(!in_array(array($_SESSION['connected']), db_getFriends($vieweduser_id))) {
                             ?><script>
                                 swal({
                                     title: 'This user only allow friend to visit his/her profil',
