@@ -35,10 +35,11 @@
             filters:['Username' => ['LIKE', '"'.$username_friend.'"','0']]
          );
         $friend_data = db_getUserData($id_friend[0][0]);
-        echo $friend_data[0].";".$friend_data[9].";".$id_user_connected.";";
+        echo $friend_data[0]."***".$id_user_connected."***";
         $conversation = db_getConversation($id_user_connected, $id_friend[0][0]);
         $number_message=count($conversation);
         for($i=0;$i<$number_message;$i++){
+            $conversation[$i][3] = urldecode($conversation[$i][3]);
             if($conversation[$i][4] != NULL){
                 $media = db_selectColumns(
                 table_name:'media',
@@ -51,8 +52,8 @@
             } else {
                 $conversation[$i][6] = NULL;
             }
-            echo $conversation[$i][1].";".$conversation[$i][2].";".$conversation[$i][3].";".$conversation[$i][4].";".$conversation[$i][5].";".$conversation[$i][6];
-            if($i<$number_message-1)echo";";
+            echo $conversation[$i][1]."***".$conversation[$i][2]."***".$conversation[$i][3]."***".$conversation[$i][4]."***".$conversation[$i][5]."***".$conversation[$i][6];
+            if($i<$number_message-1)echo"***";
         }
         return 0;
     }
@@ -89,7 +90,7 @@
         $numberComments =count($comments);
         for($i=0;$i<$numberComments;$i++){
             $user = db_getUserData($comments[$i][3]);
-            echo $comments[$i][0]."***".$comments[$i][1]."***".$comments[$i][2]."***".$comments[$i][3]."***".$user[0]."***".$user[9];
+            echo $comments[$i][0]."***".$comments[$i][1]."***".URLdecode($comments[$i][2])."***".$comments[$i][3]."***".$user[0]."***".$user[9];
             if($i<$numberComments-1)echo"***";
         }
         if($numberComments == 0) echo "empty";
@@ -118,7 +119,8 @@
         $id_user_connected=$_SESSION['connected'];
         $id_comment = db_generateId("comment");
         //Avoir ' dans la requete sql fait bug cette requete
-        $content = str_replace("'", '"', $content);
+        // $content = str_replace("'", '"', $content);
+        $content = urlencode($content);
         //La fonction php me renvoie le commentaire qu'elle a mit dans la db
         $comment = db_newComment($id_comment, $content, $id_user_connected, $post_id);
         $UserInfo = db_selectColumns(
@@ -128,7 +130,7 @@
         );
         $profpic = db_selectColumns('media', ['Base64','Type'], ['MediaID' => ['=',"'".$UserInfo[0][1]."'", '0']])[0];
         $UserInfo[0][1] = 'data:'.$profpic[1].';base64,'.$profpic[0];
-        echo "***".$comment['CommentID']."***".$comment['Content']."***".$comment['PostedBy_UserID']."***".$comment['ReplyTo_PostID']."***".$UserInfo[0][0]."***".$UserInfo[0][1];
+        echo "***".$comment['CommentID']."***".urldecode($comment['Content'])."***".$comment['PostedBy_UserID']."***".$comment['ReplyTo_PostID']."***".$UserInfo[0][0]."***".$UserInfo[0][1];
         return 0;
     }
 
@@ -145,7 +147,7 @@
             $number_answers = count($answers[$comment_id_list[$i]]);
             for($j=0; $j<$number_answers; $j++){
                 $user = db_getUserData($id_user_connected);
-                echo $answers[$comment_id_list[$i]][$j][0]."***".$answers[$comment_id_list[$i]][$j][1]."***".$comment_id_list[$i]."***".$user[0]."***".$user[9]."***";
+                echo $answers[$comment_id_list[$i]][$j][0]."***".URLdecode($answers[$comment_id_list[$i]][$j][1])."***".$comment_id_list[$i]."***".$user[0]."***".$user[9]."***";
                 //Ajout d'un *** car on ne sait pas quand on atteindra la derniere réponse du dernier commentaire
             }
         }
@@ -156,7 +158,8 @@
         $id_user_connected=$_SESSION['connected'];
         $id_answer = db_generateId("answer");
         //Avoir ' dans la requete sql fait bug cette requete
-        $content = str_replace("'", '"', $content);
+        // $content = str_replace("'", '"', $content);
+        $content = urlencode($content);
         //La fonction php me renvoie le commentaire qu'elle a mit dans la db
         $answer = db_newAnswer($id_answer, $content, $id_user_connected, $comment_id);
         $UserInfo = db_selectColumns(
@@ -166,7 +169,7 @@
         );
         $profpic = db_selectColumns('media', ['Base64','Type'], ['MediaID' => ['=',"'".$UserInfo[0][1]."'", '0']])[0];
         $UserInfo[0][1] = 'data:'.$profpic[1].';base64,'.$profpic[0];
-        echo "***".$answer['AnswerID']."***".$answer['Answer_DateTime']."***".$answer['Content']."***".$answer['PostedBy_UserID']."***".$answer['ReplyTo_CommentID']."***".$UserInfo[0][0]."***".$UserInfo[0][1];
+        echo "***".$answer['AnswerID']."***".$answer['Answer_DateTime']."***".URLdecode($answer['Content'])."***".$answer['PostedBy_UserID']."***".$answer['ReplyTo_CommentID']."***".$UserInfo[0][0]."***".$UserInfo[0][1];
         return 0;
     }
     
