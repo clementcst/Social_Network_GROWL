@@ -7,8 +7,7 @@
         <title>Profil | GROWL</title>
         <link rel="stylesheet" href="css/profil.css">
         <link rel="icon" type="image/ico" href="./images/growl_ico.ico">
-        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-        
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>        
     </head>
 
     <body>
@@ -52,7 +51,6 @@
                         </script><?php
                     break;
                     default:
-                        # code...
                         break;
                 }
             }
@@ -126,7 +124,7 @@
                 <div class="bottom-profil">
                     
                     <div class="container-btn-post">
-                        <btn id="box1" class="btn-active-profil">My Posts</btn>
+                        <btn id="box1" class="btn-active-profil"><?php if($vieweduser_id != $_SESSION['connected']) { echo "Posts of ".$vieweduserData[0]; } else { echo "My Posts"; } ?></btn>
                         <btn id="box2"  class="btn-unactive-profil">Liked Posts</btn>
                         <btn id="box3"  class="btn-unactive-profil">Shared Posts</btn>
                     </div>
@@ -173,7 +171,7 @@
                                                     <?php } 
                                                 } ?>
                                             </div>
-                                            <div class="post-reactions"  <?php if($postData[4] == 0) echo 'style="flex-direction:row;"'?>>
+                                            <div class="post-reactions" <?php if($postData[4] == 0) echo 'style="flex-direction:row;"'?>>
                                                 <div>
                                                     <ion-icon name="heart" onclick="LikePost('<?= $postData[0] ?>', this, <?=$formCount?>)"
                                                         <?php if(count(db_selectColumns("liked_post", ["*"], ["UserID" => ["LIKE", "'".$_SESSION["connected"]."'", "1"],
@@ -253,7 +251,7 @@
                                                         <?php } 
                                                     } ?>
                                                 </div>
-                                                <div class="post-reactions"  <?php if($postData[4] == 0) echo 'style="flex-direction:row;"'?>>
+                                                <div class="post-reactions" <?php if($postData[4] == 0) echo 'style="flex-direction:row;"'?>>
                                                     <div>
                                                         <ion-icon name="heart" onclick="LikePost('<?= $postData[0] ?>', this, <?=$formCount?>)"
                                                             <?php if(count(db_selectColumns("liked_post", ["*"], ["UserID" => ["LIKE", "'".$_SESSION["connected"]."'", "1"],
