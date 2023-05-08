@@ -9,6 +9,7 @@ html{
 body{
     background-color: var(--bg-body-color);
     transition: background 0.3s ease;
+    top: 50px;
     height:100%;
     width:100%;
     position:relative;
