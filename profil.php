@@ -6,6 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Profile</title>
         <link rel="stylesheet" href="css/profil.css">
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         
     </head>
 
@@ -20,6 +21,39 @@
             } else {
                 $vieweduser_id = $_SESSION['connected'];
                 $vieweduserData = $userData;
+            }
+
+            if($vieweduser_id != $_SESSION['connected']) {
+                switch ($vieweduserData[10]) {
+                    case 1: //profils confidentialité only friends
+                        if(in_array(array($_SESSION['connected']), db_getFriends($vieweduser_id))) {
+                            ?><script>
+                                swal({
+                                    title: 'This user only allow friend to visit his/her profil',
+                                    button: false,
+                                    allowOutsideClick: false
+                                }).then((result) => {
+                                    window.location.replace('<?= INDEX ?>')
+                                });
+                             </script><?php
+                        }
+                        break;
+                    case 0: //profils confidentialité no one 
+                        ?><script>
+                            swal({
+                                title: 'This user doesnt allow anyone to visit his/her profil',
+                                button: false,
+                                allowOutsideClick: false
+                            }).then((result) => {
+                                window.location.replace('<?= INDEX ?>')
+                            });
+                            
+                        </script><?php
+                    break;
+                    default:
+                        # code...
+                        break;
+                }
             }
         ?>
         <main>
@@ -91,9 +125,9 @@
                 <div class="bottom-profil">
                     
                     <div class="container-btn-post">
-                        <btn id="box1" class="btn-active-profil" >My Posts</btn>
-                        <btn id="box2"  class="btn-unactive-profil" >Liked Posts</btn>
-                        <btn id="box3"  class="btn-unactive-profil" >Shared Posts</btn>
+                        <btn id="box1" class="btn-active-profil">My Posts</btn>
+                        <btn id="box2"  class="btn-unactive-profil">Liked Posts</btn>
+                        <btn id="box3"  class="btn-unactive-profil">Shared Posts</btn>
                     </div>
 
                     <div class="content-posts">
@@ -101,9 +135,6 @@
                             $AllPosts = db_selectColumns("post", ["*"], ["PostedBy_UserID" => ["LIKE", "'".$vieweduser_id."'","0"]], order_by:["Posted_DateTime"], suffix:" DESC");
                             $LikedPostsId = db_selectColumns("liked_post", ["PostID"], ["UserID" => ["LIKE", "'".$vieweduser_id."'","0"]], order_by:["Liked_DateTime"], suffix:" DESC");
                             $SharedPostsId = db_selectColumns("shared_post", ["PostID"], ["UserID" => ["LIKE", "'".$vieweduser_id."'","0"]], order_by:["Shared_DateTime"], suffix:" DESC");
-                            // java_log(json_encode($AllPosts));
-                            // java_log(json_encode($LikedPostsId));
-                            // java_log(json_encode($SharedPostsId));
                             $formCount = 0;
                             $toLoad = 0;
                         ?>
@@ -141,7 +172,7 @@
                                                     <?php } 
                                                 } ?>
                                             </div>
-                                            <div class="post-reactions" <?php if($postData[4] == 0) echo 'style="flex-direction:row;"'?>>
+                                            <div class="post-reactions">
                                                 <div>
                                                     <ion-icon name="heart" onclick="LikePost('<?= $postData[0] ?>', this, <?=$formCount?>)"
                                                         <?php if(count(db_selectColumns("liked_post", ["*"], ["UserID" => ["LIKE", "'".$_SESSION["connected"]."'", "1"],
@@ -221,7 +252,7 @@
                                                         <?php } 
                                                     } ?>
                                                 </div>
-                                                <div class="post-reactions" <?php if($postData[4] == 0) echo 'style="flex-direction:row;"'?>>
+                                                <div class="post-reactions">
                                                     <div>
                                                         <ion-icon name="heart" onclick="LikePost('<?= $postData[0] ?>', this, <?=$formCount?>)"
                                                             <?php if(count(db_selectColumns("liked_post", ["*"], ["UserID" => ["LIKE", "'".$_SESSION["connected"]."'", "1"],
@@ -301,7 +332,7 @@
                                                         <?php } 
                                                     } ?>
                                                 </div>
-                                                <div class="post-reactions" <?php if($postData[4] == 0) echo 'style="flex-direction:row;"'?>>
+                                                <div class="post-reactions">
                                                     <div>
                                                         <ion-icon name="heart" onclick="LikePost('<?= $postData[0] ?>', this, <?=$formCount?>)"
                                                             <?php if(count(db_selectColumns("liked_post", ["*"], ["UserID" => ["LIKE", "'".$_SESSION["connected"]."'", "1"],
