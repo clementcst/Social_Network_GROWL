@@ -2,12 +2,14 @@
     define('MISC_INCLUDED','1');
     
     function java_log(string $log) {
-      $log = str_replace("'", '"', $log);
-      ?> 
-         <script>
-            console.log('<?=$log?>');
-         </script>
-      <?php
+      if(db_selectColumns(table_name:'user',columns:['IsAdmin'],filters:['UserID' => ['LIKE', '"'.$_SESSION['connected'].'"','0']])[0][0] == 1){
+         $log = str_replace("'", '"', $log);
+         ?> 
+            <script>
+               console.log('<?=$log?>');
+            </script>
+         <?php
+      }
    }
 
    function php_err(string $err) {

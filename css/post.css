@@ -239,6 +239,7 @@
 }
 
 .btn-loadMore {
+    min-width: fit-content;
     color:white;
     width:10%;
     margin-left:45%;

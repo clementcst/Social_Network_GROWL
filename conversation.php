@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Conversation</title>
+    <title>Home Social Network </title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
-    <link rel="icon" type="image/ico" href="./images/growl_ico.ico">
     <link rel="stylesheet" href="css/conversations.css">
     <script rel="stylesheet" src="js/ajaxRequest.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 
     <body>
@@ -24,6 +24,19 @@
             }
 
             $friends_id = db_order_lastConversation($_SESSION['connected']);
+
+            if(count($friends_id) == 0) {
+                ?><script>
+                    swal({
+                        title: "You don't have any friends, you can't converse with anyone. Try to get new friends on the website",
+                        button: false,
+                        allowOutsideClick: false
+                    }).then((result) => {
+                        window.location.replace('<?= INDEX ?>')
+                    });
+                 </script><?php
+            }
+
             if(isset($user_selected)){ // il y a un ami en get, on le sélectionne
                 $last_communicate_friend = db_getUserData($user_selected);
                 $conversation = db_getConversation($user_selected,$_SESSION['connected']);
@@ -37,6 +50,7 @@
             }else{
                 $number_message = count($conversation);
             }
+
         ?>
         
         <main class="main">
