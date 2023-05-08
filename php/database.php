@@ -468,7 +468,7 @@ function db_deleteRows(string $table_name, ?array $filters) {
                   'ReceiverID' => ['LIKE', '"'.$user_id1.'"','0']]
       ));
       if($conversations[0]==null){
-         return 0;
+         return array();
       }
    for ($i=0; $i<count($conversations); $i++) {
       $order = intval(str_replace("CV","",$conversations[$i][0]));

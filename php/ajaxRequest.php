@@ -34,10 +34,13 @@
             columns:['UserID'], 
             filters:['Username' => ['LIKE', '"'.$username_friend.'"','0']]
          );
-        $friend_data = db_getUserData($id_friend[0][0]);
-        echo $friend_data[0]."***".$id_user_connected."***";
+        echo $username_friend."***".$id_user_connected."***";
         $conversation = db_getConversation($id_user_connected, $id_friend[0][0]);
-        $number_message=count($conversation);
+        if(count($conversation) == 0){
+            echo "no message";
+            return 0;
+        }
+        $number_message=count($conversation);        
         for($i=0;$i<$number_message;$i++){
             $conversation[$i][3] = urldecode($conversation[$i][3]);
             if($conversation[$i][4] != NULL){
