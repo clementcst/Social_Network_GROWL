@@ -360,12 +360,6 @@
                 else
                     php_err("error, not enough POST in ajax request");
                 break;
-            case 'UnableDM' :
-                    $_SESSION['DarkMode'] = "Unable";
-                break;
-            case 'DisableDM' :
-                    $_SESSION['DarkMode'] = "Disable";
-                break;
             default :
                 php_err("error POST fct invalid in ajax request");      
                 break;      

@@ -64,7 +64,7 @@ function changeConversation(username_friend){
             var res=reponse.split("***");
             var number_messages = (res.length-2)/6;
             let all_messages = [];
-            let data = [res[0],res[1],res[3]];//variable contenant les informations de l'ami dont la fenetre de discussion est ouverte avec un 0 son username et en 1 sa photo
+            let data = [res[0],res[1]];//variable contenant les informations de l'ami dont la fenetre de discussion est ouverte avec un 0 son username et en 1 sa photo
             for(var j=0;j<(number_messages);j++){
                 all_messages[j] = []; // tableau de la taille du nombre de message
                 for(var k = 0;k<6;k++){
@@ -343,23 +343,6 @@ function displayMorePosts(postsDisplayed, postToPrint, maxDatetime, mode, userna
     requestDMP.send('fct=DMP '+ '&PDisplayed=' + postsDisplayed + '&postToPrint=' + postToPrint + '&keyWord=' + keyWord + '&mdt=' + maxDatetime + '&mode=' + mode + '&username=' + username );
 }
 
-//fonction ajax pour setup le SESSION darkMode 
-
-function SessionDarkModUpdate(action) {
-    var fct = action;
-    var requestDM= getXhr();
-    requestDM.open("POST","./php/ajaxRequest.php",false);
-    requestDM.onreadystatechange = function(){
-        if(requestDM.readyState == 4 && requestDM.status == 200){
-            var reponse=requestDM.responseText;
-        }
-    }
-    requestDM.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8');
-    requestDM.send('fct=' + fct); 
-}
-
-
-//fonction réaction au ajax
 
 function changeFormatDate(date_complete, id, have_to_whrite) {    
     var tableauMois = new Array('janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre');
@@ -437,7 +420,7 @@ function updateConvMessage(data, messages){
             zone_message.appendChild(space_between_message);
         }
         messages[i][2] = messages[i][2].replace(/\+/g, ' ');
-        if((messages[i][0]) == data[2]){
+        if((messages[i][0]) == data[1]){
             createBulbleMessage(data[0], messages[i][2],messages[i][3], messages[i][5],messages[i][4],"1", div_one_message);
         } else {
             createBulbleMessage(data[0], messages[i][2],messages[i][3], messages[i][5],messages[i][4],"0", div_one_message);               
