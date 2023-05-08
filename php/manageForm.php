@@ -75,9 +75,11 @@
             $registrationKeys = ["userName", "name", "firstName", "sex", "birthDate", "mail", "confirmationMail", "password", 
                 "confirmationPassword", "country", "city", "phoneNumber"];
 
+            $accentedCharacters = "àèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸçÇßØøÅåÆæœ";
+
             // définition des tableaux des champs pouvant être verifier avec une expression regulière
             $checkWithPatternKeys = ["userName", "name", "firstName", "password", "country", "city", "phoneNumber"];
-            $patterns = ["userName" => "/^[\p{L}\d+\s?]{1,32}$/u", "name" => "/^[\p{L}\-]{1,32}$/u", "firstName" => "/^[\p{L}\-]{1,32}$/u",
+            $patterns = ["userName" => "/^[\p{L}$accentedCharacters\d\s]{1,32}$/u", "name" => "/^[\p{L}\-]{1,32}$/u", "firstName" => "/^[\p{L}\-]{1,32}$/u",
                     "password" => "/^(?=.*\d)(?=.*[A-Z])(?=.*[-!@#$%_])(?=.*[a-z])[0-9A-Za-z!@#$%_\-]{8,30}$/", 
                     "country" => "/^[\p{L}\-]{1,32}$/u",
                     "city" => "/^[\p{L}\-]{1,32}$/u", "phoneNumber" => "/^0\d{9}$/", 

@@ -8,10 +8,19 @@ function previewPicture(e){
     if(countImg >= 4){
         return;
     }
+    var error = document.getElementById("error-size-image");
+    error.innerHTML = "";
+    error.style.display = "none";
+    const maxSize = 500000;
     var divImages = document.getElementById("new-post-images");
     var cmpImg = countImg;
         Array.from(e.files).forEach(element => {
-
+            if(element.size>maxSize){
+                error.innerHTML = 'One of the files is too large and was not added. Maximum size: 500 KB.';
+                error.style.color = 'red';
+                error.style.display = "";
+                element = null;
+            }
             if (element && cmpImg < 4) {
                 var oImg = document.createElement("img");
                 oImg.setAttribute('src', URL.createObjectURL(element));
