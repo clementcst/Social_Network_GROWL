@@ -74,7 +74,9 @@
                     }                
             ?>
             <div class="post-container <?php if(isset($_SESSION['postCreated']) && $_SESSION['postCreated'] == $postData[0]) { echo 'just-created-post'; unset($_SESSION['postCreated']);} ?>">
-                <div class="user-profil">
+                
+            
+            <div class="user-profil">
                     <img src="<?= $postUserData[9] ?>">
                     <div>
                         <p id = "userName_Post"><?= $postUserData[0] ?></p>
@@ -94,7 +96,7 @@
                             <?php } 
                         } ?>
                     </div>
-                    <div class="post-reactions">
+                    <div class="post-reactions" <?php if($postData[4] == 0) echo 'style="flex-direction:row;"'?>>
                         <div>
                             <ion-icon name="heart" onclick="LikePost('<?= $postData[0] ?>', this, <?=$i?>)"
                                 <?php if(count(db_selectColumns("liked_post", ["*"], ["UserID" => ["LIKE", "'".$_SESSION["connected"]."'", "1"],
@@ -130,6 +132,8 @@
                         </div>
                     </div>
                 </div>
+
+
             </div>
             <?php }
             if(count($posts) > POSTS_DISPLAYED){ ?>

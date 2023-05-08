@@ -141,7 +141,7 @@
                                                     <?php } 
                                                 } ?>
                                             </div>
-                                            <div class="post-reactions">
+                                            <div class="post-reactions" <?php if($postData[4] == 0) echo 'style="flex-direction:row;"'?>>
                                                 <div>
                                                     <ion-icon name="heart" onclick="LikePost('<?= $postData[0] ?>', this, <?=$formCount?>)"
                                                         <?php if(count(db_selectColumns("liked_post", ["*"], ["UserID" => ["LIKE", "'".$_SESSION["connected"]."'", "1"],
@@ -221,7 +221,7 @@
                                                         <?php } 
                                                     } ?>
                                                 </div>
-                                                <div class="post-reactions">
+                                                <div class="post-reactions" <?php if($postData[4] == 0) echo 'style="flex-direction:row;"'?>>
                                                     <div>
                                                         <ion-icon name="heart" onclick="LikePost('<?= $postData[0] ?>', this, <?=$formCount?>)"
                                                             <?php if(count(db_selectColumns("liked_post", ["*"], ["UserID" => ["LIKE", "'".$_SESSION["connected"]."'", "1"],
@@ -301,7 +301,7 @@
                                                         <?php } 
                                                     } ?>
                                                 </div>
-                                                <div class="post-reactions">
+                                                <div class="post-reactions" <?php if($postData[4] == 0) echo 'style="flex-direction:row;"'?>>
                                                     <div>
                                                         <ion-icon name="heart" onclick="LikePost('<?= $postData[0] ?>', this, <?=$formCount?>)"
                                                             <?php if(count(db_selectColumns("liked_post", ["*"], ["UserID" => ["LIKE", "'".$_SESSION["connected"]."'", "1"],

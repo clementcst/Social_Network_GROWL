@@ -591,6 +591,9 @@ function createPostContainer(profilPic, userName, postTime, textContent, tabPict
     // création de la div post-reactions
     var postReactionsDiv = document.createElement("div");
     postReactionsDiv.className ="post-reactions";
+    if(!Array.isArray(tabPicturesContent)){
+        postReactionsDiv.style = "flex-direction:row";
+    } 
     postMediaDiv.appendChild(postReactionsDiv);
 
     // Création du bouton like
