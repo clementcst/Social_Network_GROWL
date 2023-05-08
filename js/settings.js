@@ -49,7 +49,6 @@ openPassword[0].addEventListener('click', function(){openSettings(openPassword[0
     Confirm function
 */
 function delete_account(){
-    console.log("Test1");
     swal({
         title: "Are you sure?",
         text: "Once deleted, you will not be able to recover your account!",
@@ -112,7 +111,7 @@ function previewPicture(e){
             const maxSize = 500000;
 
             if(file.size > maxSize){
-                swal('Le fichier est trop volumineux. Taille maximale : 500ko');
+                swal('File too large. max size : 500ko');
                 input.value = '';
             }
             
