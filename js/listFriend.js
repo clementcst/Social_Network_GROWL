@@ -7,5 +7,9 @@ function submitFormConvLink(form_no) {
 }
 
 function submitFormAcceptFReq(form_no) {
-    document.getElementById("form-f-req" + form_no).submit();
+    document.getElementById("form-f-req-accept" + form_no).submit();
+}
+
+function submitFormCancelFReq(form_no) {
+    document.getElementById("form-f-req-cancel" + form_no).submit();
 }

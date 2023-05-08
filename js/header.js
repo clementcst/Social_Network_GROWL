@@ -29,6 +29,7 @@ searchInput.addEventListener('input', function() {
   suggestionsList.innerHTML = "";
   if(searchInput.value != "") {
     searchProfil(searchInput.value);
+    displayResultKeyWord();
   }
 });
 
@@ -64,11 +65,41 @@ function displayResult(nbrUser, tabUser){
         div.appendChild(op);
         suggestionsList.appendChild(div);
    }
+}
+
+function displayResultKeyWord(){
+
+       var div = document.createElement("div");
+       div.setAttribute('class','divSuggestion')
+       div.setAttribute('onclick','submitFormKeyWordsSerarch()');
+
+       var form = document.createElement("form");
+       form.setAttribute('id','keyWordsSearch');
+       form.setAttribute('method','GET');
+       form.setAttribute('action','./index.php');
+
+       var input = document.createElement("input");
+       input.setAttribute('type','hidden');
+       input.setAttribute('name','searchBar');
+       var i = document.getElementById('search-input').value;
+       input.value = i;
+
+       form.appendChild(input);
+
+       var op = document.createElement("p");
+       op.innerHTML = "#"+i;
+       div.appendChild(form);
+       div.appendChild(op);
+       suggestionsList.appendChild(div);
 
 }
 
 function submitFormProfilSerarch(form_no){
     document.getElementById("profilSearch" + form_no).submit();
+}
+
+function submitFormKeyWordsSerarch(){
+  document.getElementById("keyWordsSearch").submit();
 }
 
 document.addEventListener('click', function(event) {

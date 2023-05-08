@@ -53,6 +53,11 @@
         else if (isset($tabdataform["themeSelect"]) && isset($tabdataform["srcTheme_username"])){
             $User_id_theme = db_selectColumns("user", ["UserID"], ["Username" => ["LIKE", "'".$tabdataform["srcTheme_username"]."'", "0"]])[0][0];
             db_updateColumns("user", ["Theme" => $tabdataform["themeSelect"]], ["UserID" => ["LIKE", "'".$User_id_theme."'", "0"]]);
+            if($tabdataform["themeSelect"] == "1") {
+                $_SESSION['DarkMode'] = "Unable";
+            } else {
+                $_SESSION['DarkMode'] = "Disable";
+            }
         }
         else if ((isset($tabdataform["profilePrivacy"]) || isset($tabdataform["postPrivacy"])) && isset($tabdataform["srcPrivacy_username"])){
             $User_id_privacy = db_selectColumns("user", ["UserID"], ["Username" => ["LIKE", "'".$tabdataform["srcPrivacy_username"]."'", "0"]])[0][0];
@@ -61,6 +66,23 @@
             }
             if (isset($tabdataform["postPrivacy"])){
                 db_updateColumns("user", ["PostConfidentiality" => $tabdataform["postPrivacy"]], ["UserID" => ["LIKE", "'".$User_id_privacy."'", "0"]]);
+            }
+        }
+        else if (isset($tabdataform["srcDelete_username"])){
+            $User_id_delete = db_selectColumns("user", ["UserID"], ["Username" => ["LIKE", "'".$tabdataform["srcDelete_username"]."'", "0"]])[0][0];
+            db_deleteRows("user", ["UserID" => ["LIKE", "'".$User_id_delete."'", "0"]]);
+            redirect(ROOT.ACCOUNT);
+        }
+        else if (isset($tabdataform["friendDelete_username"]) && isset($tabdataform["userDelete_username"])){
+            $User_id_friend = db_selectColumns("user", ["UserID"], ["Username" => ["LIKE", "'".$tabdataform["friendDelete_username"]."'", "0"]])[0][0];
+            $User_id_user = db_selectColumns("user", ["UserID"], ["Username" => ["LIKE", "'".$tabdataform["userDelete_username"]."'", "0"]])[0][0];
+            $int_friend = preg_replace('/[^0-9]/', '', $User_id_friend);
+            $int_user = preg_replace('/[^0-9]/', '', $User_id_user);
+            if(intval($int_user) < intval($int_friend)){
+                db_deleteRows("friends", ["UserID_1" => ["LIKE", "'".$User_id_user."'", "1"], "UserID_2" => ["LIKE", "'".$User_id_friend."'", "0"]]);
+            }
+            else{
+                db_deleteRows("friends", ["UserID_1" => ["LIKE", "'".$User_id_friend."'", "1"], "UserID_2" => ["LIKE", "'".$User_id_user."'", "0"]]);
             }
         }
     }

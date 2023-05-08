@@ -15,10 +15,12 @@
     ?>
     <div id="list_friend" class="close-friends">
         <?php  
-            if(defined('ARRAYFRIEND') && !defined('CONVERSIONABLE') && isset($vieweduser_id)) {
-                ?><b><?=$vieweduserData[0]?>'s Friends</b><?php 
-            } else {
-                ?><b>Your Friends</b><?php 
+            if(count($friends_id) != 0) {
+                if(defined('ARRAYFRIEND') && !defined('CONVERSIONABLE') && isset($vieweduser_id)) {
+                    ?><b><?=$vieweduserData[0]?>'s Friends</b><?php 
+                } else {
+                        ?><b>Your Friends</b><?php 
+                }
             }
        
             for ($i=0; $i < count($friends_id); $i++) { 
@@ -44,6 +46,7 @@
                 </form>
             </div>
             <div class="close-message">
+                <!-- Converser avec un ami -->
                 <?php  if(defined('CONVERSIONABLE')) { ?>
                 <ion-icon name="paper-plane" onclick = 'submitFormConvLink(<?=$i?>)'>
                     <form id="form-conversation-link<?=$i?>" method="GET" action="<?= CONVERSATION ?>">
@@ -52,7 +55,12 @@
                 </ion-icon>
                 <?php } ?>
                 <?php  if(defined('TRASHABLE')) { ?>
-                <ion-icon name="trash" onclick="delete_friend()"></ion-icon>
+                <ion-icon name="trash" onclick="delete_friend(<?=$i?>)"></ion-icon>
+                <!-- Supprimer un ami -->
+                <form id="form-delete-friend<?=$i?>" action="<?= PHP.SETTINGS_PRO ?>" method="post">
+                    <input type="hidden" name="friendDelete_username" id="friendDelete_username" value="<?= $friendData[0]?>">
+                    <input type="hidden" name="userDelete_username" id="userDelete_username" value="<?= $userData[0]?>">
+                </form>
                 <?php }  ?>
             </div>
         </div>
@@ -75,13 +83,19 @@
                             <img src='<?= $friendReqData[9]?>'></img>
                             <span id='friend_req<?= $friendReqData[0]?>'><?= $friendReqData[0]?></span>
                         </div>
-                        <ion-icon name="checkmark" onclick="submitFormAcceptFReq(<?=$compteurform?>)"></ion-icon>
-                        <form id="form-profil-link<?=$compteurform?>" method="GET" action="<?= PROFIL ?>">
-                            <input type="hidden" name="user" id="user<?=$i?>" value="<?= $friendReqData[0] ?>">
-                        </form>
-                        <form id="form-f-req<?=$compteurform?>" method="POST" action="<?= PHP.FRIEND_PRO ?>">
-                            <input type="hidden" name="UsernameFuturFriend" id="user<?=$compteurform?>" value="<?= $friendReqData[0] ?>">
-                        </form>
+                        <div class="friend-req-buttons">
+                            <ion-icon name="checkmark" onclick="submitFormAcceptFReq(<?=$compteurform?>)"></ion-icon>
+                            <ion-icon name="close-outline" onclick="submitFormCancelFReq(<?=$compteurform?>)"></ion-icon>
+                            <form id="form-profil-link<?=$compteurform?>" method="GET" action="<?= PROFIL ?>">
+                                <input type="hidden" name="user" id="user<?=$i?>" value="<?= $friendReqData[0] ?>">
+                            </form>
+                            <form id="form-f-req-accept<?=$compteurform?>" method="POST" action="<?= PHP.FRIEND_PRO ?>">
+                                <input type="hidden" name="UsernameFuturFriend" id="user<?=$compteurform?>" value="<?= $friendReqData[0] ?>">
+                            </form>
+                            <form id="form-f-req-cancel<?=$compteurform?>" method="POST" action="<?= PHP.FRIEND_PRO ?>">
+                                <input type="hidden" name="UsernameCancelRequest" id="user<?=$compteurform?>" value="<?= $friendReqData[0] ?>">
+                            </form>
+                        </div>
                     </div>
                     <?php
                 }
