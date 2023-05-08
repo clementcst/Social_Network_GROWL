@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home Social Network </title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+    <link rel="icon" type="image/ico" href="./images/growl_ico.ico">
     <link rel="stylesheet" href="css/index.css">
 </head>
 
