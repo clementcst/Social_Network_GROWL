@@ -73,7 +73,7 @@
                 </div></a>
             </div> 
             <div class="settings-items">
-                <a href="#"><div class="circle">
+                <a href="<?= ABOUTUS ?>"><div class="circle">
                     <ion-icon name="help-outline"></ion-icon>
                 </div>
                 <div class="settings-items-description">
