@@ -12,6 +12,17 @@ function getfile(){
 }
 
 function previewPicture(e){
+    var maxSize = 500000;
+    var error = document.getElementById("error-size-image");
+    error.innerHTML = "";
+    error.style.display = "none";
+    if(e.files[0].size>maxSize){
+        error.innerHTML = 'The file is too large and was not added. Maximum size: 500 KB.';
+        error.style.color = 'red';
+        error.style.display = "";
+        e.files = null;
+        return;
+    }
     var boxmessages =  document.getElementsByClassName("box_message")[0];
     var textzone = document.getElementsByClassName("send_menu_message")[0];
     if(!document.getElementById("new-post-images")){
