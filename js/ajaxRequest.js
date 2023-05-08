@@ -419,6 +419,7 @@ function updateConvMessage(data, messages){
             space_between_message.className = 'my-empty-conv';
             zone_message.appendChild(space_between_message);
         }
+        messages[i][2] = messages[i][2].replace(/\+/g, ' ');
         if((messages[i][0]) == data[2]){
             createBulbleMessage(data[0], messages[i][2],messages[i][3], messages[i][5],messages[i][4],"1", div_one_message);
         } else {
