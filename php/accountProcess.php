@@ -49,7 +49,8 @@
                     }                    
                     unset($_SESSION["errorMessageRegistration"]);
                     $_SESSION['errorMessageRegistration'][$dbUser] = $err;
-                   redirect(ROOT.ACCOUNT);
+                    $_SESSION['error'] = "true";
+                    redirect(ROOT.ACCOUNT);
                 }
                 
                 s_connect(db_selectColumns('user', ['UserID'], ['Username' => ['=', "'".$tabDataForm["userName"]."'", "0"]])[0][0]);
@@ -57,12 +58,14 @@
         }
         else
         {
+            $_SESSION['error'] = "true";
             redirect(ROOT.ACCOUNT);
         }
     }
     else
     {
         $_SESSION['errorMessageRegistration']['submitRegistration'] = "Please fill out your registration form completely.";
+        $_SESSION['error'] = "true";
         redirect(ROOT.ACCOUNT);
     }
 ?>

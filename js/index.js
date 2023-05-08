@@ -63,4 +63,13 @@ function previewPicture(e){
         })
 } 
 
-    
+function checkPost(){
+    var text = document.getElementsByName('text_input')[0].value;
+    var img = document.getElementById('new-post-images').value;
+
+    if(!text && !img){
+        return false;
+    } else {
+        return true;
+    }
+}

@@ -272,7 +272,7 @@ function displayMorePosts(postsDisplayed, postToPrint, maxDatetime, mode, userna
         keyWord = '***';
     var nbInfosForPosts = 11;
     var requestDMP= getXhr();
-    requestDMP.open("POST","./php/ajaxRequest.php",true);
+    requestDMP.open("POST","./php/ajaxRequest.php",false);
     requestDMP.onreadystatechange = function(){
         if(requestDMP.readyState == 4 && requestDMP.status == 200){
             var reponse=requestDMP.responseText;

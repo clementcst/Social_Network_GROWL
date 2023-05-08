@@ -212,7 +212,7 @@
 
                 <div class="register-btn">
                 <button class="button2" name="submitRegistration">Confirm Register</button>
-                <button class="button2" name="Reset" onclick="document.location.href='createAccount.php'">Cancel</button>
+                <button class="button2" name="Reset" onclick="document.location.href='<?= ACCOUNT ?>'">Cancel</button>
                     <!--<input type="submit" class="btn bottom_btn" name="submitRegistration"
                                 value="Valider inscription">
                       
@@ -229,6 +229,11 @@
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <script type="text/javascript" src="./js/manage_form.js"></script>
     <script type="text/javascript" src="./js/account.js"></script>
+    <?php 
+    if(isset($_SESSION['error']) && $_SESSION['error'] == "true"){
+        unset($_SESSION['error']);
+        echo "<script> switchPage() </script>";
+    } ?>
 </body>
 
 </html>
