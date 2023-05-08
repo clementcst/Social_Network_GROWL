@@ -32,11 +32,11 @@
                             $key_words = $words[$j];
                         }                    
                     }   // S'il y a des mots clés, on créer le post avec
-                    $post = array('NumberOfMedia' => $number_media, 'KeyWords' => $key_words, 'Content' =>$_POST["text_input"], 'PostedBy_UserID' =>$_SESSION['connected']);
+                    $post = array('NumberOfMedia' => $number_media, 'KeyWords' => $key_words, 'Content' =>urlencode($_POST["text_input"]), 'PostedBy_UserID' =>$_SESSION['connected']);
                 } elseif ($matches === false) {
                     echo "Erreur de syntaxe dans le pattern.";
                 } else {
-                    $post = array('NumberOfMedia' => $number_media, 'Content' =>$_POST["text_input"], 'PostedBy_UserID' =>$_SESSION['connected']);
+                    $post = array('NumberOfMedia' => $number_media, 'Content' =>urlencode($_POST["text_input"]), 'PostedBy_UserID' =>$_SESSION['connected']);
                 }
                 
                 db_newPost($post);
@@ -59,7 +59,7 @@
             $own_media=array('PostID' => $id_post, 'MediaID' => $NewID);
             
             //On envoie le post dans la db
-            $post = array('NumberOfMedia' => 1, 'Content' =>$_POST["isShare"], 'PostedBy_UserID' =>$_SESSION['connected']);
+            $post = array('NumberOfMedia' => 1, 'Content' =>urlencode($_POST["isShare"]), 'PostedBy_UserID' =>$_SESSION['connected']);
             db_newPost($post);
 
             //On envoie les liens dans la db

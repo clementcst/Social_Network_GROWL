@@ -49,7 +49,7 @@
                                 <input id="submit-post" type="submit" value="Submit" class="submit-post" name ="isPost"/>
                                 </div>
                             </div>
-                            
+                        <p id="error-size-image"></p>
                     </div>
                 </form>
             </div>
@@ -71,12 +71,40 @@
                     $postData[5] = urldecode($postData[5]);
                     if($postData[4] > 0 && $postData[4] < 5){
                         $postMediasSrc = db_getPostMedias($postData[0]);
-                    }                
+                    }   
+                    if($postData[7] != $_SESSION['connected']){
+                        if($postUserData[11] == 1 && !in_array(array($_SESSION['connected']), db_getFriends($postData[7]))){
+                            $i++;
+                            if($i < $number_print_posts){
+                                $postData = $posts[$i]; 
+                                $postUserData = db_getUserData($postData[7]);
+                                $postData[6] = urldecode($postData[6]);
+                                $postData[5] = urldecode($postData[5]);
+                                if($postData[4] > 0 && $postData[4] < 5){
+                                    $postMediasSrc = db_getPostMedias($postData[0]);
+                                } 
+                            } else {
+                                break;
+                            }
+                        }
+                        if($postUserData[11] == 0 ) {
+                            $i++;
+                            if($i < $number_print_posts){
+                                $postData = $posts[$i]; 
+                                $postUserData = db_getUserData($postData[7]);
+                                $postData[6] = urldecode($postData[6]);
+                                $postData[5] = urldecode($postData[5]);
+                                if($postData[4] > 0 && $postData[4] < 5){
+                                    $postMediasSrc = db_getPostMedias($postData[0]);
+                                } 
+                            } else {
+                                break;
+                            }
+                        }
+                    }
             ?>
             <div class="post-container <?php if(isset($_SESSION['postCreated']) && $_SESSION['postCreated'] == $postData[0]) { echo 'just-created-post'; unset($_SESSION['postCreated']);} ?>">
-                
-            
-            <div class="user-profil">
+                <div class="user-profil">
                     <img src="<?= $postUserData[9] ?>">
                     <div>
                         <p id = "userName_Post"><?= $postUserData[0] ?></p>
@@ -132,8 +160,6 @@
                         </div>
                     </div>
                 </div>
-
-
             </div>
             <?php }
             if(count($posts) > POSTS_DISPLAYED){ ?>

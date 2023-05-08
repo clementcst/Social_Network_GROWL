@@ -76,7 +76,7 @@ function checkingForm(formName)
 
         // définition des tableaux des champs pouvant être verifier avec une expression regulière
         let checkWithPatternKeys = ["userName", "name", "firstName", "mail", "password", "country", "city", "phoneNumber"];
-        let patterns = {"userName": "^[a-zA-Z0-9"+accentedCharacters+"']{1,32}$", 
+        let patterns = {"userName": "^[a-zA-Z0-9"+accentedCharacters+"\\s']{1,32}$", 
             "name": "^[a-zA-Z"+accentedCharacters+"' \\-]{1,32}$", 
             "firstName": "^[a-zA-Z"+accentedCharacters+"' \\-]{1,32}$",
             "mail" : "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$", 
