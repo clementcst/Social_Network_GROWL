@@ -117,6 +117,8 @@
     function createCommentsFromWeb($post_id, $content){
         $id_user_connected=$_SESSION['connected'];
         $id_comment = db_generateId("comment");
+        //Avoir ' dans la requete sql fait bug cette requete
+        $content = str_replace("'", '"', $content);
         //La fonction php me renvoie le commentaire qu'elle a mit dans la db
         $comment = db_newComment($id_comment, $content, $id_user_connected, $post_id);
         $UserInfo = db_selectColumns(
@@ -153,6 +155,8 @@
     function createAnswerFromWeb($comment_id, $content){
         $id_user_connected=$_SESSION['connected'];
         $id_answer = db_generateId("answer");
+        //Avoir ' dans la requete sql fait bug cette requete
+        $content = str_replace("'", '"', $content);
         //La fonction php me renvoie le commentaire qu'elle a mit dans la db
         $answer = db_newAnswer($id_answer, $content, $id_user_connected, $comment_id);
         $UserInfo = db_selectColumns(
