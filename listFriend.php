@@ -15,10 +15,12 @@
     ?>
     <div id="list_friend" class="close-friends">
         <?php  
-            if(defined('ARRAYFRIEND') && !defined('CONVERSIONABLE') && isset($vieweduser_id)) {
-                ?><b><?=$vieweduserData[0]?>'s Friends</b><?php 
-            } else {
-                ?><b>Your Friends</b><?php 
+            if(count($friends_id) != 0) {
+                if(defined('ARRAYFRIEND') && !defined('CONVERSIONABLE') && isset($vieweduser_id)) {
+                    ?><b><?=$vieweduserData[0]?>'s Friends</b><?php 
+                } else {
+                        ?><b>Your Friends</b><?php 
+                }
             }
        
             for ($i=0; $i < count($friends_id); $i++) { 
