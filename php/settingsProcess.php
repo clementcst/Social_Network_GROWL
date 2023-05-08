@@ -10,12 +10,15 @@
             $PPid = db_selectColumns("user", ["ProfilPic"], ["Username" => ["LIKE", "'".$tabdataform["srcPP_username"]."'", "0"]])[0][0];
             if($PPid == 'M0'){
                 $NewID = db_generateID("media");
-                db_newRow("media", ["Base64" => $tabdataform["srcPP_base64"], "Type" => $tabdataform["srcPP_type"]]);
-                db_updateColumns("user", ["ProfilPic" => $NewID]);
+                db_newRow("media", ["MediaID" => $NewID, "Base64" => $tabdataform["srcPP_base64"], "Type" => $tabdataform["srcPP_type"]]);
+                db_updateColumns("user", ["ProfilPic" => $NewID], ["UserID" => ["LIKE", "'".$_SESSION['connected']."'","0"]]);
+                echo "<script> window.location.replace('".ROOT.SETTINGS."') </script>";
+                redirect(ROOT.ACCOUNT);
             }
             else{
                 db_updateColumns("media", ["Base64" => $tabdataform["srcPP_base64"], "Type" => $tabdataform["srcPP_type"]], ["MediaID" => ["LIKE", "'".$PPid."'", "0"]]);
-                echo "<script> window.location.replace('".ROOT.SETTINGS."') </script>"; //redirect malgré la taille de l'image
+                echo "<script> window.location.replace('".ROOT.SETTINGS."') </script>";
+                redirect(ROOT.ACCOUNT);
             }
         } 
         else if (
@@ -71,6 +74,7 @@
         else if (isset($tabdataform["srcDelete_username"])){
             $User_id_delete = db_selectColumns("user", ["UserID"], ["Username" => ["LIKE", "'".$tabdataform["srcDelete_username"]."'", "0"]])[0][0];
             db_deleteRows("user", ["UserID" => ["LIKE", "'".$User_id_delete."'", "0"]]);
+            echo "<script> window.location.replace('".ROOT.SETTINGS."') </script>";
             redirect(ROOT.ACCOUNT);
         }
         else if (isset($tabdataform["friendDelete_username"]) && isset($tabdataform["userDelete_username"])){
@@ -86,5 +90,6 @@
             }
         }
     }
+    echo "<script> window.location.replace('".ROOT.SETTINGS."') </script>";
     redirect(ROOT.SETTINGS);
 ?>
