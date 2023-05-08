@@ -119,7 +119,9 @@
                         <div class="send_icon_message" onclick="sendMessage()">
                             <ion-icon name="send"></ion-icon>
                         </div>
+                        
                     </div>
+                    <p id="error-size-image"></p>
                 </div>        
             </div>
             <!-- Right Content -->
