@@ -394,6 +394,5 @@
     </body>
     <script type="text/javascript" src="./js/profil.js"></script>
     <script type="text/javascript" src="./js/post.js"></script>
-    <script type="text/javascript" src="./js/ajaxRequest.js"></script>
 
 </html>
