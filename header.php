@@ -97,11 +97,26 @@
 
         </div> 
     </nav>
-    <script rel="stylesheet" src="js/darkMode.js"></script>
-    <script rel="stylesheet" src="js/header.js" defer></script>
+    <script type="text/javascript" src="js/ajaxRequest.js"></script>
+    <script type="text/javascript" src="js/darkMode.js"></script>
+    <script type="text/javascript" src="js/header.js" defer></script>
     <?php 
+        //setup du darkmode en fonction des préférence du user dans la DB et du SESSION[DarkMode] de la session courante 
+       
         if($userData[12] == "1") {
+            if(isset($_SESSION['DarkMode'])) {
+                if($_SESSION['DarkMode'] == "Unable") {
+                    ?><script type="text/javascript"> toggleDarkMode();</script><?php
+                }
+            } else {
                 ?><script type="text/javascript"> toggleDarkMode();</script><?php
+            }
+        } else if($userData[12] == "0"){
+            if(isset($_SESSION['DarkMode'])) {
+                if($_SESSION['DarkMode'] == "Unable") {
+                    ?><script type="text/javascript"> toggleDarkMode();</script><?php
+                }
+            }
         }
     ?>
 </header>
