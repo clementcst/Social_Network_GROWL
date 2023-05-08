@@ -65,8 +65,8 @@ function changeConversation(username_friend){
             var number_messages = (res.length-2)/6;
             let all_messages = [];
             let data = [res[0],res[1]];//variable contenant les informations de l'ami dont la fenetre de discussion est ouverte avec un 0 son username et en 1 sa photo            for(var j=0;j<(number_messages);j++){
-                all_messages[j] = []; // tableau de la taille du nombre de message
-                for(var k = 0;k<6;k++){
+            all_messages[j] = []; // tableau de la taille du nombre de message
+            for(var k = 0;k<6;k++){
                     all_messages[j][k] = res[6*j+2+k]// dans le tableau on y met un tableau contenant toutes les infos du message
                 }
             }
