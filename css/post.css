@@ -91,7 +91,7 @@
 .comment-menu{
     position:absolute;
     z-index: 1;
-    width:36%;
+    width:25%;
     margin:0 -35% 0 5%;
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.4) ;
