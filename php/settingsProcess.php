@@ -53,6 +53,11 @@
         else if (isset($tabdataform["themeSelect"]) && isset($tabdataform["srcTheme_username"])){
             $User_id_theme = db_selectColumns("user", ["UserID"], ["Username" => ["LIKE", "'".$tabdataform["srcTheme_username"]."'", "0"]])[0][0];
             db_updateColumns("user", ["Theme" => $tabdataform["themeSelect"]], ["UserID" => ["LIKE", "'".$User_id_theme."'", "0"]]);
+            if($tabdataform["themeSelect"] == "1") {
+                $_SESSION['DarkMode'] = "Unable";
+            } else {
+                $_SESSION['DarkMode'] = "Disable";
+            }
         }
         else if ((isset($tabdataform["profilePrivacy"]) || isset($tabdataform["postPrivacy"])) && isset($tabdataform["srcPrivacy_username"])){
             $User_id_privacy = db_selectColumns("user", ["UserID"], ["Username" => ["LIKE", "'".$tabdataform["srcPrivacy_username"]."'", "0"]])[0][0];
