@@ -101,7 +101,7 @@
                                  <img src="data:<?=$type ?>;base64,<?=$base ?>" alt="marche po" id ="image_message" class="text_message">
                                  <?php
                                  } else {?>
-                            <span class="text_message"><?=$conversation[$i][3]?></span>
+                            <span class="text_message"><?php echo urldecode($conversation[$i][3]);?></span>
                             <?php
                                  }?>
                             <span id="<?=$i;?>" class="message_info date_message" ><script>changeFormatDate('<?=$conversation[$i][5]?>', '<?=$i?>', '1')</script></span>  
