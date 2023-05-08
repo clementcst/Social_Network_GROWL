@@ -437,7 +437,7 @@ function updateConvMessage(data, messages){
             zone_message.appendChild(space_between_message);
         }
         messages[i][2] = messages[i][2].replace(/\+/g, ' ');
-        if((messages[i][0]) == data[2]){
+        if((messages[i][0]) == data[1]){
             createBulbleMessage(data[0], messages[i][2],messages[i][3], messages[i][5],messages[i][4],"1", div_one_message);
         } else {
             createBulbleMessage(data[0], messages[i][2],messages[i][3], messages[i][5],messages[i][4],"0", div_one_message);               
