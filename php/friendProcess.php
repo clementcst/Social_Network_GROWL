@@ -14,7 +14,7 @@
             if(in_array(array($FFid), db_getFriendRequest($_SESSION["connected"]))) //double check that there is a Friend Request of this user
                 db_updateColumns("friends", ["Accepted" => '1'], ["UserID_1" => ["LIKE", "'".$FFid."'", "1"], "UserID_2" => ["LIKE", "'".$_SESSION["connected"]."'", "0"] ]);
         }
-        /* CANCEL A FRIEND */
+        /* CANCEL A FRIEND REQUEST*/
         if(isset($tabdataform["UsernameCancelRequest"]) && isset($_SESSION["connected"])) { 
             $FFid = db_selectColumns("user", ["UserID"], ["Username" => ["LIKE", "'".$tabdataform["UsernameCancelRequest"]."'", "0"]])[0][0];
             if(in_array(array($FFid), db_getFriendRequest($_SESSION["connected"]))) //double check that there is a Friend Request of this user
