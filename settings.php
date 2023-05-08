@@ -233,18 +233,18 @@
                             <input type="hidden" name="srcPrivacy_username" id="srcPrivacy_username" value="<?= $userData[0]?>">
                             <label for="profilePrivacy">These people can see your profile</label><br>
                             <select name="profilePrivacy">
-                                <option value="" disabled selected><?php if($user[10] == 0){echo "Everyone";}elseif($user[10] == 1){echo "Friends";}elseif($user[10] == 2){echo "Nobody";}?></option>
-                                <option value="0">Everyone</option>
+                                <option value="" disabled selected><?php if($user[10] == 2){echo "Everyone";}elseif($user[10] == 1){echo "Friends";}elseif($user[10] == 0){echo "Nobody";}?></option>
+                                <option value="2">Everyone</option>
                                 <option value="1">Friends</option>
-                                <option value="2">Nobody</option>
+                                <option value="0">Nobody</option>
                             </select>
                             <br>
                             <label for="postPrivacy">These people can see your posts</label><br>
                             <select name="postPrivacy">
-                                <option value="" disabled selected><?php if($user[11] == 0){echo "Everyone";}elseif($user[11] == 1){echo "Friends";}elseif($user[11] == 2){echo "Nobody";}?></option>
-                                <option value="0">Everyone</option>
+                                <option value="" disabled selected><?php if($user[11] == 2){echo "Everyone";}elseif($user[11] == 1){echo "Friends";}elseif($user[11] == 0){echo "Nobody";}?></option>
+                                <option value="2">Everyone</option>
                                 <option value="1">Friends</option>
-                                <option value="2">Nobody</option>
+                                <option value="0">Nobody</option>
                             </select>
                             <br>
                             <input type="submit" class="confirm" name="submitRegistration" value="Confirm changes">
