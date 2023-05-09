@@ -195,7 +195,7 @@
 .comment-input{
     margin: 10px;
     border-radius: 20px;
-    width: 95%;
+    max-width: 95%;
     background-color: var(--bg-post-color);
     overflow-y: scroll;
     border: var(--bg-body-color) solid 1px;

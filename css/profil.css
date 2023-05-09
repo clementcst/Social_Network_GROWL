@@ -219,7 +219,18 @@ hr {
     margin-top:20px;
   }
 
-
+  .submit-post {
+    background-color:var(--bg-main-color); /* couleur de fond bleue */
+    color: #fff; /* couleur du texte en blanc */
+    padding: 6px 12px; /* ajout de marge intérieure */
+    border: none; /* suppression de la bordure */
+    border-radius: 8px; /* ajout d'arrondis aux coins */
+    font-size: 13px; /* taille de police */
+    font-weight: bold; /* épaisseur de police en gras */
+    text-transform: uppercase; /* texte en majuscules */
+    cursor: pointer; /* ajout d'un curseur au survol */
+    z-index: 5;
+}
 
  
  
