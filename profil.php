@@ -403,5 +403,6 @@
     </body>
     <script type="text/javascript" src="./js/profil.js"></script>
     <script type="text/javascript" src="./js/post.js"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 
 </html>
