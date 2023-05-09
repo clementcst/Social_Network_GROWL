@@ -7,8 +7,8 @@
         <title>Profil | GROWL</title>
         <link rel="stylesheet" href="css/profil.css">
         <link rel="icon" type="image/ico" href="./images/growl_ico.ico">
-        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>        
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">   
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>   
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">      
     </head>
 
     <body>
@@ -23,6 +23,8 @@
                 $vieweduser_id = $_SESSION['connected'];
                 $vieweduserData = $userData;
             }
+
+            $who = ($vieweduser_id == $_SESSION['connected']) ? "You have" : $vieweduserData[0]." has";
 
             if($vieweduser_id != $_SESSION['connected']) {
                 switch ($vieweduserData[10]) {
@@ -140,6 +142,7 @@
                         ?>
                         <div id="content1" >
                             <?php 
+                            if(count($AllPosts) > 0) {
                                 $number_print_posts = min(count($AllPosts), POSTS_DISPLAYED);
                                 for ($i= 0 ; $i < $number_print_posts ; $i++) {
                                     $formCount++;
@@ -212,7 +215,9 @@
                                 if(count($AllPosts) > POSTS_DISPLAYED){ ?>
                                     <input class="btn-loadMore" id="addMorePostAllPost" type="button" onclick="displayMorePosts(<?= POSTS_DISPLAYED ?>, <?= POSTS_TO_PRINT ?>, '<?= $AllPosts[0][1] ?>'  ,'prof_all', '<?= $vieweduserData[0] ?>', <?= 3*POSTS_DISPLAYED+1 ?>, <?= $toLoad ?>)" value="Load more">
                                 <?php }  
-                            ?>
+                            } else { 
+                                echo "<span>".$who." never posted anything yet"."</span>";
+                            }?>
                         </div>
                         <div id="content2" style="display:none;">
                             <?php
@@ -291,8 +296,10 @@
                                     <?php }
                                 if(count($LikedPostsId) > POSTS_DISPLAYED){ ?>
                                     <input class="btn-loadMore" id="addMorePostLikedPost" type="button" onclick="displayMorePosts(<?= POSTS_DISPLAYED ?>, <?= POSTS_TO_PRINT ?>,'<?= $likedFirstDateTime ?>' ,'prof_liked', '<?= $vieweduserData[0] ?>', <?= 3*POSTS_DISPLAYED+1 ?>, <?= $toLoad ?>)" value="Load more">
-                                <?php }
-                            } ?>
+                                <?php } 
+                            } else { 
+                                echo "<span>".$who." never liked any post yet"."</span>";
+                            }?>
                         </div>
                         <div id="content3" style="display:none;">
                             <?php
@@ -372,8 +379,9 @@
                                 if(count($SharedPostsId) > POSTS_DISPLAYED){ ?>
                                     <input class="btn-loadMore" id="addMorePostSharedPost" type="button" onclick="displayMorePosts(<?= POSTS_DISPLAYED ?>, <?= POSTS_TO_PRINT ?>,'<?= $sharedFirstDateTime ?>', 'prof_shared', '<?= $vieweduserData[0] ?>', <?= 3*POSTS_DISPLAYED+1 ?>, <?= $toLoad ?>)" value="Load more">
                                 <?php }  
-                                } 
-                            ?>
+                            } else { 
+                                echo "<span>".$who." never shared any post yet"."</span>";
+                            }?> 
                         </div>
                     </div>  
                 </div>
